@@ -93,10 +93,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){
 		timer++;
-		motorSet();
 		getAnalogsensor();
 		lineTrace();
 		updateSideSensorState();
+
+
+		motorSet();
    }
    if(htim->Instance == TIM7){
        timer1++;
@@ -172,7 +174,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim7);
 
-  speed_L = speed_R = 550;
+  speed_L = speed_R = 400; //550
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -186,14 +188,14 @@ int main(void)
 			  break;
 
 		  case 10:
-			  HAL_Delay(10000);
+			  HAL_Delay(9000);
 			  pattern = 20;
 
 			  break;
 
 		  case 20:
 			  if(side_sensor_R == 1){
-				  HAL_Delay(0);
+				  HAL_Delay(100);
 				  pattern = 30;
 			  }
 

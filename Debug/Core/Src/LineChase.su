@@ -1,5 +1,5 @@
-LineChase.c:31:6:motorSet	16	static
-LineChase.c:106:6:storeAdBuffer	4	static
-LineChase.c:119:6:getAnalogsensor	4	static
-LineChase.c:130:6:lineTrace	64	static
-LineChase.c:158:6:updateSideSensorState	8	static
+LineChase.c:37:6:motorSet	16	static
+LineChase.c:117:6:storeAdBuffer	4	static
+LineChase.c:136:6:getAnalogsensor	4	static
+LineChase.c:153:6:lineTrace	64	static
+LineChase.c:181:6:updateSideSensorState	8	static

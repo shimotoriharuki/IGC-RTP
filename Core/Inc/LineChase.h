@@ -11,8 +11,8 @@
 
 #include "main.h"
 
-#define MAX_COUNTER_PERIOD 1679
-#define MIN_COUNTER_PERIOD -1679
+#define MAX_COUNTER_PERIOD 1678
+#define MIN_COUNTER_PERIOD -1678
 
 extern int16_t motor_L, motor_R;
 extern uint16_t analog[LINESENSOR_ADC_NUM];
