@@ -1,0 +1,4 @@
+LineChase.c:28:6:motorSet	16	static
+LineChase.c:103:6:storeAdBuffer	4	static
+LineChase.c:116:6:getAnalogsensor	4	static
+LineChase.c:127:6:lineTrace	72	static
