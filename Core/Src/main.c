@@ -62,7 +62,9 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 
 uint16_t analog[LINESENSOR_ADC_NUM];
+
 uint32_t timer, timer1;
+uint16_t pattern;
 
 /* USER CODE END PV */
 
@@ -94,6 +96,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		motorSet();
 		getAnalogsensor();
 		lineTrace();
+		updateSideSensorState();
    }
    if(htim->Instance == TIM7){
        timer1++;
@@ -168,13 +171,41 @@ int main(void)
 
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim7);
+
+  speed_L = speed_R = 550;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  switch(pattern){
+		  case 0:
+			  if(side_sensor_R == 1) pattern = 10;
 
+			  break;
+
+		  case 10:
+			  HAL_Delay(10000);
+			  pattern = 20;
+
+			  break;
+
+		  case 20:
+			  if(side_sensor_R == 1){
+				  HAL_Delay(0);
+				  pattern = 30;
+			  }
+
+			  break;
+
+		  case 30:
+			  speed_L = speed_R = 0;
+
+			  break;
+	  };
+
+	  /*
 	  //LED
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
@@ -190,6 +221,7 @@ int main(void)
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
 
 	  HAL_Delay(1000);
+	  */
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -880,6 +912,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PC2 PC3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SWITCH2_Pin SWITCH1_Pin */

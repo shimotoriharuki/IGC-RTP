@@ -13,8 +13,10 @@ TIM_HandleTypeDef htim8;
 
 int16_t motor_L, motor_R;
 int16_t sensorCL, sensorCR, sensorL, sensorR, sensorLL, sensorRR;
+
 double mon_def, mon_pid;
-int16_t mon_rev_L, mon_rev_R;
+int16_t mon_cnt_L, mon_cnt_R;
+int16_t mon_rev_L, mon_rev_R, mon_cnt;
 
 static int16_t senCL[10];
 static int16_t senCR[10];
@@ -23,7 +25,8 @@ static int16_t senR[10];
 static int16_t senLL[10];
 static int16_t senRR[10];
 
-uint8_t wakeup_flag;
+uint8_t side_sensor_L, side_sensor_R;
+int16_t speed_L, speed_R;
 
 void motorSet() {
 	int16_t motorPwm_L, motorPwm_R;
@@ -142,12 +145,41 @@ void lineTrace(void){
 	i += ki * def * DELTA_T; //I制御
 	d = kd * (def - pre_def) / DELTA_T; //D制御
 
-	motor_L = ( p + i + d );
-	motor_R = -( p + i + d );
+	motor_L = speed_L + ( p + i + d );
+	motor_R = speed_R - ( p + i + d );
 
 	pre_def = def;
 
 	mon_def = def;
 	mon_pid = p + i + d;
+
+}
+
+void updateSideSensorState()
+{
+	static uint16_t cnt_L, cnt_R;
+
+	if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == 0) cnt_L++;
+	else cnt_L = 0;
+
+	if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == 0) cnt_R++;
+	else cnt_R = 0;
+
+	if(cnt_L >= 50){
+		side_sensor_L = 1;
+	}
+	else{
+		side_sensor_L = 0;
+	}
+
+	if(cnt_R >= 50){
+		side_sensor_R = 1;
+	}
+	else{
+		side_sensor_R = 0;
+	}
+
+	mon_cnt_L = cnt_L;
+	mon_cnt_R = cnt_R;
 
 }
