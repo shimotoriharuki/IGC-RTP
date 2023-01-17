@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "LineChase.h"
+#include "MPU6500.h"
 
 /* USER CODE END Includes */
 
@@ -173,8 +174,9 @@ int main(void)
 
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim7);
+  mpu6500_init();
 
-  speed_L = speed_R = 400; //550
+  speed_L = speed_R = 500; //550
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -202,7 +204,7 @@ int main(void)
 			  break;
 
 		  case 30:
-			  speed_L = speed_R = 0;
+			  //speed_L = speed_R = 0;
 
 			  break;
 	  };
@@ -469,7 +471,7 @@ static void MX_SPI3_Init(void)
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

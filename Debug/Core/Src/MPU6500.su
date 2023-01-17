@@ -1,0 +1,4 @@
+MPU6500.c:29:9:read_byte	32	static
+MPU6500.c:49:6:write_byte	32	static
+MPU6500.c:66:6:mpu6500_init	16	static
+MPU6500.c:103:7:mpu6500_read_gyro_z	24	static
