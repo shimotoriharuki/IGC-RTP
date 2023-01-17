@@ -67,6 +67,8 @@ uint16_t analog[LINESENSOR_ADC_NUM];
 uint32_t timer, timer1;
 uint16_t pattern;
 
+int16_t mon_who;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,7 +96,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){
 		timer++;
-		mpu6500_read_gyro_z();
+		read_gyro_data();
 		getAnalogsensor();
 		lineTrace();
 		updateSideSensorState();
@@ -175,7 +177,7 @@ int main(void)
 
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim7);
-  mpu6500_init();
+  mon_who = IMU_init();
 
   speed_L = speed_R = 500; //550
   /* USER CODE END 2 */

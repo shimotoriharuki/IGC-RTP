@@ -6,110 +6,54 @@
  */
 
 #include "mpu6500.h"
-#include "main.h"
 
-#define WHO_AM_I 0x75
-#define PWR_MGMT_1 0x6B
-#define CONFIG 0x1A
-#define GYRO_CONFIG 0x1B
-#define GYRO_ZOUT_H 0x48
-#define GYRO_ZOUT_L 0x47
-#define GYRO_FACTOR 16.4
+volatile int16_t xa, ya, za;
+volatile int16_t xg, yg, zg;
 
-uint8_t mon_who_am_i, mon_gyro_z;
-uint16_t mon_error = 0;
-float omega;
+uint8_t read_byte( uint8_t reg ) {
+	uint8_t ret,val;
 
-SPI_HandleTypeDef hspi3;
+		ret = reg | 0x80;
+		CS_RESET;
+		HAL_SPI_Transmit(&hspi3, &ret, 1, 100);
+		HAL_SPI_Receive(&hspi3, &val, 1, 100);
+		CS_SET;
 
-/*
- @brief spi : read 1 byte
- @param uint8_t Register
- @return read 1byte data
-*/
-uint8_t read_byte( uint8_t reg )
-{
-  uint8_t rx_data[2];
-  uint8_t tx_data[2];
-
-  tx_data[0] = reg | 0x80;
-  tx_data[1] = 0x00;  // dummy
-
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, RESET);
-  HAL_SPI_TransmitReceive(&hspi3, tx_data, rx_data, 2, 1);
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, SET);
-
-  return rx_data[1];
+	return val;
 }
 
-/*
- @brief spi : write 1 byte
- @param uint8_t Register
- @param uint8_t Write Data
-*/
-void write_byte( uint8_t reg, uint8_t val )
-{
-  uint8_t rx_data[2];
-  uint8_t tx_data[2];
+void write_byte( uint8_t reg, uint8_t val )  {
+	uint8_t ret;
 
-  tx_data[0] = reg & 0x7F;
-  tx_data[1] = val;  // write data
-
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, RESET);
-  HAL_SPI_TransmitReceive(&hspi3, tx_data, rx_data, 2, 1);
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, SET);
+	ret = reg & 0x7F;
+	CS_RESET;
+	HAL_SPI_Transmit(&hspi3, &ret, 1, 100);
+	HAL_SPI_Receive(&hspi3, &val, 1, 100);
+	CS_SET;
 }
 
-/*
- * @breif initialize mpu 6500
-*/
+uint8_t IMU_init() {
+	uint8_t who_am_i, ret;
 
-void mpu6500_init( void )
-{
-  uint8_t who_am_i;
-
-  HAL_Delay( 100 ); // wait start up
-  who_am_i = read_byte( WHO_AM_I ); // 1. read who am i
-  mon_who_am_i = who_am_i;
-  //printf( "\r\n0x%x\r\n",who_am_i ); // 2. check who am i value
-
-  // 2. error check
-  if ( who_am_i != 0x70 ){
-    while(1){
-   //   printf( "gyro_error\r");
-    mon_error = 1;
-    }
-  }
-
-  HAL_Delay( 50 ); // wait
-
-  write_byte( PWR_MGMT_1, 0x00 ); // 3. set pwr_might
-
-  HAL_Delay( 50 );
-
-  write_byte( CONFIG, 0x00 ); // 4. set config
-
-  HAL_Delay( 50 );
-
-  write_byte( GYRO_CONFIG, 0x18 ); // 5. set gyro config
-
-  HAL_Delay( 50 );
-
+	who_am_i = read_byte( 0x75 );
+	if ( who_am_i == 0x70 ) {
+		ret = 1;
+		write_byte(0x6B, 0x00);	//sleep mode解除
+		HAL_Delay(100);
+		write_byte(0x1A, 0x00);
+		write_byte(0x1B, 0x18);
+	}
+	return ret;
 }
 
-/*
- * @breif read z axis
- * @return float gyro_z deg/sec
-*/
-float mpu6500_read_gyro_z( void )
-{
-  int16_t gyro_z;
+void read_gyro_data() {
+//	xg = ((int16_t)read_byte(0x33) << 8) | ((int16_t)read_byte(0x34));
+//	yg = ((int16_t)read_byte(0x35) << 8) | ((int16_t)read_byte(0x36));
+	zg = ((int16_t)read_byte(0x47) << 8) | ((int16_t)read_byte(0x48));
+}
 
-  // H:8bit shift, Link h and l,.
-  gyro_z = ((int16_t)(read_byte(GYRO_ZOUT_L) << 8) | (int16_t)read_byte(GYRO_ZOUT_H));
-  mon_gyro_z = gyro_z;
-
-  omega = (float)( gyro_z / GYRO_FACTOR ); // dps to deg/sec
-
-  return omega;
+void read_accel_data() {
+	xa = ((int16_t)read_byte(0x2D) << 8) | ((int16_t)read_byte(0x2E));
+	ya = ((int16_t)read_byte(0x2F) << 8) | ((int16_t)read_byte(0x30));
+	za = ((int16_t)read_byte(0x31) << 8) | ((int16_t)read_byte(0x32));
 }
