@@ -12,12 +12,13 @@
 #define PWR_MGMT_1 0x6B
 #define CONFIG 0x1A
 #define GYRO_CONFIG 0x1B
-#define GYRO_ZOUT_H 0x47
-#define GYRO_ZOUT_L 0x48
+#define GYRO_ZOUT_H 0x48
+#define GYRO_ZOUT_L 0x47
 #define GYRO_FACTOR 16.4
 
 uint8_t mon_who_am_i, mon_gyro_z;
 uint16_t mon_error = 0;
+float omega;
 
 SPI_HandleTypeDef hspi3;
 
@@ -103,10 +104,9 @@ void mpu6500_init( void )
 float mpu6500_read_gyro_z( void )
 {
   int16_t gyro_z;
-  float omega;
 
   // H:8bit shift, Link h and l,.
-  gyro_z = (int16_t)( (int16_t)(read_byte(GYRO_ZOUT_H) << 8 ) | read_byte(GYRO_ZOUT_L) );
+  gyro_z = ((int16_t)(read_byte(GYRO_ZOUT_L) << 8) | (int16_t)read_byte(GYRO_ZOUT_H));
   mon_gyro_z = gyro_z;
 
   omega = (float)( gyro_z / GYRO_FACTOR ); // dps to deg/sec

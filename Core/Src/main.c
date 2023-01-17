@@ -94,6 +94,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){
 		timer++;
+		mpu6500_read_gyro_z();
 		getAnalogsensor();
 		lineTrace();
 		updateSideSensorState();
