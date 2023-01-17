@@ -47,13 +47,13 @@ uint8_t IMU_init() {
 }
 
 void read_gyro_data() {
-//	xg = ((int16_t)read_byte(0x33) << 8) | ((int16_t)read_byte(0x34));
-//	yg = ((int16_t)read_byte(0x35) << 8) | ((int16_t)read_byte(0x36));
+	xg = ((int16_t)read_byte(0x43) << 8) | ((int16_t)read_byte(0x44));
+	yg = ((int16_t)read_byte(0x45) << 8) | ((int16_t)read_byte(0x46));
 	zg = ((int16_t)read_byte(0x47) << 8) | ((int16_t)read_byte(0x48));
 }
 
 void read_accel_data() {
-	xa = ((int16_t)read_byte(0x2D) << 8) | ((int16_t)read_byte(0x2E));
-	ya = ((int16_t)read_byte(0x2F) << 8) | ((int16_t)read_byte(0x30));
-	za = ((int16_t)read_byte(0x31) << 8) | ((int16_t)read_byte(0x32));
+	xa = ((int16_t)read_byte(0x3B) << 8) | ((int16_t)read_byte(0x3C));
+	ya = ((int16_t)read_byte(0x3D) << 8) | ((int16_t)read_byte(0x3E));
+	za = ((int16_t)read_byte(0x3F) << 8) | ((int16_t)read_byte(0x40));
 }

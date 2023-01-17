@@ -97,11 +97,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
    if(htim->Instance == TIM6){
 		timer++;
 		read_gyro_data();
+		read_accel_data();
 		getAnalogsensor();
 		lineTrace();
 		updateSideSensorState();
-
-
 		motorSet();
    }
    if(htim->Instance == TIM7){
