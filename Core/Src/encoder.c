@@ -8,6 +8,7 @@
 #include "encoder.h"
 
 int16_t enc_l_cnt, enc_r_cnt, enc_l_total, enc_r_total;
+int32_t enc_total, enc_mm_cnt;
 
 void getEncoder(void){
 
@@ -17,6 +18,8 @@ void getEncoder(void){
 	TIM3 -> CNT = 0;
 	TIM4 -> CNT = 0;
 
-	enc_l_total = enc_l_total + enc_l_cnt;
-	enc_r_total = enc_r_total - enc_r_cnt;
+	enc_l_total += enc_l_cnt;
+	enc_r_total -= enc_r_cnt;
+	enc_total = (enc_l_total + enc_r_total) / 2;
+	//15.73カウントで1ｍｍ
 }

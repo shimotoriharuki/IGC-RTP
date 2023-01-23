@@ -125,7 +125,8 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -182,7 +183,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim7);
   mon_who = IMU_init();
 
-  speed_L = speed_R = 500; //550
+  speed_L = speed_R = 450; //550
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -201,6 +202,7 @@ int main(void)
 
 			  break;
 
+
 		  case 20:
 			  if(side_sensor_R == 1){
 				  HAL_Delay(100);
@@ -210,7 +212,7 @@ int main(void)
 			  break;
 
 		  case 30:
-			  //speed_L = speed_R = 0;
+			  speed_L = speed_R = 0;
 
 			  break;
 	  };
