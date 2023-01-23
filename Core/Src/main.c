@@ -69,6 +69,7 @@ uint32_t timer, timer1;
 uint16_t pattern;
 
 int16_t mon_who;
+int16_t soiya;
 
 /* USER CODE END PV */
 
