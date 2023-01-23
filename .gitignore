@@ -1,7 +1,7 @@
 #---CubeIDE---
 .settings/
 Debug/
-.mxproject/
+*.mxproject
 *.launch
 
 #---Vim---
