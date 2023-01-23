@@ -17,5 +17,15 @@ git clone https://github.com/shimotoriharuki/IGC-RTP
 4. 「General」の中にある「Existing Projects int Workspace」をクリック
 5. 「Browse」ボタンをクリックしてクローンしてきたディレクトリを選択
 
+# 変更の確認手順
+
+```shell
+git remote add upstream <フォーク元のURL> # フォーク元のURLをupstreamという名前で登録 一度やればOK
+git fetch upstream # upstreamの変更をローカルに持ってくる
+git merge upstream/<ブランチ名> # マスターに変更を持ってくる
+```
+
+- https://leico.github.io/TechnicalNote/Git/pull-fork-origin
+
 # LICENSE
 このソフトウェアパッケージは[MITライセンス](https://github.com/shimotoriharuki/IGC-RTP/blob/master/LICENSE)の下、再頒布および使用が使用が許可されます．
