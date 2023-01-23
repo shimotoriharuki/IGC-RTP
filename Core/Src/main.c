@@ -69,7 +69,6 @@ uint32_t timer, timer1;
 uint16_t pattern;
 
 int16_t mon_who;
-int16_t soiya, soiya2;
 
 /* USER CODE END PV */
 
@@ -96,7 +95,7 @@ static void MX_TIM7_Init(void);
 /* USER CODE BEGIN 0 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-   if(htim->Instance == TIM6){
+   if(htim->Instance == TIM6){ //1ms
 		timer++;
 		read_gyro_data();
 		read_accel_data();
@@ -106,7 +105,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		motorSet();
 		getEncoder();
    }
-   if(htim->Instance == TIM7){
+   if(htim->Instance == TIM7){ //0.1ms
        timer1++;
        storeAdBuffer();
    }
