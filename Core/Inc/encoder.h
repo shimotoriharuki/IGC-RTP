@@ -13,4 +13,6 @@
 extern int16_t enc_l_total, enc_r_total;
 extern int32_t enc_mm_cnt, enc_total;
 
+void getEncoder(void);
+
 #endif /* INC_ENCODER_H_ */
