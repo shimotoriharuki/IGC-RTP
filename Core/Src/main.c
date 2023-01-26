@@ -113,8 +113,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void init(void)
 {
-  HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);	//encoderカウントスタート
-  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);	//encoderカウントスタート
+  HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);	//encoderカウントスター�?
+  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);	//encoderカウントスター�?
 
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1); //PWM start
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start
@@ -150,8 +150,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
-	HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -189,7 +188,10 @@ int main(void)
 
   init();
 
-  speed_L = speed_R = 450; //550
+
+  speed_L = speed_R = 300; //550
+  //motor_L = 400;
+  //motor_R = 400;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -267,7 +269,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 6;
+  RCC_OscInitStruct.PLL.PLLM = 8;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
