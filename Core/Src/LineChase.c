@@ -52,44 +52,27 @@ void motorSet() {
 	}
 	if(motor_R >= 0){
 		rev_motor_R = MAX_COUNTER_PERIOD - motor_R;
-		}
+	}
 	else{
 		rev_motor_R = MIN_COUNTER_PERIOD - motor_R;
 	}
+
 	mon_rev_L = rev_motor_L;
 	mon_rev_R = rev_motor_R;
 
-	/*
-	if(wakeup_flage == 1){
-		wakeup_flage = 0;
-
-		//motor driver wakeup
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
-		HAL_Delay(100);
-	}
-	*/
 
 	if(rev_motor_L > 0) {
 		motorPwm_L = rev_motor_L;
 		// motor1
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, motorPwm_L);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, motorPwm_L);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
 
 	}
-	/*
-	else if(rev_motor_L == 0){
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
-	}
-	*/
 	else {
 		motorPwm_L = rev_motor_L*(-1) ;
 		// motor1
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, motorPwm_L);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, motorPwm_L);
 	}
 
 
@@ -99,12 +82,6 @@ void motorSet() {
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, motorPwm_R);
 	}
-	/*
-	else if(rev_motor_R == 0){
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
-			__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
-	}
-	*/
 	else {
 		motorPwm_R = rev_motor_R * (-1);
 		//motor2
