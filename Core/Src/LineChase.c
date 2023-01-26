@@ -130,7 +130,7 @@ void getAnalogsensor(void) {
 void lineTrace(void){
 	double p, d;
 	static double i;
-	double kp = 0.8, ki = 0.08, kd = 0.;
+	double kp = 0.6, ki = 0.00, kd = 0.;
 	double def = 0.;
 	static double pre_def = 0.;
 
