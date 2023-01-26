@@ -22,6 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "motor.h"
 #include "LineChase.h"
 #include "MPU6500.h"
 #include "encoder.h"
@@ -102,7 +103,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		getAnalogsensor();
 		lineTrace();
 		updateSideSensorState();
-		motorSet();
+		//motorSet();
+		motorCtrlFlip();
 		getEncoder();
    }
    if(htim->Instance == TIM7){ //0.1ms
@@ -113,9 +115,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void init(void)
 {
-  HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);	//encoderカウントスター�?
-  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);	//encoderカウントスター�?
+  HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);	//encoder start
+  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);	//encoder start
 
+  //motorInit();
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1); //PWM start
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start
   HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3); //PWM start
@@ -188,10 +191,9 @@ int main(void)
 
   init();
 
-
   speed_L = speed_R = 300; //550
-  //motor_L = 400;
-  //motor_R = 400;
+  motorSet(300, 300);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

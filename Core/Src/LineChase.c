@@ -34,6 +34,7 @@ static int16_t sen11[10];
 uint8_t side_sensor_L, side_sensor_R;
 int16_t speed_L, speed_R;
 
+/*
 void motorSet() {
 	int16_t motorPwm_L, motorPwm_R;
 	int16_t rev_motor_L, rev_motor_R;
@@ -90,6 +91,7 @@ void motorSet() {
 	}
 
 }
+*/
 
 void storeAdBuffer(void) {
 	static uint8_t index;
@@ -147,6 +149,8 @@ void lineTrace(void){
 
 	motor_L = speed_L + (int)( p + i + d );
 	motor_R = speed_R - ( p + i + d );
+
+	motorSet(motor_L, motor_R);
 
 	pre_def = def;
 
