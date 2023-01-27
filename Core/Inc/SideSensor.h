@@ -2,7 +2,7 @@
  * SideSensor.h
  *
  *  Created on: Jan 27, 2023
- *      Author: under
+ *      Author: Haruki SHIMOTORI
  */
 
 #ifndef INC_SIDESENSOR_H_

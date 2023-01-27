@@ -11,7 +11,7 @@ TIM_HandleTypeDef htim8;
 
 static int16_t motor_l, motor_r;
 
-void motorInit(void)
+void initMotor(void)
 {
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1); //PWM start
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start

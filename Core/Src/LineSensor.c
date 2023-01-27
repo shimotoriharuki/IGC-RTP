@@ -24,7 +24,7 @@ static int16_t sensor9_buffer[10];
 static int16_t sensor10_buffer[10];
 static int16_t sensor11_buffer[10];
 
-void adcInit()
+void initADC()
 {
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adc_value, LINESENSOR_ADC_NUM); //ADC start
 }

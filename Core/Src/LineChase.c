@@ -2,7 +2,7 @@
  * LineChase.c
  *
  *  Created on: Jan 15, 2023
- *      Author: ryuku
+ *      Author: ryuku, Haruki SHIMOTORI
  */
 
 #include "LineChase.h"

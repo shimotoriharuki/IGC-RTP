@@ -2,7 +2,7 @@
  * LineChase.h
  *
  *  Created on: Jan 15, 2023
- *      Author: ryuku
+ *      Author: ryuku, Haruki SHIMOTORI
  */
 
 #ifndef INC_LINECHASE_H_
