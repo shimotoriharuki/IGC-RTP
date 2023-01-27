@@ -1,5 +1,5 @@
 /*
- * motor.h
+ * Motor.h
  *
  *  Created on: Jan 26, 2023
  *      Author: Haruki SHIMOTORI
@@ -13,7 +13,7 @@
 #define MAX_COUNTER_PERIOD 1678
 #define MIN_COUNTER_PERIOD -1678
 
-TIM_HandleTypeDef htim8_;
+TIM_HandleTypeDef htim8;
 int16_t motor_l_, motor_r_;
 
 void motorInit(void);

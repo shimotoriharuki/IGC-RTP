@@ -7,10 +7,11 @@
 
 #ifndef INC_LINECHASE_H_
 #define INC_LINECHASE_H_
+
 #define LINESENSOR_ADC_NUM 12
 
 #include "main.h"
-#include "motor.h"
+#include <Motor.h>
 
 //#define MAX_COUNTER_PERIOD 1678
 //#define MIN_COUNTER_PERIOD -1678
