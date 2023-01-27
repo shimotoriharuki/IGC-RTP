@@ -25,6 +25,11 @@ git clone https://github.com/shimotoriharuki/IGC-RTP
 # 変更の確認手順
 
 ```shell
+git fetch origin <テストしたいブランチ名>
+```
+
+## before
+```shell
 git remote add upstream <フォーク元のURL> # フォーク元のURLをupstreamという名前で登録 一度やればOK
 git fetch upstream # upstreamの変更をローカルに持ってくる
 git merge upstream/<ブランチ名> # マスターに変更を持ってくる
