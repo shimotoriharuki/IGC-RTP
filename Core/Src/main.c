@@ -22,9 +22,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "LineSensor.h"
+#include "SideSensor.h"
+#include "Motor.h"
+#include "Encoder.h"
 #include "LineChase.h"
 #include "MPU6500.h"
-#include "encoder.h"
 
 /* USER CODE END Includes */
 
@@ -63,8 +66,6 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
-uint16_t analog[LINESENSOR_ADC_NUM];
-
 uint32_t timer, timer1;
 uint16_t pattern;
 
@@ -97,43 +98,33 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){ //1ms
 		timer++;
+		updateEncoderCnt();
+
 		read_gyro_data();
 		read_accel_data();
-		getAnalogsensor();
-		lineTrace();
-		updateSideSensorState();
-		motorSet();
-		getEncoder();
+		updateAnalogSensor();
+		lineTraceFlip();
+		updateSideSensorStatus();
+		motorCtrlFlip();
+
+		resetEncoderCnt();
    }
    if(htim->Instance == TIM7){ //0.1ms
        timer1++;
-       storeAdBuffer();
+       storeAnalogSensorBuffer();
    }
 }
 
 void init(void)
 {
-  HAL_TIM_Encoder_Start(&htim3,TIM_CHANNEL_ALL);	//encoderカウントスタート
-  HAL_TIM_Encoder_Start(&htim4,TIM_CHANNEL_ALL);	//encoderカウントスタート
+	initEncoder();
+	initMotor();
 
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1); //PWM start
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3); //PWM start
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4); //PWM start
+	initADC();
 
-  //motor driver wakeup
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
-  HAL_Delay(100);
-
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *) analog, LINESENSOR_ADC_NUM); //ADC start
-
-  HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
-  HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
-  mon_who = IMU_init();
-
+	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
+	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
+	mon_who = IMU_init();
 }
 /* USER CODE END 0 */
 
@@ -150,8 +141,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
-	HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -180,6 +170,8 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 
+  init();
+
   while(1){
 	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {
 		  HAL_Delay(500);
@@ -187,9 +179,9 @@ int main(void)
 	  }
   }
 
-  init();
+  lineTraceStart();
+  setSpeed(300, 300);
 
-  speed_L = speed_R = 450; //550
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -198,7 +190,7 @@ int main(void)
   {
 	  switch(pattern){
 		  case 0:
-			  if(side_sensor_R == 1) pattern = 10;
+			  if(getSideSensorStatusR() == 1) pattern = 10;
 
 			  break;
 
@@ -210,7 +202,7 @@ int main(void)
 
 
 		  case 20:
-			  if(side_sensor_R == 1){
+			  if(getSideSensorStatusR() == 1){
 				  HAL_Delay(100);
 				  pattern = 30;
 			  }
@@ -218,7 +210,7 @@ int main(void)
 			  break;
 
 		  case 30:
-			  speed_L = speed_R = 0;
+			  setSpeed(0, 0);
 
 			  break;
 	  };

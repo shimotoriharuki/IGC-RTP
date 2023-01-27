@@ -1,8 +1,8 @@
 /*
- * encoder.h
+ * Encoder.h
  *
  *  Created on: Jan 18, 2023
- *      Author: ryuku
+ *      Author: ryuku, Haruki SHIMOTORI
  */
 
 #ifndef INC_ENCODER_H_
@@ -10,9 +10,8 @@
 
 #include "main.h"
 
-extern int16_t enc_l_total, enc_r_total;
-extern int32_t enc_mm_cnt, enc_total;
-
-void getEncoder(void);
+void initEncoder(void);
+void updateEncoderCnt(void);
+void resetEncoderCnt(void);
 
 #endif /* INC_ENCODER_H_ */
