@@ -38,4 +38,4 @@ git merge upstream/<ブランチ名> # マスターに変更を持ってくる
 - https://leico.github.io/TechnicalNote/Git/pull-fork-origin
 
 # LICENSE
-このソフトウェアパッケージは[MITライセンス](https://github.com/shimotoriharuki/IGC-RTP/blob/master/LICENSE)の下、再頒布および使用が使用が許可されます．
+このソフトウェアパッケージは[3条項BSDのライセンス](https://github.com/shimotoriharuki/IGC-RTP/blob/master/LICENSE)の下、再頒布および使用が使用が許可されます．
