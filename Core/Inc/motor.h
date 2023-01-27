@@ -13,12 +13,9 @@
 #define MAX_COUNTER_PERIOD 1678
 #define MIN_COUNTER_PERIOD -1678
 
-TIM_HandleTypeDef htim8;
-int16_t motor_l_, motor_r_;
-
 void motorInit(void);
 void motorCtrlFlip(void);
-void motorSet(int16_t, int16_t);
+void setMotor(int16_t, int16_t);
 
 
 #endif /* INC_MOTOR_H_ */

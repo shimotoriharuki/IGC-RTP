@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "LineSensor.h"
+#include "SideSensor.h"
 #include "LineChase.h"
 #include "MPU6500.h"
 #include "encoder.h"
@@ -100,8 +101,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		read_gyro_data();
 		read_accel_data();
 		updateAnalogSensor();
-		lineTrace();
-		updateSideSensorState();
+		lineTraceFlip();
+		updateSideSensorStatus();
 		motorCtrlFlip();
 		getEncoder();
    }
@@ -123,7 +124,6 @@ void init(void)
   HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
   HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
   mon_who = IMU_init();
-
 }
 /* USER CODE END 0 */
 
@@ -169,6 +169,8 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 
+  init();
+
   while(1){
 	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {
 		  HAL_Delay(500);
@@ -176,10 +178,9 @@ int main(void)
 	  }
   }
 
-  init();
+  lineTraceStart();
+  setSpeed(300, 300);
 
-  speed_L = speed_R = 0; //550
-  //motorSet(300, 300);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -188,7 +189,7 @@ int main(void)
   {
 	  switch(pattern){
 		  case 0:
-			  if(side_sensor_R == 1) pattern = 10;
+			  if(getSideSensorStatusR() == 1) pattern = 10;
 
 			  break;
 
@@ -200,7 +201,7 @@ int main(void)
 
 
 		  case 20:
-			  if(side_sensor_R == 1){
+			  if(getSideSensorStatusR() == 1){
 				  HAL_Delay(100);
 				  pattern = 30;
 			  }
@@ -208,7 +209,7 @@ int main(void)
 			  break;
 
 		  case 30:
-			  speed_L = speed_R = 0;
+			  setSpeed(0, 0);
 
 			  break;
 	  };

@@ -7,19 +7,23 @@
 
 #include <Motor.h>
 
+TIM_HandleTypeDef htim8;
+
+static int16_t motor_l, motor_r;
+
 void motorInit(void)
 {
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1); //PWM start
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3); //PWM start
-  HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4); //PWM start
+	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_1); //PWM start
+	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start
+	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3); //PWM start
+	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4); //PWM start
 
-  //motor driver wakeup
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
-  __HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
-  HAL_Delay(100);
+	//motor driver wakeup
+	__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
+	__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
+	__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
+	__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
+	HAL_Delay(100);
 }
 
 void motorCtrlFlip(void)
@@ -27,17 +31,17 @@ void motorCtrlFlip(void)
 	int16_t motor_pwm_l, motor_pwm_r;
 	int16_t reverse_motor_l, reverse_motor_r;
 
-	if(motor_l_ >= 0){
-		reverse_motor_l = MAX_COUNTER_PERIOD - motor_l_;
+	if(motor_l >= 0){
+		reverse_motor_l = MAX_COUNTER_PERIOD - motor_l;
 	}
 	else{
-		reverse_motor_l = MIN_COUNTER_PERIOD - motor_l_;
+		reverse_motor_l = MIN_COUNTER_PERIOD - motor_l;
 	}
-	if(motor_r_ >= 0){
-		reverse_motor_r = MAX_COUNTER_PERIOD - motor_r_;
+	if(motor_r >= 0){
+		reverse_motor_r = MAX_COUNTER_PERIOD - motor_r;
 	}
 	else{
-		reverse_motor_r = MIN_COUNTER_PERIOD - motor_r_;
+		reverse_motor_r = MIN_COUNTER_PERIOD - motor_r;
 	}
 
 	if(reverse_motor_l > 0) {
@@ -69,7 +73,7 @@ void motorCtrlFlip(void)
 	}
 }
 
-void motorSet(int16_t l, int16_t r)
+void setMotor(int16_t l, int16_t r)
 {
 	if(l >= MAX_COUNTER_PERIOD) l = MAX_COUNTER_PERIOD;
 	else if(l <= MIN_COUNTER_PERIOD) l = MIN_COUNTER_PERIOD;
@@ -77,7 +81,7 @@ void motorSet(int16_t l, int16_t r)
 	if(r >= MAX_COUNTER_PERIOD) r = MAX_COUNTER_PERIOD;
 	else if(r <= MIN_COUNTER_PERIOD) r = MIN_COUNTER_PERIOD;
 
-	motor_l_ = l;
-	motor_r_ = r;
+	motor_l = l;
+	motor_r = r;
 
 }
