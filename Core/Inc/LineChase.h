@@ -11,13 +11,9 @@
 #define LINESENSOR_ADC_NUM 12
 
 #include "main.h"
-#include <Motor.h>
+#include "Motor.h"
 
-//#define MAX_COUNTER_PERIOD 1678
-//#define MIN_COUNTER_PERIOD -1678
-
-//extern int16_t motor_L, motor_R;
-extern uint16_t analog[LINESENSOR_ADC_NUM];
+//extern uint16_t analog[LINESENSOR_ADC_NUM];
 
 extern uint8_t side_sensor_L, side_sensor_R;
 extern int16_t speed_L, speed_R;

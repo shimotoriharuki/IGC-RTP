@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "LineSensor.h"
 #include "LineChase.h"
 #include "MPU6500.h"
 #include "encoder.h"
@@ -64,8 +65,6 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
-uint16_t analog[LINESENSOR_ADC_NUM];
-
 uint32_t timer, timer1;
 uint16_t pattern;
 
@@ -100,16 +99,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		timer++;
 		read_gyro_data();
 		read_accel_data();
-		getAnalogsensor();
+		updateAnalogSensor();
 		lineTrace();
 		updateSideSensorState();
-		//motorSet();
 		motorCtrlFlip();
 		getEncoder();
    }
    if(htim->Instance == TIM7){ //0.1ms
        timer1++;
-       storeAdBuffer();
+       storeAnalogSensorBuffer();
    }
 }
 
@@ -120,7 +118,7 @@ void init(void)
 
   motorInit();
 
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *) analog, LINESENSOR_ADC_NUM); //ADC start
+  adcInit();
 
   HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
   HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
