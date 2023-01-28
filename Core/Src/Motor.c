@@ -10,6 +10,7 @@
 TIM_HandleTypeDef htim8;
 
 static int16_t motor_l, motor_r;
+int16_t mon_rev_l, mon_rev_r;
 
 
 void initMotor(void)
@@ -44,8 +45,10 @@ void motorCtrlFlip(void)
 	else{
 		reverse_motor_r = MIN_COUNTER_PERIOD - motor_r;
 	}
+	mon_rev_l = reverse_motor_l;
+	mon_rev_r = reverse_motor_r;
 
-	if(reverse_motor_l > 0) {
+	if(reverse_motor_l >= 0) {
 		motor_pwm_l = reverse_motor_l;
 		// motor1
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, motor_pwm_l);
@@ -60,7 +63,7 @@ void motorCtrlFlip(void)
 	}
 
 
-	if(reverse_motor_r > 0) {
+	if(reverse_motor_r >= 0) {
 		motor_pwm_r = reverse_motor_r;
 		//motor2
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
