@@ -9,6 +9,17 @@
 #define INC_VELOCITYCTRL_H_
 
 #include "stm32f4xx_hal.h"
+#include "Encoder.h"
+#include "Motor.h"
+#include "UserSelection.h"
 
+void calculateVelocityControlFlip(void);
+float getVelocityControlTerm(void);
+
+float getCurrentVelocity(void);
+void setTargetVelocity(float);
+
+void startVelocityControl(void);
+void stopVelocityControl(void);
 
 #endif /* INC_VELOCITYCTRL_H_ */

@@ -18,8 +18,6 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <Encoder.h>
-#include <Motor.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -98,16 +96,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){ //1ms
 		timer++;
-		updateEncoderCnt();
+		updateEncoderCnt(); //Do not move from HERE!!
 
 		read_gyro_data();
 		read_accel_data();
 		updateAnalogSensor();
+
+		calculateLineFollowingTermFlip();
+		calculateVelocityControlFlip();
 		lineTraceFlip();
+
 		updateSideSensorStatus();
 		motorCtrlFlip();
 
-		resetEncoderCnt();
+		resetEncoderCnt(); //Do not move from HERE!!
    }
    if(htim->Instance == TIM7){ //0.1ms
        timer1++;
@@ -179,8 +181,10 @@ int main(void)
 	  }
   }
 
-  lineTraceStart();
-  setSpeed(300, 300);
+  startLineTrace();
+  startVelocityControl();
+  setTargetVelocity(0.5);
+  //setSpeed(300, 300);
 
   /* USER CODE END 2 */
 
@@ -259,7 +263,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 6;
+  RCC_OscInitStruct.PLL.PLLM = 8;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;

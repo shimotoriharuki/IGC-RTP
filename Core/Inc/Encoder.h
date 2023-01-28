@@ -12,6 +12,8 @@
 
 void initEncoder(void);
 void updateEncoderCnt(void);
+void getEncoderCnt(int16_t *, int16_t *);
+
 void resetEncoderCnt(void);
 
 

@@ -35,6 +35,12 @@ void updateEncoderCnt(void)
 	//15.73カウントで1ｍｍ
 }
 
+void getEncoderCnt(int16_t *cnt_l, int16_t *cnt_r)
+{
+	*cnt_l = enc_l_cnt;
+	*cnt_r = enc_r_cnt;
+}
+
 void resetEncoderCnt(void)
 {
 	TIM3 -> CNT = CNT_OFFSET;
