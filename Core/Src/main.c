@@ -18,6 +18,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <Encoder.h>
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -25,7 +26,6 @@
 #include "LineSensor.h"
 #include "SideSensor.h"
 #include "Motor.h"
-#include "Encoder.h"
 #include "LineChase.h"
 #include "MPU6500.h"
 

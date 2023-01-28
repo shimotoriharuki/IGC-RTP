@@ -6,7 +6,6 @@
  */
 
 #include "LineChase.h"
-#include "stm32f4xx_hal.h"
 #define DELTA_T 0.001
 
 static int16_t speed_l, speed_r;
