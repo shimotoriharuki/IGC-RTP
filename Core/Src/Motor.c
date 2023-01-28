@@ -35,21 +35,39 @@ void motorCtrlFlip(void)
 
 	if(motor_l >= 0){
 		reverse_motor_l = MAX_COUNTER_PERIOD - motor_l;
+		motor_pwm_l = reverse_motor_l;
+		// motor1
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, motor_pwm_l);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
 	}
 	else{
 		reverse_motor_l = MIN_COUNTER_PERIOD - motor_l;
+		motor_pwm_l = reverse_motor_l * (-1) ;
+		// motor1
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, motor_pwm_l);
 	}
+
 	if(motor_r >= 0){
 		reverse_motor_r = MAX_COUNTER_PERIOD - motor_r;
+		motor_pwm_r = reverse_motor_r;
+		// motor1
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, motor_pwm_r);
 	}
 	else{
 		reverse_motor_r = MIN_COUNTER_PERIOD - motor_r;
+		motor_pwm_r = reverse_motor_r * (-1);
+		//motor2
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, motor_pwm_r);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
 	}
 	mon_rev_l = reverse_motor_l;
 	mon_rev_r = reverse_motor_r;
 
+/*
 	if(reverse_motor_l >= 0) {
-		motor_pwm_l = reverse_motor_l;
+		motor_pwm_l = reversVe_motor_l;
 		// motor1
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, motor_pwm_l);
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
@@ -75,6 +93,10 @@ void motorCtrlFlip(void)
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, motor_pwm_r);
 		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
 	}
+		//motor2
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, motor_pwm_r);
+		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
+		*/
 }
 
 void setMotor(int16_t l, int16_t r)
