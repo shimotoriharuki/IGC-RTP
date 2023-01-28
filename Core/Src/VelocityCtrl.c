@@ -20,19 +20,21 @@ static uint8_t i_clear_flag;
 static float velocity_control_term;
 static float target_velocity;
 
-float mon_current_velocity;
+float mon_current_velocity, mon_diff;
 
 void calculateVelocityControlFlip(void)
 {
 	float p, d;
 	static float i;
+
 #ifdef RYUKU
 	float kp = 3000, ki = 30000, kd = 0.;
 #elif defined(I7)
 	float kp = 3000, ki = 30000, kd = 0.;
 #endif
+
 	float diff = 0.;
-	static double pre_diff = 0.;
+	static float pre_diff = 0.;
 	float current_velocity = getCurrentVelocity();
 
 	if(velocity_control_enable_flag == 1){
@@ -42,9 +44,13 @@ void calculateVelocityControlFlip(void)
 		}
 
 		diff = target_velocity - current_velocity;
+		mon_diff = diff;
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御
 		d = kd * (diff - pre_diff) / DELTA_T; //D制御
+
+		if(i >= 100) i = 100;
+		if(i <= -100) i = -100;
 
 		velocity_control_term = p + i + d;
 
@@ -66,7 +72,7 @@ void setTargetVelocity(float velocity)
 
 float getCurrentVelocity(void)
 {
-	int16_t enc_l, enc_r;
+	int16_t enc_l = 0, enc_r = 0;
 	getEncoderCnt(&enc_l, &enc_r);
 	float enc_cnt = (enc_l + enc_r) / 2;
 

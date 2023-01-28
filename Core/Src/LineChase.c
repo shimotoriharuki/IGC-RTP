@@ -13,6 +13,8 @@ static uint8_t line_trace_enable_flag;
 static uint8_t i_clear_flag;
 static float line_following_term;
 
+float mon_velo_term;
+
 void calculateLineFollowingTermFlip(void){
 	float p, d;
 	static double i;
@@ -49,6 +51,7 @@ void lineTraceFlip(void)
 	float motor_l = velocity_control_term + line_following_term;
 	float motor_r = velocity_control_term - line_following_term;
 
+	mon_velo_term = velocity_control_term;
 	setMotor(motor_l, motor_r);
 }
 

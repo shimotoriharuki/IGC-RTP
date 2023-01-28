@@ -14,6 +14,12 @@ void initEncoder(void);
 void updateEncoderCnt(void);
 void getEncoderCnt(int16_t *, int16_t *);
 
+float getCrossLineIgnoreDistance(void);
+float getSideLineIgnoreDistance(void);
+
+void clearCrossLineIgnoreDistance(void);
+void clearSideLineIgnoreDistance(void);
+
 void resetEncoderCnt(void);
 
 

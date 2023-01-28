@@ -11,8 +11,13 @@
 #include "stm32f4xx_hal.h"
 
 void updateSideSensorStatus(void);
-uint8_t getSideSensorStatusL();
-uint8_t getSideSensorStatusR();
+uint8_t getSideSensorStatusL(void);
+uint8_t getSideSensorStatusR(void);
 
+/*
+void enableSideSensorIgnore(void);
+void disableSideSensorIgnore(void);
+uint8_t getSideSensorIgnoreFlag(void);
+*/
 
 #endif /* INC_SIDESENSOR_H_ */

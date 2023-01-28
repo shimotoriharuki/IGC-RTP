@@ -22,9 +22,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Motor.h"
 #include "LineSensor.h"
 #include "SideSensor.h"
 #include "LineChase.h"
+#include "Running.h"
 #include "MPU6500.h"
 
 /* USER CODE END Includes */
@@ -65,7 +67,7 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 
 uint32_t timer, timer1;
-uint16_t pattern;
+//uint16_t pattern;
 
 int16_t mon_who;
 
@@ -101,12 +103,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		read_gyro_data();
 		read_accel_data();
 		updateAnalogSensor();
+		updateSideSensorStatus();
 
 		calculateLineFollowingTermFlip();
 		calculateVelocityControlFlip();
 		lineTraceFlip();
 
-		updateSideSensorStatus();
+		runningFlip();
 		motorCtrlFlip();
 
 		resetEncoderCnt(); //Do not move from HERE!!
@@ -120,13 +123,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void init(void)
 {
 	initEncoder();
-	initMotor();
-
 	initADC();
+	mon_who = IMU_init();
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
-	mon_who = IMU_init();
+	initMotor();
 }
 /* USER CODE END 0 */
 
@@ -181,10 +183,8 @@ int main(void)
 	  }
   }
 
-  startLineTrace();
-  startVelocityControl();
-  setTargetVelocity(0.5);
-  //setSpeed(300, 300);
+  //setMotor(-3000, -3000);
+  //while(1);
 
   /* USER CODE END 2 */
 
@@ -192,6 +192,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  running();
+	  /*
 	  switch(pattern){
 		  case 0:
 			  if(getSideSensorStatusR() == 1) pattern = 10;
@@ -218,6 +220,7 @@ int main(void)
 
 			  break;
 	  };
+	  */
 
 	  /*
 	  //LED
