@@ -14,4 +14,5 @@ void initEncoder(void);
 void updateEncoderCnt(void);
 void resetEncoderCnt(void);
 
+
 #endif /* INC_ENCODER_H_ */
