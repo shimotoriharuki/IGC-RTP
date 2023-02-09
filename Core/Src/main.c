@@ -67,6 +67,7 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 
 uint32_t timer, timer1;
+uint16_t start_flag = 0;
 //uint16_t pattern;
 
 int16_t mon_who;
@@ -124,6 +125,7 @@ void init(void)
 {
 	initEncoder();
 	initADC();
+	loginit();
 	mon_who = IMU_init();
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
@@ -177,9 +179,41 @@ int main(void)
   init();
 
   while(1){
-	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {
-		  HAL_Delay(500);
+	  if(start_flag == 1){
 		  break;
+	  }
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12) == 0) {//run
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+		  erease();
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+		  HAL_Delay(500);
+		  while(1){
+			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
+			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+			  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0){
+				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
+				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+				  start_flag = 1;
+				  HAL_Delay(500);
+				  break;
+			  }
+		  }
+	  }
+	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {//load
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+		  getDistance();
+		  HAL_Delay(500);
 	  }
   }
 

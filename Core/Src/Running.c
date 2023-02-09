@@ -10,6 +10,8 @@
 uint8_t mon_is_crossline;
 
 static uint8_t start_goal_line_cnt;
+static bool log_flag;
+uint16_t cnt_log;
 
 uint8_t isCrossLine()
 {
@@ -77,7 +79,7 @@ void running(void)
 		switch(pattern){
 		  case 0:
 			  if(start_goal_line_cnt == 1) pattern = 10;
-
+			  logStart();
 			  break;
 
 		  case 10:
@@ -97,6 +99,7 @@ void running(void)
 
 		  case 30:
 			  setTargetVelocity(0.0);
+			  log_flag = false;
 			  //goal_flag = 1;
 
 			  break;
@@ -108,6 +111,11 @@ void runningFlip()
 {
 	static uint8_t cross_line_ignore_flag;
 	static uint8_t side_line_ignore_flag;
+
+	if(isTargetDistance(10) == true){
+		saveLog();
+		clearDistance10mm();
+	}
 
 	if(isCrossLine() == 1 && cross_line_ignore_flag == 0){ //Cross line detect
 		cross_line_ignore_flag = 1;
@@ -135,4 +143,26 @@ void runningInit()
 {
 	clearCrossLineIgnoreDistance();
 	clearSideLineIgnoreDistance();
+}
+
+bool isTargetDistance(float target){
+	bool ret = false;
+	if(getDistance10mm() >= target){
+		ret = true;
+	}
+	return ret;
+}
+
+void saveLog(){
+	if(log_flag == true){
+		static float cnt;
+		saveDistance(getDistance10mm());
+		cnt_log = cnt;
+		cnt++;
+	}
+}
+
+void logStart(){
+	clearDistance10mm();
+	log_flag = true;
 }

@@ -10,10 +10,10 @@
 #define MAX_ENCODER_CNT 65535
 #define CNT_OFFSET 10000 //32768
 
-#define WHEEL_RADIUS 10.75 //[mm]
+#define WHEEL_RADIUS 10.5 //[mm]
 #define PI 3.1415926535
 #define ENCODER_RESOLUTION 4096
-#define REDUCTION_RATIO 0.35 //Gear reduction ratio
+#define REDUCTION_RATIO 0.4 //Gear reduction ratio
 #define DISTANCE_PER_CNT (2 * PI * WHEEL_RADIUS * REDUCTION_RATIO / ENCODER_RESOLUTION) //[mm per cnt]
 
 TIM_HandleTypeDef htim3;
@@ -23,6 +23,8 @@ static int16_t enc_l_cnt, enc_r_cnt, enc_l_total, enc_r_total;
 //static int32_t enc_total, enc_mm_cnt;
 
 static float distance_1ms;
+static float distance_10mm;
+static float total_distance;
 static float distance_cross_line_ignore;
 static float distance_side_line_ignore;
 
@@ -44,6 +46,8 @@ void updateEncoderCnt(void)
 	//enc_total = (enc_l_total + enc_r_total) / 2;
 
 	distance_1ms = DISTANCE_PER_CNT * (enc_l_cnt + enc_r_cnt) / 2;
+	distance_10mm += distance_1ms;
+	total_distance += distance_1ms;
 	distance_cross_line_ignore += distance_1ms;
 	distance_side_line_ignore += distance_1ms;
 	//15.73カウントで1ｍｍ
@@ -79,4 +83,12 @@ void resetEncoderCnt(void)
 {
 	TIM3 -> CNT = CNT_OFFSET;
 	TIM4 -> CNT = CNT_OFFSET;
+}
+
+float getDistance10mm(void){
+	return distance_10mm;
+}
+
+void clearDistance10mm(void){
+	distance_10mm = 0;
 }
