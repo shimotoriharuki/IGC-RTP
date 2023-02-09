@@ -7,10 +7,10 @@
 
 #include "VelocityCtrl.h"
 
-#define WHEEL_RADIUS 11 //[mm]
+#define WHEEL_RADIUS 10.5 //[mm]
 #define PI 3.1415926535
 #define ENCODER_RESOLUTION 4096
-#define REDUCTION_RATIO 0.35 //Gear reduction ratio 0.35
+#define REDUCTION_RATIO 0.4 //Gear reduction ratio 0.35
 #define VELOCITY_PER_CNT (2 * PI * WHEEL_RADIUS * REDUCTION_RATIO / ENCODER_RESOLUTION) //[m/s per cnt]
 #define DELTA_T 0.001
 
@@ -30,7 +30,7 @@ void calculateVelocityControlFlip(void)
 #ifdef RYUKU
 	float kp = 1000, ki = 10000, kd = 0.;
 #elif defined(I7)
-	float kp = 2500, ki = 20000, kd = 0.0;
+	float kp = 1500, ki = 5000, kd = 0;
 #endif
 
 	float diff = 0.;

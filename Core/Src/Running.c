@@ -70,7 +70,7 @@ void running(void)
 
 	startLineTrace();
 	startVelocityControl();
-	setTargetVelocity(1.0);
+	setTargetVelocity(2);
 	runningInit();
 
 	while(goal_flag == 0){
