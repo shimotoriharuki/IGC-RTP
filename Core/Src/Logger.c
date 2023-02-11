@@ -51,6 +51,10 @@ void erease(){
 	FLASH_EreaseSector(FLASH_SECTOR_10);
 }
 
+uint16_t getlogSize(){
+	return log_distance_cnt;
+}
+
 void getDistance(){
 	uint16_t i = 0;
 	while(1){

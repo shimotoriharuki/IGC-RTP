@@ -72,7 +72,7 @@ void running(void)
 
 	startLineTrace();
 	startVelocityControl();
-	setTargetVelocity(2);
+	setTargetVelocity(1.5);
 	runningInit();
 
 	while(goal_flag == 0){
@@ -157,6 +157,7 @@ void saveLog(){
 	if(log_flag == true){
 		static float cnt;
 		saveDistance(getDistance10mm());
+		saveTheta(getOmega());
 		cnt_log = cnt;
 		cnt++;
 	}
@@ -165,4 +166,69 @@ void saveLog(){
 void logStart(){
 	clearDistance10mm();
 	log_flag = true;
+}
+
+void createVelocityTable(){
+	const float *p_distance, *p_theta;
+	p_distance = getDistanceArrayPointer();
+	p_theta = getThetaArrayPointer();
+	float temp_distance, temp_theta;
+
+	uint16_t log_size = getlogSize();
+
+	for(uint16_t i = 0; i < log_size; i++){
+		temp_distance = p_distance[i];
+		temp_theta = p_theta[i];
+
+		if(temp_theta == 0) temp_theta = 0.00001;
+		float radius = abs(temp_distance / temp_theta);
+		if(radius >= 5000) radius = 5000;
+		velocity_table[i] = radius2Velocity(radius);
+	}
+	decelerateProcessing(1, p_distance);
+	accelerateProcessing(5, p_distance);
+	velocity_table[0] = 1.2;
+}
+
+float radius2Velocity(float radius){
+	float velocity;
+
+	if(radius < 400) velocity = 1.2;
+	else if(radius < 500) velocity = 1.5;
+	else if(radius < 650) velocity = 1.8;
+	else if(radius < 1500) velocity = 2.0;
+	else if(radius < 2000) velocity = 2.5;
+	else velocity = 2.5;
+
+	return velocity;
+}
+
+void decelerateProcessing(const float am, const float *p_distance){
+	uint16_t log_size = getlogSize();
+	for(uint16_t i = log_size - 1; i >= 1; i--){
+		float v_diff = velocity_table[i-1] - velocity_table[i];
+
+		if(v_diff > 0){
+			float t = p_distance[i]*1e-3 / v_diff;
+			float a = v_diff / t;
+			if(a > am){
+				velocity_table[i-1] = velocity_table[i] + am * p_distance[i]*1e-3;
+			}
+		}
+	}
+}
+
+void accelerateProcessing(const float am, const float *p_distance){
+	uint16_t log_size = getlogSize();
+	for(uint16_t i = 0; i <= log_size - 1; i++){
+		float v_diff = velocity_table[i+1] - velocity_table[i];
+
+		if(v_diff > 0){
+			float t = p_distance[i]*1e-3 / v_diff;
+			float a = v_diff / t;
+			if(a > am){
+				velocity_table[i+1] = velocity_table[i] + am * p_distance[i]*1e-3;
+			}
+		}
+	}
 }

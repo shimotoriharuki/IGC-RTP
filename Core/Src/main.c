@@ -28,6 +28,7 @@
 #include "LineChase.h"
 #include "Running.h"
 #include "MPU6500.h"
+#include "IMU.h"
 
 /* USER CODE END Includes */
 
@@ -101,8 +102,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		timer++;
 		updateEncoderCnt(); //Do not move from HERE!!
 
-		read_gyro_data();
-		read_accel_data();
+		IMUupdateValue();
 		updateAnalogSensor();
 		updateSideSensorStatus();
 
@@ -126,7 +126,7 @@ void init(void)
 	initEncoder();
 	initADC();
 	loginit();
-	mon_who = IMU_init();
+	gyroinit();
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
@@ -213,7 +213,9 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
 		  getDistance();
+		  getTheta();
 		  HAL_Delay(500);
+		  createVelocityTable();
 	  }
   }
 

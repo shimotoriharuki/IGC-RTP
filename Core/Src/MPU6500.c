@@ -34,6 +34,7 @@ void write_byte( uint8_t reg, uint8_t val )  {
 
 uint8_t IMU_init() {
 	uint8_t who_am_i, ret;
+	ret = 0;
 
 	who_am_i = read_byte( 0x75 );
 	if ( who_am_i == 0x70 ) {

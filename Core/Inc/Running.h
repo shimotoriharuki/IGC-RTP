@@ -14,14 +14,23 @@
 #include "Encoder.h"
 #include "stdbool.h"
 #include "Logger.h"
+#include "IMU.h"
+#include "stdlib.h"
 
 uint8_t isCrossLine();
+
+float velocity_table[6000];
 
 void running();
 void runningFlip();
 void runningInit();
 void saveLog();
 void logStart();
+void createVelocityTable();
+void decelerateProcessing(const float, const float *);
+void accelerateProcessing(const float, const float *);
+
+float radius2Velocity(float);
 
 bool isTargetDistance(float);
 
