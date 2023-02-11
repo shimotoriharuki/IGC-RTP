@@ -29,6 +29,9 @@ void logStart();
 void createVelocityTable();
 void decelerateProcessing(const float, const float *);
 void accelerateProcessing(const float, const float *);
+void updateTargetVelocity();
+void startVelocityPlay();
+void runMode(uint16_t);
 
 float radius2Velocity(float);
 

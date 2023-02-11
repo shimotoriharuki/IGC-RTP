@@ -27,6 +27,8 @@ void getTheta();
 void getCross();
 void getSide();
 
+float getIdxDistance(uint16_t);
+
 const float *getDistanceArrayPointer();
 const float *getThetaArrayPointer();
 const float *getCrossArrayPointer();

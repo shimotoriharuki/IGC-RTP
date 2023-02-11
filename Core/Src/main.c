@@ -69,6 +69,7 @@ UART_HandleTypeDef huart1;
 
 uint32_t timer, timer1;
 uint16_t start_flag = 0;
+uint16_t second_run_flag;
 //uint16_t pattern;
 
 int16_t mon_who;
@@ -127,6 +128,7 @@ void init(void)
 	initADC();
 	loginit();
 	gyroinit();
+	second_run_flag = 1;
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
@@ -193,6 +195,7 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+		  if(second_run_flag == 1) runMode(1);
 		  HAL_Delay(500);
 		  while(1){
 			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
@@ -216,6 +219,8 @@ int main(void)
 		  getTheta();
 		  HAL_Delay(500);
 		  createVelocityTable();
+		  second_run_flag = 2;
+		  runMode(2);
 	  }
   }
 

@@ -59,6 +59,10 @@ void getEncoderCnt(int16_t *cnt_l, int16_t *cnt_r)
 	*cnt_r = enc_r_cnt;
 }
 
+float getTotalDistance(){
+	return total_distance;
+}
+
 float getCrossLineIgnoreDistance(void)
 {
 	return distance_cross_line_ignore;
@@ -67,6 +71,10 @@ float getCrossLineIgnoreDistance(void)
 float getSideLineIgnoreDistance(void)
 {
 	return distance_side_line_ignore;
+}
+
+void clearTotalDistance(){
+	total_distance = 0;
 }
 
 void clearCrossLineIgnoreDistance(void)

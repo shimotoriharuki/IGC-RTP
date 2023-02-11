@@ -8,6 +8,10 @@
 #include "Running.h"
 
 uint8_t mon_is_crossline;
+uint16_t velocity_table_idx;
+uint16_t mode;
+
+float ref_distance;
 
 static uint8_t start_goal_line_cnt;
 static bool log_flag;
@@ -65,27 +69,30 @@ uint8_t isCrossLine()
 	return flag;
 }
 
+void runMode(uint16_t num){
+	mode = num;
+}
+
 void running(void)
 {
 	uint8_t goal_flag = 0;
 	uint16_t pattern = 0;
-
 	startLineTrace();
 	startVelocityControl();
-	setTargetVelocity(1.5);
 	runningInit();
 
 	while(goal_flag == 0){
 		switch(pattern){
 		  case 0:
 			  if(start_goal_line_cnt == 1) pattern = 10;
-			  logStart();
+			  startVelocityPlay();
+			  if(mode == 1) logStart();
 			  break;
 
 		  case 10:
 			  HAL_Delay(0);
 			  pattern = 20;
-
+			  //if()
 			  break;
 
 
@@ -107,10 +114,32 @@ void running(void)
 	}
 }
 
+void updateTargetVelocity(){
+	if(mode == 1) setTargetVelocity(1.2);
+	if(mode == 2){
+		if(getTotalDistance() >= ref_distance){
+			ref_distance += getIdxDistance(velocity_table_idx);
+			velocity_table_idx++;
+		}
+		if(velocity_table_idx >= getlogSize()){
+			velocity_table_idx = getlogSize() - 1;
+		}
+		setTargetVelocity(velocity_table[velocity_table_idx]);
+	}
+}
+
+void startVelocityPlay(){
+	clearTotalDistance();
+	velocity_table_idx = 0;
+	ref_distance = 0;
+}
+
 void runningFlip()
 {
 	static uint8_t cross_line_ignore_flag;
 	static uint8_t side_line_ignore_flag;
+
+	updateTargetVelocity();
 
 	if(isTargetDistance(10) == true){
 		saveLog();

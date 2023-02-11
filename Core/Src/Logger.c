@@ -130,3 +130,7 @@ const float *getCrossArrayPointer(){
 const float *getSideArrayPointer(){
 	return log_side;
 }
+
+float getIdxDistance(uint16_t idx){
+	return log_distance[idx];
+}

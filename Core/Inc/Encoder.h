@@ -18,11 +18,12 @@ float getDistance10mm(void);
 void clearDistance10mm(void);
 float getCrossLineIgnoreDistance(void);
 float getSideLineIgnoreDistance(void);
+float getTotalDistance();
 
 void clearCrossLineIgnoreDistance(void);
 void clearSideLineIgnoreDistance(void);
-
 void resetEncoderCnt(void);
+void clearTotalDistance();
 
 
 #endif /* INC_ENCODER_H_ */
