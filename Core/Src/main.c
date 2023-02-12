@@ -187,57 +187,6 @@ int main(void)
 
   init();
 
-<<<<<<< HEAD
-  while(1){
-	  if(start_flag == 1){
-		  break;
-	  }
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
-	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12) == 0) {//run
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
-		  erease();
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
-		  if(second_run_flag == 1) runMode(1);
-		  HAL_Delay(500);
-		  while(1){
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
-			  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0){
-				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
-				  start_flag = 1;
-				  HAL_Delay(500);
-				  break;
-			  }
-		  }
-	  }
-	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {//load
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
-		  getDistance();
-		  getTheta();
-		  getCross();
-		  getSide();
-		  HAL_Delay(500);
-		  createVelocityTable();
-		  second_run_flag = 2;
-		  runMode(2);
-	  }
-  }
-=======
-  //while(1){
-  //}
->>>>>>> 8a4fb9ee05618214c3598930b1a029c8809e5d0e
-
   /*
  	//startLineTrace();
 	startVelocityControl();
