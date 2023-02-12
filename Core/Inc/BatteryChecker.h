@@ -10,8 +10,10 @@
 
 #include "stm32f4xx_hal.h"
 #include "stdbool.h"
+#include "UserSelection.h"
 
 void initBatteryChecker();
-bool getBatteryVoltage();
+void batteryCheckFlip();
+bool isBatteryLow();
 
 #endif /* INC_BATTERYCHECKER_H_ */

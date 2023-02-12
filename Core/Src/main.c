@@ -78,6 +78,7 @@ uint16_t second_run_flag;
 uint16_t mode_selector = 0;
 
 
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,6 +109,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		timer++;
 		updateEncoderCnt(); //Do not move from HERE!!
 
+		batteryCheckFlip();
 		IMUupdateValue();
 		updateAnalogSensor();
 		updateSideSensorStatus();
@@ -139,7 +141,21 @@ void init(void)
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
 	initMotor();
+
+	HAL_Delay(200);
+	if(isBatteryLow() == true){
+		uint16_t i = 0;
+		for(i = 0; i < 10; i++){
+			setLED('R');
+			HAL_Delay(33);
+			setLED('G');
+			HAL_Delay(33);
+			setLED('B');
+			HAL_Delay(33);
+		}
+	}
 }
+
 /* USER CODE END 0 */
 
 /**
@@ -212,6 +228,7 @@ int main(void)
   while (1)
   {
 	  //running();
+
 
 	  switch(mode_selector){
 		  case 0:
