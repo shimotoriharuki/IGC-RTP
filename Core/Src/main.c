@@ -110,7 +110,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		updateEncoderCnt(); //Do not move from HERE!!
 
 		batteryCheckFlip();
-		IMUupdateValue();
+		updateIMUValue();
 		updateAnalogSensor();
 		updateSideSensorStatus();
 
@@ -134,8 +134,8 @@ void init(void)
 	initEncoder();
 	initADC();
 	initBatteryChecker();
-	logInit();
-	gyroinit();
+	initLog();
+	initGyro();
 	second_run_flag = 1;
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
@@ -203,36 +203,40 @@ int main(void)
 
   init();
 
-  //while(1){
-  //}
-
-  /*
- 	//startLineTrace();
-	startVelocityControl();
-	setTargetVelocity(1.0);
-	//setMotor(300, 300);
-	HAL_Delay(500);
-	//setMotor(-2000, -2000);
-	setTargetVelocity(0.0);
-	//stopVelocityControl();
-	//setMotor(0, 0);
-	*/
-
-  //setMotor(300, 300);
-  //while(1);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //running();
 
+	  if(getSwitchStatus('R') == true){
+		  mode_selector++;
+		  HAL_Delay(500);
+		  if(mode_selector >= 4) mode_selector = 0;
+	  }
 
 	  switch(mode_selector){
 		  case 0:
 			  setLED('C');
+
+			  if(getSwitchStatus('L') == true){ //run
+				  setLED('G');
+				  ereaseLog();
+				  HAL_Delay(500);
+
+				  setLED('M');
+				  setRunMode(1);
+				  setTargetVelocity(0.5);
+				  HAL_Delay(500);
+
+				  running();
+			  }
+
+			  break;
+
+		  case 1:
+			  setLED('Y');
 
 			  if(getSwitchStatus('L') == true) { //run
 				  setLED('G');
@@ -249,50 +253,20 @@ int main(void)
 
 			  break;
 
-		  case 1:
-			  setLED('C');
-
-			  if(getSwitchStatus('L') == true) { //run
-				  setLED('G');
-
-				  ereaseLog();
-
-				  setLED('B');
-
-				  //if(second_run_flag == 1) runMode(1);
-
-				  HAL_Delay(500);
-				  while(1){
-					  setLED('W');
-
-					  if(getSwitchStatus('R') == true){
-						  setLED('Y');
-						  HAL_Delay(500);
-						  break;
-					  }
-				  }
-			  }
-			  if(getSwitchStatus('R') == true) {//load
-				  setLED('M');
-
-				  getDistance();
-				  getTheta();
-
-				  HAL_Delay(500);
-
-				  createVelocityTable();
-
-				  second_run_flag = 2;
-				  //runMode(2);
-			  }
-
-			  break;
-
 		  case 2:
+			  setLED('M');
 
 			  break;
 
 		  case 3:
+			  setLED('B');
+			  if(getSwitchStatus('L') == true) {
+				  loadDistance();
+				  loadTheta();
+				  loadCross();
+
+
+			  }
 
 			  break;
 	  };

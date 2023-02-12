@@ -78,6 +78,7 @@ void running(void)
 {
 	uint8_t goal_flag = 0;
 	uint16_t pattern = 0;
+
 	startLineTrace();
 	startVelocityControl();
 	runningInit();
@@ -122,7 +123,6 @@ void running(void)
 }
 
 void updateTargetVelocity(){
-	//if(mode == 1) setTargetVelocity(0.5);
 	if(velocity_update_flag == true){
 		if(getTotalDistance() >= ref_distance){
 			ref_distance += getIdxDistance(velocity_table_idx);
@@ -151,6 +151,7 @@ void runningFlip()
 	if(isTargetDistance(10) == true){
 		saveLog();
 		clearDistance10mm();
+		clearTheta10mm();
 	}
 
 	if(isCrossLine() == 1 && cross_line_ignore_flag == 0){ //Cross line detect
@@ -158,6 +159,8 @@ void runningFlip()
 		side_line_ignore_flag = 1;
 		clearCrossLineIgnoreDistance();
 		clearSideLineIgnoreDistance();
+
+		saveCross(getTotalDistance());
 	}
 	else if(cross_line_ignore_flag == 1 && getCrossLineIgnoreDistance() >= 50){
 		cross_line_ignore_flag = 0;
@@ -179,6 +182,7 @@ void runningInit()
 {
 	clearCrossLineIgnoreDistance();
 	clearSideLineIgnoreDistance();
+	start_goal_line_cnt = 0;
 }
 
 bool isTargetDistance(float target){
@@ -191,16 +195,15 @@ bool isTargetDistance(float target){
 
 void saveLog(){
 	if(logging_flag == true){
-		static float cnt;
 		saveDistance(getDistance10mm());
-		saveTheta(getOmega());
-		cnt_log = cnt;
-		cnt++;
+		saveTheta(getTheta10mm());
 	}
 }
 
 void startLogging(){
 	clearDistance10mm();
+	clearTheta10mm();
+	clearTotalDistance();
 	logging_flag = true;
 }
 
@@ -244,12 +247,17 @@ void createVelocityTable(){
 float radius2Velocity(float radius){
 	float velocity;
 
-	if(radius < 400) velocity = 1.2;
-	else if(radius < 500) velocity = 1.5;
-	else if(radius < 650) velocity = 1.8;
-	else if(radius < 1500) velocity = 2.0;
-	else if(radius < 2000) velocity = 2.5;
-	else velocity = 2.5;
+	if(mode == 2){
+		if(radius < 400) velocity = 1.2;
+		else if(radius < 500) velocity = 1.5;
+		else if(radius < 650) velocity = 1.8;
+		else if(radius < 1500) velocity = 2.0;
+		else if(radius < 2000) velocity = 2.5;
+		else velocity = 2.5;
+	}
+	else if(mode == 3){
+
+	}
 
 	return velocity;
 }

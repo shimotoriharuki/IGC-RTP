@@ -13,7 +13,7 @@ static float log_distance[6000];
 static float log_theta[6000];
 static uint16_t log_distance_cnt, log_theta_cnt, log_cross_cnt, log_side_cnt;
 
-void logInit(){
+void initLog(){
 	writeAdd_1 = start_adress_sector7;
 	writeAdd_2 = start_adress_sector8;
 	writeAdd_3 = start_adress_sector9;
@@ -55,7 +55,7 @@ uint16_t getlogSize(){
 	return log_distance_cnt;
 }
 
-void getDistance(){
+void loadDistance(){
 	uint16_t i = 0;
 	while(1){
 		log_distance[i] = *(float*)readAdd_1;
@@ -70,7 +70,7 @@ void getDistance(){
 	}
 }
 
-void getTheta(){
+void loadTheta(){
 	uint16_t i = 0;
 	while(1){
 		log_theta[i] = *(float*)readAdd_2;
@@ -85,7 +85,7 @@ void getTheta(){
 	}
 }
 
-void getCross(){
+void loadCross(){
 	uint16_t i = 0;
 	while(1){
 		log_cross[i] = *(float*)readAdd_3;
@@ -100,7 +100,7 @@ void getCross(){
 	}
 }
 
-void getSide(){
+void loadSide(){
 	uint16_t i = 0;
 	while(1){
 		log_side[i] = *(float*)readAdd_4;

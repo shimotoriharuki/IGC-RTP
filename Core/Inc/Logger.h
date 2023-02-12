@@ -19,13 +19,13 @@ void saveDistance(float);
 void saveTheta(float);
 void saveCross(float);
 void saveSide(float);
-void logInit(void);
+void initLog(void);
 void ereaseLog(void);
 uint16_t getlogSize();
-void getDistance();
-void getTheta();
-void getCross();
-void getSide();
+void loadDistance();
+void loadTheta();
+void loadCross();
+void loadSide();
 
 float getIdxDistance(uint16_t);
 

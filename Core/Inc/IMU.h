@@ -14,8 +14,10 @@
 #define R_IMU 0.03//0.03 Lowpath filter constant. The smaller it is, the more effective/
 
 
-void gyroinit();
-void IMUupdateValue();
+void initGyro();
+void updateIMUValue();
 float getOmega();
+float getTheta10mm();
+void clearTheta10mm();
 
 #endif /* INC_IMU_H_ */
