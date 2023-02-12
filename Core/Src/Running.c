@@ -115,7 +115,7 @@ void running(void)
 }
 
 void updateTargetVelocity(){
-	if(mode == 1) setTargetVelocity(1.2);
+	if(mode == 1) setTargetVelocity(0.5);
 	if(mode == 2){
 		if(getTotalDistance() >= ref_distance){
 			ref_distance += getIdxDistance(velocity_table_idx);
