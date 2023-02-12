@@ -25,13 +25,16 @@ void running();
 void runningFlip();
 void runningInit();
 void saveLog();
-void logStart();
+void startLogging();
+void stopLogging();
+void startVelocityUpdate();
+void stopVelocityUpdate();
 void createVelocityTable();
 void decelerateProcessing(const float, const float *);
 void accelerateProcessing(const float, const float *);
 void updateTargetVelocity();
 void startVelocityPlay();
-void runMode(uint16_t);
+void setRunMode(uint16_t);
 
 float radius2Velocity(float);
 

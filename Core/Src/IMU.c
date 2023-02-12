@@ -12,8 +12,9 @@ int16_t xg_, yg_, zg_;
 float omega;
 
 void gyroinit(){
-	uint8_t who_i_am;
-	who_i_am = IMU_init();
+	//uint8_t who_i_am;
+	//who_i_am = IMU_init();
+	IMU_init();
 	HAL_Delay(500);
 }
 

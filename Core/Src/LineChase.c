@@ -19,9 +19,9 @@ void calculateLineFollowingTermFlip(void){
 	float p, d;
 	static double i;
 #ifdef RYUKU
-	float kp = 0., ki = 0.00, kd = 0.01;
-#elif defined(I7)
 	float kp = 0.85, ki = 0.00, kd = 0.009;
+#elif defined(I7)
+	float kp = 0.6, ki = 0.00, kd = 0.01;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;
@@ -47,12 +47,17 @@ void calculateLineFollowingTermFlip(void){
 
 void lineTraceFlip(void)
 {
-	float velocity_control_term = getVelocityControlTerm();
-	float motor_l = velocity_control_term + line_following_term;
-	float motor_r = velocity_control_term - line_following_term;
+	if(line_trace_enable_flag == 1){
+		float velocity_control_term = getVelocityControlTerm();
+		float motor_l = velocity_control_term + line_following_term;
+		float motor_r = velocity_control_term - line_following_term;
 
-	mon_velo_term = velocity_control_term;
-	setMotor(motor_l, motor_r);
+		mon_velo_term = velocity_control_term;
+		setMotor(motor_l, motor_r);
+	}
+	else{
+		setMotor(0, 0);
+	}
 }
 
 float getLineFollowingTerm()
