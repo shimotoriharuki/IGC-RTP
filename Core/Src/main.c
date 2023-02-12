@@ -29,6 +29,8 @@
 #include "Running.h"
 #include "MPU6500.h"
 #include "IMU.h"
+#include "LED.h"
+#include "Switch.h"
 
 /* USER CODE END Includes */
 
@@ -184,42 +186,30 @@ int main(void)
 	  if(start_flag == 1){
 		  break;
 	  }
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
-	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_12) == 0) {//run
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+	  setLED('C');
+	  if(getSwitchStatus('L') == true) {//run
+		  setLED('G');
 
 		  erease();
 
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+		  setLED('B');
 
 		  if(second_run_flag == 1) runMode(1);
 
 		  HAL_Delay(500);
 		  while(1){
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+			  setLED('W');
 
-			  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0){
-				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+			  if(getSwitchStatus('R') == true){
+				  setLED('Y');
 				  start_flag = 1;
 				  HAL_Delay(500);
 				  break;
 			  }
 		  }
 	  }
-	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {//load
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
-		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+	  if(getSwitchStatus('R') == true) {//load
+		  setLED('M');
 
 		  getDistance();
 		  getTheta();
