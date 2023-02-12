@@ -126,7 +126,7 @@ void init(void)
 {
 	initEncoder();
 	initADC();
-	loginit();
+	logInit();
 	gyroinit();
 	second_run_flag = 1;
 
@@ -191,16 +191,21 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+
 		  erease();
+
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+
 		  if(second_run_flag == 1) runMode(1);
+
 		  HAL_Delay(500);
 		  while(1){
 			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
 			  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+
 			  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0){
 				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 				  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
@@ -215,10 +220,14 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+
 		  getDistance();
 		  getTheta();
+
 		  HAL_Delay(500);
+
 		  createVelocityTable();
+
 		  second_run_flag = 2;
 		  runMode(2);
 	  }

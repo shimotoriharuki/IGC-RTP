@@ -19,7 +19,7 @@ void saveDistance(float);
 void saveTheta(float);
 void saveCross(float);
 void saveSide(float);
-void loginit(void);
+void logInit(void);
 void erease(void);
 uint16_t getlogSize();
 void getDistance();

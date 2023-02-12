@@ -13,7 +13,7 @@ static float log_distance[6000];
 static float log_theta[6000];
 static uint16_t log_distance_cnt, log_theta_cnt, log_cross_cnt, log_side_cnt;
 
-void loginit(){
+void logInit(){
 	writeAdd_1 = start_adress_sector7;
 	writeAdd_2 = start_adress_sector8;
 	writeAdd_3 = start_adress_sector9;
