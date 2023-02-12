@@ -256,6 +256,22 @@ int main(void)
 		  case 2:
 			  setLED('M');
 
+			  if(getSwitchStatus('L') == true) { //run
+				  setLED('G');
+				  loadDistance();
+				  loadTheta();
+				  loadCross();
+				  HAL_Delay(500);
+
+				  setLED('M');
+				  setRunMode(2);
+				  setTargetVelocity(1.0);
+				  createVelocityTable();
+				  HAL_Delay(500);
+
+				  //running();
+			  }
+
 			  break;
 
 		  case 3:

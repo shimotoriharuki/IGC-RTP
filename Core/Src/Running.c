@@ -87,7 +87,6 @@ void running(void)
 		switch(pattern){
 		  case 0:
 			  if(start_goal_line_cnt == 1) pattern = 10;
-			  startVelocityPlay();
 			  if(mode == 1) startLogging();
 			  else if(mode == 2) startVelocityUpdate();
 			  break;
@@ -131,15 +130,11 @@ void updateTargetVelocity(){
 		if(velocity_table_idx >= getlogSize()){
 			velocity_table_idx = getlogSize() - 1;
 		}
+
 		setTargetVelocity(velocity_table[velocity_table_idx]);
 	}
 }
 
-void startVelocityPlay(){
-	clearTotalDistance();
-	velocity_table_idx = 0;
-	ref_distance = 0;
-}
 
 void runningFlip()
 {
@@ -214,6 +209,9 @@ void stopLogging()
 
 void startVelocityUpdate(){
 	clearDistance10mm();
+	clearTotalDistance();
+	velocity_table_idx = 0;
+	ref_distance = 0;
 	velocity_update_flag = true;
 }
 
@@ -248,14 +246,16 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
+		if(radius < 400) velocity = 0.5;
+		else velocity = 1.0;
+	}
+	else if(mode == 3){
 		if(radius < 400) velocity = 1.2;
 		else if(radius < 500) velocity = 1.5;
 		else if(radius < 650) velocity = 1.8;
 		else if(radius < 1500) velocity = 2.0;
 		else if(radius < 2000) velocity = 2.5;
 		else velocity = 2.5;
-	}
-	else if(mode == 3){
 
 	}
 
