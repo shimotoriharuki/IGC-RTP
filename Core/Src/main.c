@@ -70,11 +70,10 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 
 uint32_t timer, timer1;
-uint16_t start_flag = 0;
 uint16_t second_run_flag;
-//uint16_t pattern;
 
-int16_t mon_who;
+uint16_t mode_selector = 0;
+
 
 /* USER CODE END PV */
 
@@ -182,46 +181,8 @@ int main(void)
 
   init();
 
-  while(1){
-	  if(start_flag == 1){
-		  break;
-	  }
-	  setLED('C');
-	  if(getSwitchStatus('L') == true) {//run
-		  setLED('G');
-
-		  erease();
-
-		  setLED('B');
-
-		  if(second_run_flag == 1) runMode(1);
-
-		  HAL_Delay(500);
-		  while(1){
-			  setLED('W');
-
-			  if(getSwitchStatus('R') == true){
-				  setLED('Y');
-				  start_flag = 1;
-				  HAL_Delay(500);
-				  break;
-			  }
-		  }
-	  }
-	  if(getSwitchStatus('R') == true) {//load
-		  setLED('M');
-
-		  getDistance();
-		  getTheta();
-
-		  HAL_Delay(500);
-
-		  createVelocityTable();
-
-		  second_run_flag = 2;
-		  runMode(2);
-	  }
-  }
+  //while(1){
+  //}
 
   /*
  	//startLineTrace();
@@ -244,35 +205,74 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  running();
-	  /*
-	  switch(pattern){
+	  //running();
+
+	  switch(mode_selector){
 		  case 0:
-			  if(getSideSensorStatusR() == 1) pattern = 10;
+			  setLED('C');
 
-			  break;
+			  if(getSwitchStatus('L') == true) { //run
+				  setLED('G');
+				  ereaseLog();
+				  HAL_Delay(500);
 
-		  case 10:
-			  HAL_Delay(9000);
-			  pattern = 20;
+				  setLED('M');
+				  setRunMode(1);
+				  setTargetVelocity(1.0);
+				  HAL_Delay(500);
 
-			  break;
-
-
-		  case 20:
-			  if(getSideSensorStatusR() == 1){
-				  HAL_Delay(100);
-				  pattern = 30;
+				  running();
 			  }
 
 			  break;
 
-		  case 30:
-			  setSpeed(0, 0);
+		  case 1:
+			  setLED('C');
+
+			  if(getSwitchStatus('L') == true) { //run
+				  setLED('G');
+
+				  ereaseLog();
+
+				  setLED('B');
+
+				  //if(second_run_flag == 1) runMode(1);
+
+				  HAL_Delay(500);
+				  while(1){
+					  setLED('W');
+
+					  if(getSwitchStatus('R') == true){
+						  setLED('Y');
+						  HAL_Delay(500);
+						  break;
+					  }
+				  }
+			  }
+			  if(getSwitchStatus('R') == true) {//load
+				  setLED('M');
+
+				  getDistance();
+				  getTheta();
+
+				  HAL_Delay(500);
+
+				  createVelocityTable();
+
+				  second_run_flag = 2;
+				  //runMode(2);
+			  }
+
+			  break;
+
+		  case 2:
+
+			  break;
+
+		  case 3:
 
 			  break;
 	  };
-	  */
 
 	  /*
 	  //LED

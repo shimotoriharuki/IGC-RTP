@@ -47,12 +47,17 @@ void calculateLineFollowingTermFlip(void){
 
 void lineTraceFlip(void)
 {
-	float velocity_control_term = getVelocityControlTerm();
-	float motor_l = velocity_control_term + line_following_term;
-	float motor_r = velocity_control_term - line_following_term;
+	if(line_trace_enable_flag == 1){
+		float velocity_control_term = getVelocityControlTerm();
+		float motor_l = velocity_control_term + line_following_term;
+		float motor_r = velocity_control_term - line_following_term;
 
-	mon_velo_term = velocity_control_term;
-	setMotor(motor_l, motor_r);
+		mon_velo_term = velocity_control_term;
+		setMotor(motor_l, motor_r);
+	}
+	else{
+		setMotor(0, 0);
+	}
 }
 
 float getLineFollowingTerm()

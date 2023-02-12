@@ -44,7 +44,7 @@ void saveSide(float side){
 	writeAdd_4 += 0x04;
 }
 
-void erease(){
+void ereaseLog(){
 	FLASH_EreaseSector(FLASH_SECTOR_7);
 	FLASH_EreaseSector(FLASH_SECTOR_8);
 	FLASH_EreaseSector(FLASH_SECTOR_9);

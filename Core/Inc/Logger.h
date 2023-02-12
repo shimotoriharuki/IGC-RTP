@@ -20,7 +20,7 @@ void saveTheta(float);
 void saveCross(float);
 void saveSide(float);
 void logInit(void);
-void erease(void);
+void ereaseLog(void);
 uint16_t getlogSize();
 void getDistance();
 void getTheta();

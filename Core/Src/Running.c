@@ -14,7 +14,8 @@ uint16_t mode;
 float ref_distance;
 
 static uint8_t start_goal_line_cnt;
-static bool log_flag;
+static bool logging_flag;
+static bool velocity_update_flag;
 uint16_t cnt_log;
 
 uint8_t isCrossLine()
@@ -69,7 +70,7 @@ uint8_t isCrossLine()
 	return flag;
 }
 
-void runMode(uint16_t num){
+void setRunMode(uint16_t num){
 	mode = num;
 }
 
@@ -86,19 +87,20 @@ void running(void)
 		  case 0:
 			  if(start_goal_line_cnt == 1) pattern = 10;
 			  startVelocityPlay();
-			  if(mode == 1) logStart();
+			  if(mode == 1) startLogging();
+			  else if(mode == 2) startVelocityUpdate();
 			  break;
 
 		  case 10:
 			  HAL_Delay(0);
 			  pattern = 20;
-			  //if()
 			  break;
 
 
 		  case 20:
 			  if(start_goal_line_cnt == 2){
-				  HAL_Delay(100);
+				  stopLogging();
+				  stopVelocityUpdate();
 				  pattern = 30;
 			  }
 
@@ -106,8 +108,13 @@ void running(void)
 
 		  case 30:
 			  setTargetVelocity(0.0);
-			  log_flag = false;
-			  //goal_flag = 1;
+			  HAL_Delay(500);
+
+			  stopVelocityControl();
+			  stopLineTrace();
+			  //setMotor(0, 0);
+
+			  goal_flag = 1;
 
 			  break;
 		};
@@ -115,8 +122,8 @@ void running(void)
 }
 
 void updateTargetVelocity(){
-	if(mode == 1) setTargetVelocity(0.5);
-	if(mode == 2){
+	//if(mode == 1) setTargetVelocity(0.5);
+	if(velocity_update_flag == true){
 		if(getTotalDistance() >= ref_distance){
 			ref_distance += getIdxDistance(velocity_table_idx);
 			velocity_table_idx++;
@@ -183,7 +190,7 @@ bool isTargetDistance(float target){
 }
 
 void saveLog(){
-	if(log_flag == true){
+	if(logging_flag == true){
 		static float cnt;
 		saveDistance(getDistance10mm());
 		saveTheta(getOmega());
@@ -192,9 +199,24 @@ void saveLog(){
 	}
 }
 
-void logStart(){
+void startLogging(){
 	clearDistance10mm();
-	log_flag = true;
+	logging_flag = true;
+}
+
+void stopLogging()
+{
+	logging_flag = false;
+}
+
+void startVelocityUpdate(){
+	clearDistance10mm();
+	velocity_update_flag = true;
+}
+
+void stopVelocityUpdate()
+{
+	velocity_update_flag = false;
 }
 
 void createVelocityTable(){
