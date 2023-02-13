@@ -19,7 +19,7 @@ static bool velocity_update_flag;
 uint16_t cnt_log;
 
 static bool cross_line_ignore_flag;
-static bool side_line_ignore_flag;
+static bool goal_judge_flag = false;
 
 bool isCrossLine()
 {
@@ -86,30 +86,59 @@ void running(void)
 	startVelocityControl();
 	runningInit();
 
+	setLED('B');
 	while(goal_flag == 0){
 		switch(pattern){
 		  case 0:
-			  if(start_goal_line_cnt == 1) pattern = 10;
-			  if(mode == 1) startLogging();
-			  else if(mode == 2) startVelocityUpdate();
-			  break;
+			  setLED('R');
 
-		  case 10:
-			  HAL_Delay(0);
-			  pattern = 20;
-			  break;
+			  if(getSideSensorStatusR() == true){ //Right side line detect
+				  start_goal_line_cnt++;
 
+				  if(mode == 1) startLogging();
+				  else if(mode == 2) startVelocityUpdate();
 
-		  case 20:
-			  if(start_goal_line_cnt == 2){
-				  stopLogging();
-				  stopVelocityUpdate();
-				  pattern = 30;
+				  clearGoalJudgeDistance();
+				  pattern = 5;
 			  }
 
 			  break;
 
-		  case 30:
+		  case 5:
+			  setLED('B');
+			  if(getSideSensorStatusR() == false) pattern = 10;
+
+		  case 10:
+			  setLED('G');
+
+			  //--- Goal marker Check ---//
+			  if(getSideSensorStatusL() == true){ //Leght side line detect
+				  goal_judge_flag = false;
+				  clearGoalJudgeDistance();
+			  }
+
+			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >=30){
+				  goal_judge_flag = true;
+				  clearGoalJudgeDistance();
+			  }
+			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 30){
+				  start_goal_line_cnt++;
+				  goal_judge_flag = false;
+
+			  }
+
+
+			  if(start_goal_line_cnt >= 2){
+				  stopLogging();
+				  stopVelocityUpdate();
+				  pattern = 20;
+			  }
+
+			  break;
+
+		  case 20:
+			  setLED('B');
+
 			  setTargetVelocity(0.0);
 			  HAL_Delay(500);
 
@@ -141,6 +170,8 @@ void updateTargetVelocity(){
 
 void runningFlip()
 {
+	//static uint16_t side_l_cnt, side_r_cnt;
+
 	updateTargetVelocity();
 
 	if(isTargetDistance(10) == true){
@@ -149,9 +180,10 @@ void runningFlip()
 		clearTheta10mm();
 	}
 
+	//--- Cross Line Process ---//
 	if(isCrossLine() == 1 && cross_line_ignore_flag == false){ //Cross line detect
 		cross_line_ignore_flag = true;
-		side_line_ignore_flag = true;
+		//side_line_ignore_flag = true;
 		clearCrossLineIgnoreDistance();
 		clearSideLineIgnoreDistance();
 
@@ -161,6 +193,8 @@ void runningFlip()
 		cross_line_ignore_flag = false;
 	}
 
+
+	/*
 	if(getSideSensorStatusR() == 1 && side_line_ignore_flag == false){ //Right side line detect
 		side_line_ignore_flag = true;
 		start_goal_line_cnt++;
@@ -169,6 +203,7 @@ void runningFlip()
 	else if(side_line_ignore_flag == true && getSideLineIgnoreDistance() >= 150){
 		side_line_ignore_flag = false;
 	}
+	*/
 
 
 }
@@ -179,7 +214,7 @@ void runningInit()
 	clearSideLineIgnoreDistance();
 	start_goal_line_cnt = 0;
 	cross_line_ignore_flag = false;
-	side_line_ignore_flag = false;
+	goal_judge_flag = false;
 }
 
 bool isTargetDistance(float target){

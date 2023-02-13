@@ -16,6 +16,7 @@
 #include "Logger.h"
 #include "IMU.h"
 #include "stdlib.h"
+#include "LED.h"
 
 bool isCrossLine();
 
