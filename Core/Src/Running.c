@@ -103,6 +103,11 @@ void running(void)
 				  stopVelocityUpdate();
 				  pattern = 30;
 			  }
+			  if(sensorInp() == 1){
+				  pattern = 30;
+				  stopLogging();
+				  stopVelocityUpdate();
+			  }
 
 			  break;
 

@@ -15,6 +15,10 @@ static float line_following_term;
 
 float mon_velo_term;
 
+void astrayStop(){
+
+}
+
 void calculateLineFollowingTermFlip(void){
 	float p, d;
 	static double i;

@@ -17,6 +17,7 @@
 
 void calculateLineFollowingTermFlip(void);
 void lineTraceFlip(void);
+void astrayStop();
 
 float getLineFollowingTerm(void);
 
