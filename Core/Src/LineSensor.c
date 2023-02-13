@@ -67,7 +67,7 @@ void updateAnalogSensor(void) {
 	sensor[11] = ( sensor11_buffer[0] + sensor11_buffer[1] + sensor11_buffer[2] + sensor11_buffer[3] + sensor11_buffer[4] + sensor11_buffer[5] + sensor11_buffer[6] + sensor11_buffer[7] + sensor11_buffer[8] + sensor11_buffer[9] ) / 10;
 }
 
-bool sensorInp(void){
+bool sensorInput(void){
 	all_sensor = (sensor[0] + sensor[1] + sensor[2] + sensor[3] + sensor[4] + sensor[5] + sensor[6] + sensor[7] + sensor[8] + sensor[9] + sensor[10] + sensor[11]) / 12;
 	if(all_sensor > 2400){
 		dark_cnt++;

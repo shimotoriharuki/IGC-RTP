@@ -117,7 +117,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		calculateLineFollowingTermFlip();
 		calculateVelocityControlFlip();
 		lineTraceFlip();
-		sensorInp();
+		sensorInput();
 
 		runningFlip();
 		motorCtrlFlip();

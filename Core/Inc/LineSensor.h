@@ -20,7 +20,7 @@ int16_t sensor[LINESENSOR_ADC_NUM];
 void initADC(void);
 void storeAnalogSensorBuffer(void);
 void updateAnalogSensor(void);
-bool sensorInp(void);
+bool sensorInput(void);
 
 
 #endif /* INC_LINESENSOR_H_ */

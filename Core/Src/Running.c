@@ -101,11 +101,6 @@ void running(void)
 				  clearGoalJudgeDistance();
 				  pattern = 5;
 			  }
-			  if(sensorInp() == 1){
-				  pattern = 30;
-				  stopLogging();
-				  stopVelocityUpdate();
-			  }
 
 			  break;
 
@@ -137,6 +132,12 @@ void running(void)
 				  stopLogging();
 				  stopVelocityUpdate();
 				  pattern = 20;
+			  }
+
+			  if(sensorInput() == 1){
+				  pattern = 20;
+				  stopLogging();
+				  stopVelocityUpdate();
 			  }
 
 			  break;
