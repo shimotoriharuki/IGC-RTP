@@ -26,4 +26,7 @@ void setSpeed(int16_t, int16_t);
 void startLineTrace();
 void stopLineTrace();
 
+void checkCourseOut(void);
+bool getCouseOutFlag(void);
+
 #endif /* INC_LINECHASE_H_ */

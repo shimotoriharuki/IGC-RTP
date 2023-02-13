@@ -134,7 +134,7 @@ void running(void)
 				  pattern = 20;
 			  }
 
-			  if(sensorInput() == 1){
+			  if(getCouseOutFlag() == true){
 				  pattern = 20;
 				  stopLogging();
 				  stopVelocityUpdate();
