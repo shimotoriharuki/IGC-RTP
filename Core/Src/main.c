@@ -210,7 +210,7 @@ int main(void)
   while (1)
   {
 
-	  if(getSwitchStatus('R') == true){
+	  if(getSwitchStatus('L') == true){
 		  mode_selector++;
 		  HAL_Delay(500);
 		  if(mode_selector >= 4) mode_selector = 0;
@@ -220,7 +220,7 @@ int main(void)
 		  case 0:
 			  setLED('C');
 
-			  if(getSwitchStatus('L') == true){ //run
+			  if(getSwitchStatus('R') == true){ //run
 				  setLED('G');
 				  ereaseLog();
 				  HAL_Delay(500);
@@ -238,7 +238,7 @@ int main(void)
 		  case 1:
 			  setLED('Y');
 
-			  if(getSwitchStatus('L') == true) { //run
+			  if(getSwitchStatus('R') == true) { //run
 				  setLED('G');
 				  ereaseLog();
 				  HAL_Delay(500);
@@ -256,7 +256,7 @@ int main(void)
 		  case 2:
 			  setLED('M');
 
-			  if(getSwitchStatus('L') == true) { //run
+			  if(getSwitchStatus('R') == true) { //run
 				  setLED('G');
 				  loadDistance();
 				  loadTheta();
@@ -264,24 +264,25 @@ int main(void)
 				  HAL_Delay(500);
 
 				  setLED('M');
-				  setRunMode(2);
 				  setTargetVelocity(1.0);
+				  setRunMode(2);
 				  createVelocityTable();
 				  HAL_Delay(500);
 
-				  //running();
+				  running();
 			  }
 
 			  break;
 
 		  case 3:
 			  setLED('B');
-			  if(getSwitchStatus('L') == true) {
+			  if(getSwitchStatus('R') == true) {
 				  loadDistance();
 				  loadTheta();
 				  loadCross();
 
-
+				  setRunMode(2);
+				  createVelocityTable();
 			  }
 
 			  break;

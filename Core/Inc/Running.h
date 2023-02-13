@@ -17,7 +17,7 @@
 #include "IMU.h"
 #include "stdlib.h"
 
-uint8_t isCrossLine();
+bool isCrossLine();
 
 float velocity_table[6000];
 

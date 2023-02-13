@@ -18,14 +18,17 @@ static bool logging_flag;
 static bool velocity_update_flag;
 uint16_t cnt_log;
 
-uint8_t isCrossLine()
+static bool cross_line_ignore_flag;
+static bool side_line_ignore_flag;
+
+bool isCrossLine()
 {
 	static uint16_t cnt = 0;
 	//float sensor_edge_val_l = (sensor[0] + sensor[1]) / 2;
 	//float sensor_edge_val_r = (sensor[10] + sensor[11]) / 2;
 	float sensor_edge_val_l = sensor[0];
 	float sensor_edge_val_r = sensor[11];
-	static uint8_t flag = 0;
+	static bool flag = false;
 
 	//mon_ave_l = sensor_edge_val_l;
 	//mon_ave_r = sensor_edge_val_r;
@@ -40,7 +43,7 @@ uint8_t isCrossLine()
 		}
 
 		if(cnt >= 3){
-			flag = 1;
+			flag = true;
 			//white_flag = true;
 			//cnt = 0;
 
@@ -64,7 +67,7 @@ uint8_t isCrossLine()
 			*/
 		}
 		else{
-			flag = 0;
+			flag = false;
 		}
 
 	return flag;
@@ -138,9 +141,6 @@ void updateTargetVelocity(){
 
 void runningFlip()
 {
-	static uint8_t cross_line_ignore_flag;
-	static uint8_t side_line_ignore_flag;
-
 	updateTargetVelocity();
 
 	if(isTargetDistance(10) == true){
@@ -149,25 +149,25 @@ void runningFlip()
 		clearTheta10mm();
 	}
 
-	if(isCrossLine() == 1 && cross_line_ignore_flag == 0){ //Cross line detect
-		cross_line_ignore_flag = 1;
-		side_line_ignore_flag = 1;
+	if(isCrossLine() == 1 && cross_line_ignore_flag == false){ //Cross line detect
+		cross_line_ignore_flag = true;
+		side_line_ignore_flag = true;
 		clearCrossLineIgnoreDistance();
 		clearSideLineIgnoreDistance();
 
 		saveCross(getTotalDistance());
 	}
-	else if(cross_line_ignore_flag == 1 && getCrossLineIgnoreDistance() >= 50){
-		cross_line_ignore_flag = 0;
+	else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){
+		cross_line_ignore_flag = false;
 	}
 
-	if(getSideSensorStatusR() == 1 && side_line_ignore_flag == 0){ //Right side line detect
-		side_line_ignore_flag = 1;
+	if(getSideSensorStatusR() == 1 && side_line_ignore_flag == false){ //Right side line detect
+		side_line_ignore_flag = true;
 		start_goal_line_cnt++;
 		clearSideLineIgnoreDistance();
 	}
-	else if(side_line_ignore_flag == 1 && getSideLineIgnoreDistance() >= 150){
-		side_line_ignore_flag = 0;
+	else if(side_line_ignore_flag == true && getSideLineIgnoreDistance() >= 150){
+		side_line_ignore_flag = false;
 	}
 
 
@@ -178,6 +178,8 @@ void runningInit()
 	clearCrossLineIgnoreDistance();
 	clearSideLineIgnoreDistance();
 	start_goal_line_cnt = 0;
+	cross_line_ignore_flag = false;
+	side_line_ignore_flag = false;
 }
 
 bool isTargetDistance(float target){
@@ -236,9 +238,12 @@ void createVelocityTable(){
 		float radius = abs(temp_distance / temp_theta);
 		if(radius >= 5000) radius = 5000;
 		velocity_table[i] = radius2Velocity(radius);
+
 	}
-	decelerateProcessing(1, p_distance);
-	accelerateProcessing(5, p_distance);
+
+	decelerateProcessing(10, p_distance);
+	accelerateProcessing(10, p_distance);
+
 	velocity_table[0] = 1.2;
 }
 
@@ -246,7 +251,7 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		if(radius < 400) velocity = 0.5;
+		if(radius < 1000) velocity = 0.5;
 		else velocity = 1.0;
 	}
 	else if(mode == 3){
