@@ -9,6 +9,8 @@
 
 ADC_HandleTypeDef hadc1;
 
+
+
 static uint16_t adc_value[LINESENSOR_ADC_NUM];
 
 static int16_t sensor0_buffer[10];
@@ -64,3 +66,4 @@ void updateAnalogSensor(void) {
 	sensor[10] = ( sensor10_buffer[0] + sensor10_buffer[1] + sensor10_buffer[2] + sensor10_buffer[3] + sensor10_buffer[4] + sensor10_buffer[5] + sensor10_buffer[6] + sensor10_buffer[7] + sensor10_buffer[8] + sensor10_buffer[9] ) / 10;
 	sensor[11] = ( sensor11_buffer[0] + sensor11_buffer[1] + sensor11_buffer[2] + sensor11_buffer[3] + sensor11_buffer[4] + sensor11_buffer[5] + sensor11_buffer[6] + sensor11_buffer[7] + sensor11_buffer[8] + sensor11_buffer[9] ) / 10;
 }
+

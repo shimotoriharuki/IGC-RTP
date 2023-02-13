@@ -12,6 +12,7 @@ static int16_t speed_l, speed_r;
 static uint8_t line_trace_enable_flag;
 static uint8_t i_clear_flag;
 static float line_following_term;
+static bool dark_flag;
 
 float mon_velo_term;
 
@@ -83,3 +84,22 @@ void stopLineTrace()
 	setMotor(0, 0);
 }
 
+void checkCourseOut(void){
+	uint16_t all_sensor;
+	static uint16_t dark_cnt;
+
+	all_sensor = (sensor[0] + sensor[1] + sensor[2] + sensor[3] + sensor[4] + sensor[5] + sensor[6] + sensor[7] + sensor[8] + sensor[9] + sensor[10] + sensor[11]) / 12;
+	if(all_sensor > 2400){
+		dark_cnt++;
+	}
+	else dark_cnt = 0;
+
+	if(dark_cnt >= SENSOR_ALL_DARK) dark_flag = true;
+	else dark_flag = false;
+
+}
+
+bool getCouseOutFlag()
+{
+	return dark_flag;
+}

@@ -74,6 +74,7 @@ Dma.Request0=ADC1
 Dma.Request1=ADC2
 Dma.RequestsNb=2
 File.Version=6
+GPIO.groupedBy=Group By Peripherals
 KeepUserPlacement=false
 Mcu.Family=STM32F4
 Mcu.IP0=ADC1

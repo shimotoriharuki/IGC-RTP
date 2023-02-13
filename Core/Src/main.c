@@ -117,6 +117,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		calculateLineFollowingTermFlip();
 		calculateVelocityControlFlip();
 		lineTraceFlip();
+		checkCourseOut();
 
 		runningFlip();
 		motorCtrlFlip();
@@ -213,6 +214,22 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   init();
+
+  /*
+ 	//startLineTrace();
+	startVelocityControl();
+	setTargetVelocity(1.0);
+	//setMotor(300, 300);
+	HAL_Delay(500);
+	//setMotor(-2000, -2000);
+	setTargetVelocity(0.0);
+	//stopVelocityControl();
+	//setMotor(0, 0);
+	*/
+
+  //setMotor(300, 300);
+  //while(1);
+
 
   /* USER CODE END 2 */
 

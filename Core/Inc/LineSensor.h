@@ -8,7 +8,10 @@
 #ifndef INC_LINESENSOR_H_
 #define INC_LINESENSOR_H_
 
+#define SENSOR_ALL_DARK 50
+
 #include "stm32f4xx_hal.h"
+#include "stdbool.h"
 
 #define LINESENSOR_ADC_NUM 12
 

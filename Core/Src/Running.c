@@ -134,6 +134,12 @@ void running(void)
 				  pattern = 20;
 			  }
 
+			  if(getCouseOutFlag() == true){
+				  pattern = 20;
+				  stopLogging();
+				  stopVelocityUpdate();
+			  }
+
 			  break;
 
 		  case 20:
