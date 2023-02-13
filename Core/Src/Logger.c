@@ -13,7 +13,7 @@ static float log_distance[6000];
 static float log_theta[6000];
 static uint16_t log_distance_cnt, log_theta_cnt, log_cross_cnt, log_side_cnt;
 
-void logInit(){
+void initLog(){
 	writeAdd_1 = start_adress_sector7;
 	writeAdd_2 = start_adress_sector8;
 	writeAdd_3 = start_adress_sector9;
@@ -49,14 +49,22 @@ void ereaseLog(){
 	FLASH_EreaseSector(FLASH_SECTOR_8);
 	FLASH_EreaseSector(FLASH_SECTOR_9);
 	FLASH_EreaseSector(FLASH_SECTOR_10);
+
+	writeAdd_1 = start_adress_sector7;
+	writeAdd_2 = start_adress_sector8;
+	writeAdd_3 = start_adress_sector9;
+	writeAdd_4 = start_adress_sector10;
 }
 
 uint16_t getlogSize(){
 	return log_distance_cnt;
 }
 
-void getDistance(){
+void loadDistance(){
 	uint16_t i = 0;
+	readAdd_1 = start_adress_sector7;
+	log_distance_cnt = 0;
+
 	while(1){
 		log_distance[i] = *(float*)readAdd_1;
 		if(isnan(log_distance[i]) != 0){
@@ -70,8 +78,9 @@ void getDistance(){
 	}
 }
 
-void getTheta(){
+void loadTheta(){
 	uint16_t i = 0;
+	readAdd_2 = start_adress_sector8;
 	while(1){
 		log_theta[i] = *(float*)readAdd_2;
 		if(isnan(log_theta[i]) != 0){
@@ -85,8 +94,10 @@ void getTheta(){
 	}
 }
 
-void getCross(){
+void loadCross(){
 	uint16_t i = 0;
+	readAdd_3 = start_adress_sector9;
+
 	while(1){
 		log_cross[i] = *(float*)readAdd_3;
 		if(isnan(log_cross[i]) != 0){
@@ -100,8 +111,10 @@ void getCross(){
 	}
 }
 
-void getSide(){
+void loadSide(){
 	uint16_t i = 0;
+	readAdd_4 = start_adress_sector10;
+
 	while(1){
 		log_side[i] = *(float*)readAdd_4;
 		if(isnan(log_side[i]) != 0){

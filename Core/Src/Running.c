@@ -18,14 +18,17 @@ static bool logging_flag;
 static bool velocity_update_flag;
 uint16_t cnt_log;
 
-uint8_t isCrossLine()
+static bool cross_line_ignore_flag;
+static bool goal_judge_flag = false;
+
+bool isCrossLine()
 {
 	static uint16_t cnt = 0;
 	//float sensor_edge_val_l = (sensor[0] + sensor[1]) / 2;
 	//float sensor_edge_val_r = (sensor[10] + sensor[11]) / 2;
 	float sensor_edge_val_l = sensor[0];
 	float sensor_edge_val_r = sensor[11];
-	static uint8_t flag = 0;
+	static bool flag = false;
 
 	//mon_ave_l = sensor_edge_val_l;
 	//mon_ave_r = sensor_edge_val_r;
@@ -40,7 +43,7 @@ uint8_t isCrossLine()
 		}
 
 		if(cnt >= 3){
-			flag = 1;
+			flag = true;
 			//white_flag = true;
 			//cnt = 0;
 
@@ -64,7 +67,7 @@ uint8_t isCrossLine()
 			*/
 		}
 		else{
-			flag = 0;
+			flag = false;
 		}
 
 	return flag;
@@ -78,30 +81,25 @@ void running(void)
 {
 	uint8_t goal_flag = 0;
 	uint16_t pattern = 0;
+
 	startLineTrace();
 	startVelocityControl();
 	runningInit();
 
+	setLED('B');
 	while(goal_flag == 0){
 		switch(pattern){
 		  case 0:
-			  if(start_goal_line_cnt == 1) pattern = 10;
-			  startVelocityPlay();
-			  if(mode == 1) startLogging();
-			  else if(mode == 2) startVelocityUpdate();
-			  break;
+			  setLED('R');
 
-		  case 10:
-			  HAL_Delay(0);
-			  pattern = 20;
-			  break;
+			  if(getSideSensorStatusR() == true){ //Right side line detect
+				  start_goal_line_cnt++;
 
+				  if(mode == 1) startLogging();
+				  else if(mode == 2) startVelocityUpdate();
 
-		  case 20:
-			  if(start_goal_line_cnt == 2){
-				  stopLogging();
-				  stopVelocityUpdate();
-				  pattern = 30;
+				  clearGoalJudgeDistance();
+				  pattern = 5;
 			  }
 			  if(sensorInp() == 1){
 				  pattern = 30;
@@ -111,7 +109,41 @@ void running(void)
 
 			  break;
 
-		  case 30:
+		  case 5:
+			  setLED('B');
+			  if(getSideSensorStatusR() == false) pattern = 10;
+
+		  case 10:
+			  setLED('G');
+
+			  //--- Goal marker Check ---//
+			  if(getSideSensorStatusL() == true){ //Leght side line detect
+				  goal_judge_flag = false;
+				  clearGoalJudgeDistance();
+			  }
+
+			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >=30){
+				  goal_judge_flag = true;
+				  clearGoalJudgeDistance();
+			  }
+			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 30){
+				  start_goal_line_cnt++;
+				  goal_judge_flag = false;
+
+			  }
+
+
+			  if(start_goal_line_cnt >= 2){
+				  stopLogging();
+				  stopVelocityUpdate();
+				  pattern = 20;
+			  }
+
+			  break;
+
+		  case 20:
+			  setLED('B');
+
 			  setTargetVelocity(0.0);
 			  HAL_Delay(500);
 
@@ -127,7 +159,6 @@ void running(void)
 }
 
 void updateTargetVelocity(){
-	//if(mode == 1) setTargetVelocity(0.5);
 	if(velocity_update_flag == true){
 		if(getTotalDistance() >= ref_distance){
 			ref_distance += getIdxDistance(velocity_table_idx);
@@ -136,46 +167,48 @@ void updateTargetVelocity(){
 		if(velocity_table_idx >= getlogSize()){
 			velocity_table_idx = getlogSize() - 1;
 		}
+
 		setTargetVelocity(velocity_table[velocity_table_idx]);
 	}
 }
 
-void startVelocityPlay(){
-	clearTotalDistance();
-	velocity_table_idx = 0;
-	ref_distance = 0;
-}
 
 void runningFlip()
 {
-	static uint8_t cross_line_ignore_flag;
-	static uint8_t side_line_ignore_flag;
+	//static uint16_t side_l_cnt, side_r_cnt;
 
 	updateTargetVelocity();
 
 	if(isTargetDistance(10) == true){
 		saveLog();
 		clearDistance10mm();
+		clearTheta10mm();
 	}
 
-	if(isCrossLine() == 1 && cross_line_ignore_flag == 0){ //Cross line detect
-		cross_line_ignore_flag = 1;
-		side_line_ignore_flag = 1;
+	//--- Cross Line Process ---//
+	if(isCrossLine() == 1 && cross_line_ignore_flag == false){ //Cross line detect
+		cross_line_ignore_flag = true;
+		//side_line_ignore_flag = true;
 		clearCrossLineIgnoreDistance();
 		clearSideLineIgnoreDistance();
+
+		saveCross(getTotalDistance());
 	}
-	else if(cross_line_ignore_flag == 1 && getCrossLineIgnoreDistance() >= 50){
-		cross_line_ignore_flag = 0;
+	else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){
+		cross_line_ignore_flag = false;
 	}
 
-	if(getSideSensorStatusR() == 1 && side_line_ignore_flag == 0){ //Right side line detect
-		side_line_ignore_flag = 1;
+
+	/*
+	if(getSideSensorStatusR() == 1 && side_line_ignore_flag == false){ //Right side line detect
+		side_line_ignore_flag = true;
 		start_goal_line_cnt++;
 		clearSideLineIgnoreDistance();
 	}
-	else if(side_line_ignore_flag == 1 && getSideLineIgnoreDistance() >= 150){
-		side_line_ignore_flag = 0;
+	else if(side_line_ignore_flag == true && getSideLineIgnoreDistance() >= 150){
+		side_line_ignore_flag = false;
 	}
+	*/
 
 
 }
@@ -184,6 +217,9 @@ void runningInit()
 {
 	clearCrossLineIgnoreDistance();
 	clearSideLineIgnoreDistance();
+	start_goal_line_cnt = 0;
+	cross_line_ignore_flag = false;
+	goal_judge_flag = false;
 }
 
 bool isTargetDistance(float target){
@@ -196,16 +232,15 @@ bool isTargetDistance(float target){
 
 void saveLog(){
 	if(logging_flag == true){
-		static float cnt;
 		saveDistance(getDistance10mm());
-		saveTheta(getOmega());
-		cnt_log = cnt;
-		cnt++;
+		saveTheta(getTheta10mm());
 	}
 }
 
 void startLogging(){
 	clearDistance10mm();
+	clearTheta10mm();
+	clearTotalDistance();
 	logging_flag = true;
 }
 
@@ -216,6 +251,9 @@ void stopLogging()
 
 void startVelocityUpdate(){
 	clearDistance10mm();
+	clearTotalDistance();
+	velocity_table_idx = 0;
+	ref_distance = 0;
 	velocity_update_flag = true;
 }
 
@@ -240,21 +278,31 @@ void createVelocityTable(){
 		float radius = abs(temp_distance / temp_theta);
 		if(radius >= 5000) radius = 5000;
 		velocity_table[i] = radius2Velocity(radius);
+
 	}
-	decelerateProcessing(1, p_distance);
-	accelerateProcessing(5, p_distance);
+
+	decelerateProcessing(10, p_distance);
+	accelerateProcessing(10, p_distance);
+
 	velocity_table[0] = 1.2;
 }
 
 float radius2Velocity(float radius){
 	float velocity;
 
-	if(radius < 400) velocity = 1.2;
-	else if(radius < 500) velocity = 1.5;
-	else if(radius < 650) velocity = 1.8;
-	else if(radius < 1500) velocity = 2.0;
-	else if(radius < 2000) velocity = 2.5;
-	else velocity = 2.5;
+	if(mode == 2){
+		if(radius < 1000) velocity = 0.5;
+		else velocity = 1.0;
+	}
+	else if(mode == 3){
+		if(radius < 400) velocity = 1.2;
+		else if(radius < 500) velocity = 1.5;
+		else if(radius < 650) velocity = 1.8;
+		else if(radius < 1500) velocity = 2.0;
+		else if(radius < 2000) velocity = 2.5;
+		else velocity = 2.5;
+
+	}
 
 	return velocity;
 }

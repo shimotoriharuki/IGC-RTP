@@ -10,15 +10,16 @@
 
 int16_t xg_, yg_, zg_;
 float omega;
+float theta_10mm;
 
-void gyroinit(){
+void initGyro(){
 	//uint8_t who_i_am;
 	//who_i_am = IMU_init();
 	IMU_init();
 	HAL_Delay(500);
 }
 
-void IMUupdateValue(){
+void updateIMUValue(){
 	read_gyro_data();
 	zg_ = zg;
 
@@ -28,9 +29,21 @@ void IMUupdateValue(){
 	pre_zg = zg_;
 
 	float corrected_zg = zg_;
-	omega = -(corrected_zg / 16.4) * PI / 180;
+	omega = (corrected_zg / 16.4) * PI / 180;
+
+	theta_10mm += omega * 0.001;
 }
 
 float getOmega(){
-	return omega * 0.01;
+	return omega;
+}
+
+float getTheta10mm()
+{
+	return theta_10mm;
+}
+
+void clearTheta10mm()
+{
+	theta_10mm = 0;
 }

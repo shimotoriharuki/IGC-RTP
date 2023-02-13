@@ -16,8 +16,9 @@
 #include "Logger.h"
 #include "IMU.h"
 #include "stdlib.h"
+#include "LED.h"
 
-uint8_t isCrossLine();
+bool isCrossLine();
 
 float velocity_table[6000];
 
@@ -33,7 +34,6 @@ void createVelocityTable();
 void decelerateProcessing(const float, const float *);
 void accelerateProcessing(const float, const float *);
 void updateTargetVelocity();
-void startVelocityPlay();
 void setRunMode(uint16_t);
 
 float radius2Velocity(float);
