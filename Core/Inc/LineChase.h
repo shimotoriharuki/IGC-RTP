@@ -10,16 +10,19 @@
 
 #define LINESENSOR_ADC_NUM 12
 
-#include "main.h"
+#include "stm32f4xx_hal.h"
 #include "Motor.h"
 #include "LineSensor.h"
+#include "VelocityCtrl.h"
 
-
+void calculateLineFollowingTermFlip(void);
 void lineTraceFlip(void);
+
+float getLineFollowingTerm(void);
 
 void setSpeed(int16_t, int16_t);
 
-void lineTraceStart();
-void lineTraceStop();
+void startLineTrace();
+void stopLineTrace();
 
 #endif /* INC_LINECHASE_H_ */

@@ -10,8 +10,8 @@
 
 #include "stm32f4xx_hal.h"
 
-#define MAX_COUNTER_PERIOD 1678
-#define MIN_COUNTER_PERIOD -1678
+#define MAX_COUNTER_PERIOD 1679
+#define MIN_COUNTER_PERIOD -1679
 
 void initMotor(void);
 void motorCtrlFlip(void);

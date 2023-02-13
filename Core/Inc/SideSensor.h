@@ -9,10 +9,18 @@
 #define INC_SIDESENSOR_H_
 
 #include "stm32f4xx_hal.h"
+#include "stdbool.h"
 
+void updateStatusLeftExti();
+void updateStatusRightExti();
 void updateSideSensorStatus(void);
-uint8_t getSideSensorStatusL();
-uint8_t getSideSensorStatusR();
+bool getSideSensorStatusL(void);
+bool getSideSensorStatusR(void);
 
+/*
+void enableSideSensorIgnore(void);
+void disableSideSensorIgnore(void);
+uint8_t getSideSensorIgnoreFlag(void);
+*/
 
 #endif /* INC_SIDESENSOR_H_ */

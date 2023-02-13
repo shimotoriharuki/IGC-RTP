@@ -22,12 +22,16 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Motor.h"
 #include "LineSensor.h"
 #include "SideSensor.h"
-#include "Motor.h"
-#include "Encoder.h"
 #include "LineChase.h"
+#include "Running.h"
 #include "MPU6500.h"
+#include "IMU.h"
+#include "LED.h"
+#include "Switch.h"
+#include "BatteryChecker.h"
 
 /* USER CODE END Includes */
 
@@ -48,7 +52,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
+DMA_HandleTypeDef hdma_adc2;
 
 I2C_HandleTypeDef hi2c1;
 
@@ -67,9 +73,11 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 
 uint32_t timer, timer1;
-uint16_t pattern;
+uint16_t second_run_flag;
 
-int16_t mon_who;
+uint16_t mode_selector = 0;
+
+
 
 /* USER CODE END PV */
 
@@ -88,6 +96,7 @@ static void MX_TIM12_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM7_Init(void);
+static void MX_ADC2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -98,16 +107,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){ //1ms
 		timer++;
-		updateEncoderCnt();
+		updateEncoderCnt(); //Do not move from HERE!!
 
-		read_gyro_data();
-		read_accel_data();
+		batteryCheckFlip();
+		updateIMUValue();
 		updateAnalogSensor();
-		lineTraceFlip();
 		updateSideSensorStatus();
+
+		calculateLineFollowingTermFlip();
+		calculateVelocityControlFlip();
+		lineTraceFlip();
+
+		runningFlip();
 		motorCtrlFlip();
 
-		resetEncoderCnt();
+		resetEncoderCnt(); //Do not move from HERE!!
    }
    if(htim->Instance == TIM7){ //0.1ms
        timer1++;
@@ -115,17 +129,44 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
    }
 }
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == GPIO_PIN_2){ //leght
+		updateStatusLeftExti();
+	}
+
+	else if(GPIO_Pin == GPIO_PIN_3){ //right
+		updateStatusRightExti();
+	}
+}
+
 void init(void)
 {
 	initEncoder();
-	initMotor();
-
 	initADC();
+	initBatteryChecker();
+	initLog();
+	initGyro();
+	second_run_flag = 1;
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
-	mon_who = IMU_init();
+	initMotor();
+
+	HAL_Delay(200);
+	if(isBatteryLow() == true){
+		uint16_t i = 0;
+		for(i = 0; i < 10; i++){
+			setLED('R');
+			HAL_Delay(33);
+			setLED('G');
+			HAL_Delay(33);
+			setLED('B');
+			HAL_Delay(33);
+		}
+	}
 }
+
 /* USER CODE END 0 */
 
 /**
@@ -168,19 +209,10 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
+  MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
 
   init();
-
-  while(1){
-	  if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_8) == 0) {
-		  HAL_Delay(500);
-		  break;
-	  }
-  }
-
-  lineTraceStart();
-  setSpeed(300, 300);
 
   /* USER CODE END 2 */
 
@@ -188,29 +220,81 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  switch(pattern){
+
+	  if(getSwitchStatus('L') == true){
+		  mode_selector++;
+		  HAL_Delay(500);
+		  if(mode_selector >= 4) mode_selector = 0;
+	  }
+
+	  switch(mode_selector){
 		  case 0:
-			  if(getSideSensorStatusR() == 1) pattern = 10;
+			  setLED('C');
 
-			  break;
+			  if(getSwitchStatus('R') == true){ //run
+				  setLED('G');
+				  ereaseLog();
+				  HAL_Delay(500);
 
-		  case 10:
-			  HAL_Delay(9000);
-			  pattern = 20;
+				  setLED('M');
+				  setRunMode(1);
+				  setTargetVelocity(0.5);
+				  HAL_Delay(500);
 
-			  break;
-
-
-		  case 20:
-			  if(getSideSensorStatusR() == 1){
-				  HAL_Delay(100);
-				  pattern = 30;
+				  running();
 			  }
 
 			  break;
 
-		  case 30:
-			  setSpeed(0, 0);
+		  case 1:
+			  setLED('Y');
+
+			  if(getSwitchStatus('R') == true) { //run
+				  setLED('G');
+				  ereaseLog();
+				  HAL_Delay(500);
+
+				  setLED('M');
+				  setRunMode(1);
+				  setTargetVelocity(1.0);
+				  HAL_Delay(500);
+
+				  running();
+			  }
+
+			  break;
+
+		  case 2:
+			  setLED('M');
+
+			  if(getSwitchStatus('R') == true) { //run
+				  setLED('G');
+				  loadDistance();
+				  loadTheta();
+				  loadCross();
+				  HAL_Delay(500);
+
+				  setLED('M');
+				  setTargetVelocity(1.0);
+				  setRunMode(2);
+				  createVelocityTable();
+				  HAL_Delay(500);
+
+				  running();
+			  }
+
+			  break;
+
+		  case 3:
+			  setLED('B');
+			  if(getSwitchStatus('R') == true) {
+				  loadDistance();
+				  loadTheta();
+				  loadCross();
+
+				  setRunMode(2);
+				  createVelocityTable();
+			  }
 
 			  break;
 	  };
@@ -259,7 +343,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 6;
+  RCC_OscInitStruct.PLL.PLLM = 8;
   RCC_OscInitStruct.PLL.PLLN = 168;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
@@ -417,6 +501,56 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief ADC2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_ADC2_Init(void)
+{
+
+  /* USER CODE BEGIN ADC2_Init 0 */
+
+  /* USER CODE END ADC2_Init 0 */
+
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN ADC2_Init 1 */
+
+  /* USER CODE END ADC2_Init 1 */
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
+  hadc2.Instance = ADC2;
+  hadc2.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc2.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc2.Init.ScanConvMode = ENABLE;
+  hadc2.Init.ContinuousConvMode = ENABLE;
+  hadc2.Init.DiscontinuousConvMode = DISABLE;
+  hadc2.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc2.Init.NbrOfConversion = 1;
+  hadc2.Init.DMAContinuousRequests = ENABLE;
+  hadc2.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  if (HAL_ADC_Init(&hadc2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Channel = ADC_CHANNEL_11;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC2_Init 2 */
+
+  /* USER CODE END ADC2_Init 2 */
 
 }
 
@@ -892,6 +1026,9 @@ static void MX_DMA_Init(void)
   /* DMA2_Stream0_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+  /* DMA2_Stream2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
 
 }
 
@@ -926,7 +1063,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PC2 PC3 */
   GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_3;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
@@ -942,6 +1079,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(SPI_CS_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
 }
 
