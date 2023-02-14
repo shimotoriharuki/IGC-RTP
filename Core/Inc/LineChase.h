@@ -8,8 +8,6 @@
 #ifndef INC_LINECHASE_H_
 #define INC_LINECHASE_H_
 
-#define LINESENSOR_ADC_NUM 12
-
 #include "stm32f4xx_hal.h"
 #include "Motor.h"
 #include "LineSensor.h"
