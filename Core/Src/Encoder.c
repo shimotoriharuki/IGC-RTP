@@ -69,6 +69,11 @@ float getGoalJudgeDistance(){
 	return goal_judge_distance;
 }
 
+void setTotalDistance(float distance)
+{
+	total_distance = distance;
+}
+
 float getCrossLineIgnoreDistance(void)
 {
 	return distance_cross_line_ignore;

@@ -21,13 +21,15 @@ void saveCross(float);
 void saveSide(float);
 void initLog(void);
 void ereaseLog(void);
-uint16_t getlogSize();
+uint16_t getLogSize();
 void loadDistance();
 void loadTheta();
 void loadCross();
 void loadSide();
 
-float getIdxDistance(uint16_t);
+float getLogDistance(uint16_t);
+float getLogCross(uint16_t);
+float getLogSide(uint16_t);
 
 const float *getDistanceArrayPointer();
 const float *getThetaArrayPointer();

@@ -18,26 +18,32 @@
 #include "stdlib.h"
 #include "LED.h"
 
-bool isCrossLine();
 
 float velocity_table[6000];
+
+bool isCrossLine();
+
+void setRunMode(uint16_t);
+bool isTargetDistance(float);
 
 void running();
 void runningFlip();
 void runningInit();
+
 void saveLog();
 void startLogging();
 void stopLogging();
+
 void startVelocityUpdate();
 void stopVelocityUpdate();
 void createVelocityTable();
+float radius2Velocity(float);
 void decelerateProcessing(const float, const float *);
 void accelerateProcessing(const float, const float *);
 void updateTargetVelocity();
-void setRunMode(uint16_t);
 
-float radius2Velocity(float);
+void correctionTotalDistanceFromCrossLine();
+void correctionTotalDistanceFromSideLine();
 
-bool isTargetDistance(float);
 
 #endif /* INC_RUNNING_H_ */

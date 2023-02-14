@@ -56,7 +56,7 @@ void ereaseLog(){
 	writeAdd_4 = start_adress_sector10;
 }
 
-uint16_t getlogSize(){
+uint16_t getLogSize(){
 	return log_distance_cnt;
 }
 
@@ -144,6 +144,14 @@ const float *getSideArrayPointer(){
 	return log_side;
 }
 
-float getIdxDistance(uint16_t idx){
+float getLogDistance(uint16_t idx){
 	return log_distance[idx];
+}
+
+float getLogCross(uint16_t idx){
+	return log_cross[idx];
+}
+
+float getLogSide(uint16_t idx){
+	return log_side[idx];
 }
