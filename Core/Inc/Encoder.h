@@ -9,6 +9,7 @@
 #define INC_ENCODER_H_
 
 #include "stm32f4xx_hal.h"
+#include "UserSelection.h"
 
 void initEncoder(void);
 void updateEncoderCnt(void);
