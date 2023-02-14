@@ -182,8 +182,7 @@ int main(void)
 
   /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -240,8 +239,8 @@ int main(void)
 
 	  if(getSwitchStatus('L') == true){
 		  mode_selector++;
-		  HAL_Delay(500);
-		  if(mode_selector >= 4) mode_selector = 0;
+		  HAL_Delay(200);
+		  if(mode_selector >= 5) mode_selector = 0;
 	  }
 
 	  switch(mode_selector){
@@ -249,13 +248,9 @@ int main(void)
 			  setLED('C');
 
 			  if(getSwitchStatus('R') == true){ //run
-				  setLED('G');
-				  ereaseLog();
-				  HAL_Delay(500);
-
 				  setLED('M');
 				  setRunMode(1);
-				  setTargetVelocity(0.5);
+				  setVelocityRange(0.5, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -267,13 +262,9 @@ int main(void)
 			  setLED('Y');
 
 			  if(getSwitchStatus('R') == true) { //run
-				  setLED('G');
-				  ereaseLog();
-				  HAL_Delay(500);
-
 				  setLED('M');
 				  setRunMode(1);
-				  setTargetVelocity(1.0);
+				  setVelocityRange(1.0, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -285,16 +276,11 @@ int main(void)
 			  setLED('M');
 
 			  if(getSwitchStatus('R') == true) { //run
-				  setLED('G');
-				  loadDistance();
-				  loadTheta();
-				  loadCross();
-				  HAL_Delay(500);
 
 				  setLED('M');
-				  setTargetVelocity(1.0);
 				  setRunMode(2);
-				  createVelocityTable();
+				  setVelocityRange(1.0, 1.5);
+				  setAccDec(5, 5);
 				  HAL_Delay(500);
 
 				  running();
@@ -308,11 +294,31 @@ int main(void)
 				  loadDistance();
 				  loadTheta();
 				  loadCross();
+				  loadSide();
+				  loadDebug();
 
 				  setRunMode(2);
+				  setVelocityRange(0.5, 1.5);
+				  setAccDec(10, 10);
 				  createVelocityTable();
 			  }
 
+			  break;
+
+		  case 4:
+			  setLED('R');
+			  if(getSwitchStatus('R') == true) {
+				  HAL_Delay(500);
+				  setLED('Y');
+				  //timer = 0;
+				  //while(1){
+					  sensorCalibration();
+					  //if(timer >= 3000) break;
+				  //}
+				  //calibration();
+				  HAL_Delay(500);
+				  setLED('G');
+			  }
 			  break;
 	  };
 

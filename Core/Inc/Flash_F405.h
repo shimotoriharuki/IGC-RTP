@@ -33,6 +33,7 @@ extern const uint32_t end_adress_sector9;
 extern const uint32_t start_adress_sector10; //sector10 start address
 extern const uint32_t end_adress_sector10;
 extern const uint32_t start_adress_sector11; //sector11 start address
+//extern const uint32_t middle_adress_sector11; //sector11 middle address
 extern const uint32_t end_adress_sector11;
 
 void FLASH_WaitBusy(void);

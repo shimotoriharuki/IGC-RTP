@@ -12,22 +12,29 @@
 #include "math.h"
 #include "Flash_F405.h"
 
-uint32_t writeAdd_1, writeAdd_2, writeAdd_3, writeAdd_4;
-uint32_t readAdd_1, readAdd_2, readAdd_3, readAdd_4;
+uint32_t writeAdd_1, writeAdd_2, writeAdd_3, writeAdd_4, writeAdd_5;
+uint32_t readAdd_1, readAdd_2, readAdd_3, readAdd_4, readAdd_5;
 
 void saveDistance(float);
 void saveTheta(float);
 void saveCross(float);
 void saveSide(float);
+void saveDebug(float);
 void initLog(void);
 void ereaseLog(void);
-uint16_t getlogSize();
+void ereaseDebugLog(void);
+uint16_t getDistanceLogSize();
+uint16_t getCrossLogSize();
+uint16_t getSideLogSize();
 void loadDistance();
 void loadTheta();
 void loadCross();
 void loadSide();
+void loadDebug();
 
-float getIdxDistance(uint16_t);
+float getDistanceLog(uint16_t);
+float getCrossLog(uint16_t);
+float getSideLog(uint16_t);
 
 const float *getDistanceArrayPointer();
 const float *getThetaArrayPointer();
