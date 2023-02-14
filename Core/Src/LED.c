@@ -51,4 +51,17 @@ void setLED(uint8_t color)
 	}
 }
 
+// Uppercase: lighting, lowercase: lights out
+void setRGB(uint8_t rgb)
+{
+	if(rgb == 'R')	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+	else if(rgb == 'G')	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
+	else if(rgb == 'B')	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
+
+
+	if(rgb == 'r')	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
+	else if(rgb == 'g')	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
+	else if(rgb == 'b')	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
+
+}
 

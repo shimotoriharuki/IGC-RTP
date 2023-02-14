@@ -249,13 +249,9 @@ int main(void)
 			  setLED('C');
 
 			  if(getSwitchStatus('R') == true){ //run
-				  setLED('G');
-				  ereaseLog();
-				  HAL_Delay(500);
-
 				  setLED('M');
 				  setRunMode(1);
-				  setTargetVelocity(0.5);
+				  setVelocityRange(0.5, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -267,13 +263,9 @@ int main(void)
 			  setLED('Y');
 
 			  if(getSwitchStatus('R') == true) { //run
-				  setLED('G');
-				  ereaseLog();
-				  HAL_Delay(500);
-
 				  setLED('M');
 				  setRunMode(1);
-				  setTargetVelocity(1.0);
+				  setVelocityRange(1.0, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -285,16 +277,11 @@ int main(void)
 			  setLED('M');
 
 			  if(getSwitchStatus('R') == true) { //run
-				  setLED('G');
-				  loadDistance();
-				  loadTheta();
-				  loadCross();
-				  HAL_Delay(500);
 
 				  setLED('M');
-				  setTargetVelocity(1.0);
 				  setRunMode(2);
-				  createVelocityTable();
+				  setVelocityRange(1.0, 1.5);
+				  setAccDec(5, 5);
 				  HAL_Delay(500);
 
 				  running();
@@ -308,8 +295,12 @@ int main(void)
 				  loadDistance();
 				  loadTheta();
 				  loadCross();
+				  loadSide();
+				  loadDebug();
 
 				  setRunMode(2);
+				  setVelocityRange(0.5, 1.5);
+				  setAccDec(10, 10);
 				  createVelocityTable();
 			  }
 

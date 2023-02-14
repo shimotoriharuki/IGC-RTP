@@ -20,6 +20,7 @@ float getCrossLineIgnoreDistance(void);
 float getSideLineIgnoreDistance(void);
 float getTotalDistance();
 float getGoalJudgeDistance();
+float getSideLineJudgeDistance();
 
 void setTotalDistance(float);
 
@@ -28,6 +29,7 @@ void clearSideLineIgnoreDistance(void);
 void resetEncoderCnt(void);
 void clearTotalDistance();
 void clearGoalJudgeDistance();
+void clearSideLineJudgeDistance();
 
 
 #endif /* INC_ENCODER_H_ */

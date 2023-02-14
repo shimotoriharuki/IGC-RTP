@@ -45,5 +45,7 @@ void updateTargetVelocity();
 void correctionTotalDistanceFromCrossLine();
 void correctionTotalDistanceFromSideLine();
 
+void setVelocityRange(float, float);
+void setAccDec(float, float);
 
 #endif /* INC_RUNNING_H_ */

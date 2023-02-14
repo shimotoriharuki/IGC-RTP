@@ -20,11 +20,15 @@ uint16_t cnt_log;
 
 static bool cross_line_ignore_flag;
 static bool goal_judge_flag = false;
+static bool side_line_judge_flag = false;
 
 static uint16_t cross_line_idx;
 static uint16_t side_line_idx;
 
-static uint16_t correction_check_cnt;
+static uint16_t correction_check_cnt_cross, correction_check_cnt_side;
+
+static float min_velocity, max_velocity;
+static float acceleration, deceleration;
 
 bool isCrossLine()
 {
@@ -69,9 +73,10 @@ void running(void)
 	uint8_t goal_flag = 0;
 	uint16_t pattern = 0;
 
+	runningInit();
 	startLineTrace();
 	startVelocityControl();
-	runningInit();
+	setTargetVelocity(min_velocity);
 
 	//setLED('B');
 	while(goal_flag == 0){
@@ -83,9 +88,10 @@ void running(void)
 				  start_goal_line_cnt++;
 
 				  if(mode == 1) startLogging();
-				  else if(mode == 2) startVelocityUpdate();
+				  else startVelocityUpdate();
 
 				  clearGoalJudgeDistance();
+				  clearSideLineJudgeDistance();
 				  pattern = 5;
 			  }
 
@@ -167,11 +173,12 @@ void runningFlip()
 		clearSideLineIgnoreDistance();
 
 		if(mode == 1){
+			correction_check_cnt_cross = 0;
 			saveCross(getTotalDistance());
-			correction_check_cnt = 0;
 		}
 		else{
-			correctionTotalDistanceFromCrossLine();
+			//correctionTotalDistanceFromCrossLine();
+			//saveDebug(getTotalDistance());
 		}
 
 	}
@@ -179,24 +186,67 @@ void runningFlip()
 		cross_line_ignore_flag = false;
 	}
 
+	//--- Side marker Process---//
+	if(getSideSensorStatusR() == true){ //Right side line detect
+		side_line_judge_flag = false;
+	 	clearSideLineJudgeDistance();
+	}
+	if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >=30){
+		side_line_judge_flag= true;
+		clearSideLineJudgeDistance();
+	}
+	else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 30){ //Detect side line
+		side_line_judge_flag= false;
+
+		if(mode == 1){
+			correction_check_cnt_side = 0;
+			saveSide(getTotalDistance());
+		}
+		else{
+			correctionTotalDistanceFromSideLine();
+			saveDebug(getTotalDistance());
+		}
+	}
+
 
 	// Debug LED //
-	correction_check_cnt++;
-	if(correction_check_cnt >= 10000) correction_check_cnt = 10000;
+	correction_check_cnt_cross++;
+	if(correction_check_cnt_cross >= 10000) correction_check_cnt_cross = 10000;
 
-	if(correction_check_cnt <= 300) setLED('R');
-	else setLED('W');
+	correction_check_cnt_side++;
+	if(correction_check_cnt_side >= 10000) correction_check_cnt_side = 10000;
+
+	if(correction_check_cnt_cross <= 150) setRGB('R');
+	else setRGB('r');
+	if(correction_check_cnt_side <= 150) setRGB('B');
+	else setRGB('b');
+
 
 
 }
 
 void runningInit()
 {
+	if(mode == 1){
+		ereaseLog();
+	}
+	else{
+		loadDistance();
+		loadTheta();
+		loadCross();
+		loadSide();
+		createVelocityTable();
+
+		ereaseDebugLog();
+	}
+
 	clearCrossLineIgnoreDistance();
 	clearSideLineIgnoreDistance();
+
 	start_goal_line_cnt = 0;
 	cross_line_ignore_flag = false;
 	goal_judge_flag = false;
+	side_line_judge_flag = false;
 }
 
 void saveLog(){
@@ -226,6 +276,7 @@ void startVelocityUpdate(){
 	velocity_update_flag = true;
 
 	cross_line_idx = 0;
+	side_line_idx = 0;
 }
 
 void stopVelocityUpdate()
@@ -239,7 +290,7 @@ void createVelocityTable(){
 	p_theta = getThetaArrayPointer();
 	float temp_distance, temp_theta;
 
-	uint16_t log_size = getLogSize();
+	uint16_t log_size = getDistanceLogSize();
 
 	for(uint16_t i = 0; i < log_size; i++){
 		temp_distance = p_distance[i];
@@ -249,29 +300,28 @@ void createVelocityTable(){
 		float radius = abs(temp_distance / temp_theta);
 		if(radius >= 5000) radius = 5000;
 		velocity_table[i] = radius2Velocity(radius);
-
 	}
 
-	decelerateProcessing(10, p_distance);
-	accelerateProcessing(10, p_distance);
+	decelerateProcessing(deceleration, p_distance);
+	accelerateProcessing(acceleration, p_distance);
 
-	velocity_table[0] = 1.2;
+	velocity_table[0] = min_velocity;
 }
 
 float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		if(radius < 1000) velocity = 1.0;
-		else velocity = 1.5;
+		if(radius < 1000) velocity = min_velocity;
+		else velocity = max_velocity;
 	}
 	else if(mode == 3){
-		if(radius < 400) velocity = 1.2;
+		if(radius < 400) velocity = min_velocity;
 		else if(radius < 500) velocity = 1.5;
 		else if(radius < 650) velocity = 1.8;
 		else if(radius < 1500) velocity = 2.0;
 		else if(radius < 2000) velocity = 2.5;
-		else velocity = 2.5;
+		else velocity = max_velocity;
 
 	}
 
@@ -279,7 +329,7 @@ float radius2Velocity(float radius){
 }
 
 void decelerateProcessing(const float am, const float *p_distance){
-	uint16_t log_size = getLogSize();
+	uint16_t log_size = getDistanceLogSize();
 	for(uint16_t i = log_size - 1; i >= 1; i--){
 		float v_diff = velocity_table[i-1] - velocity_table[i];
 
@@ -294,7 +344,7 @@ void decelerateProcessing(const float am, const float *p_distance){
 }
 
 void accelerateProcessing(const float am, const float *p_distance){
-	uint16_t log_size = getLogSize();
+	uint16_t log_size = getDistanceLogSize();
 	for(uint16_t i = 0; i <= log_size - 1; i++){
 		float v_diff = velocity_table[i+1] - velocity_table[i];
 
@@ -311,11 +361,11 @@ void accelerateProcessing(const float am, const float *p_distance){
 void updateTargetVelocity(){
 	if(velocity_update_flag == true){
 		if(getTotalDistance() >= ref_distance){
-			ref_distance += getLogDistance(velocity_table_idx);
+			ref_distance += getDistanceLog(velocity_table_idx);
 			velocity_table_idx++;
 		}
-		if(velocity_table_idx >= getLogSize()){
-			velocity_table_idx = getLogSize() - 1;
+		if(velocity_table_idx >= getDistanceLogSize()){
+			velocity_table_idx = getDistanceLogSize() - 1;
 		}
 
 		setTargetVelocity(velocity_table[velocity_table_idx]);
@@ -324,27 +374,53 @@ void updateTargetVelocity(){
 
 void correctionTotalDistanceFromCrossLine()
 {
-	while(cross_line_idx <= getLogSize()){
-		float temp_crossline_distance = getLogCross(cross_line_idx);
-		float diff = abs(temp_crossline_distance - (getTotalDistance()));
+	while(cross_line_idx <= getCrossLogSize()){
+		float temp_crossline_distance = getCrossLog(cross_line_idx);
+		float diff = abs(temp_crossline_distance - getTotalDistance());
 		if(diff <= 250){
-			correction_check_cnt = 0;
+			correction_check_cnt_cross = 0;
 			setTotalDistance(temp_crossline_distance);
 			cross_line_idx++;
 			break;
 		}
 		cross_line_idx++;
 
-		if(cross_line_idx >= getLogSize()){
-			cross_line_idx = getLogSize() - 1;
+		if(cross_line_idx >= getCrossLogSize()){
+			cross_line_idx = getCrossLogSize() - 1;
 			break;
 		}
 	}
-
-
 }
 
 void correctionTotalDistanceFromSideLine()
 {
+	while(side_line_idx <= getSideLogSize()){
+		float temp_sideline_distance = getSideLog(side_line_idx);
+		float diff = abs(temp_sideline_distance - getTotalDistance());
+		//if(diff <= 700){
+		if(diff <= 250){
+			correction_check_cnt_side = 0;
+			setTotalDistance(temp_sideline_distance);
+			side_line_idx++;
+			break;
+		}
+		side_line_idx++;
 
+		if(side_line_idx >= getSideLogSize()){
+			side_line_idx = getSideLogSize() - 1;
+			break;
+		}
+	}
+}
+
+void setVelocityRange(float min_vel, float max_vel)
+{
+	min_velocity = min_vel;
+	max_velocity = max_vel;
+}
+
+void setAccDec(float acc, float dec)
+{
+	acceleration = acc;
+	deceleration = dec;
 }

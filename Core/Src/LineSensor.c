@@ -9,8 +9,6 @@
 
 ADC_HandleTypeDef hadc1;
 
-
-
 static uint16_t adc_value[LINESENSOR_ADC_NUM];
 
 static int16_t sensor0_buffer[10];

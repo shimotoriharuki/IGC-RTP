@@ -26,6 +26,7 @@ static float distance_1ms;
 static float distance_10mm;
 static float total_distance;
 static float goal_judge_distance;
+static float side_line_judge_distance;
 static float distance_cross_line_ignore;
 static float distance_side_line_ignore;
 
@@ -50,6 +51,7 @@ void updateEncoderCnt(void)
 	distance_10mm += distance_1ms;
 	total_distance += distance_1ms;
 	goal_judge_distance += distance_1ms;
+	side_line_judge_distance += distance_1ms;
 	distance_cross_line_ignore += distance_1ms;
 	distance_side_line_ignore += distance_1ms;
 	//15.73カウントで1ｍｍ
@@ -67,6 +69,10 @@ float getTotalDistance(){
 
 float getGoalJudgeDistance(){
 	return goal_judge_distance;
+}
+
+float getSideLineJudgeDistance(){
+	return side_line_judge_distance;
 }
 
 void setTotalDistance(float distance)
@@ -90,6 +96,10 @@ void clearTotalDistance(){
 
 void clearGoalJudgeDistance(){
 	goal_judge_distance = 0;
+}
+
+void clearSideLineJudgeDistance(){
+	side_line_judge_distance = 0;
 }
 
 void clearCrossLineIgnoreDistance(void)

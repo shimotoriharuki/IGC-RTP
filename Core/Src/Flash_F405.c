@@ -27,6 +27,7 @@ const uint32_t end_adress_sector9 	 = 	0x80BFFFF;
 const uint32_t start_adress_sector10 =  0x80C0000; //sentor10 start address
 const uint32_t end_adress_sector10 	 = 	0x80DFFFF;
 const uint32_t start_adress_sector11 =  0x80E0000; //sentor11 start address
+//const uint32_t middle_adress_sector11 = 0x80E3CAF; //sentor11 midle address
 const uint32_t end_adress_sector11 	 = 	0x80FFFFF;
 
 inline static void FLASH_Unlock(void)
