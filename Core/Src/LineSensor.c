@@ -9,7 +9,8 @@
 
 ADC_HandleTypeDef hadc1;
 
-
+float max_values[LINESENSOR_ADC_NUM], max_values_buffer[LINESENSOR_ADC_NUM];
+float min_values[LINESENSOR_ADC_NUM], min_values_buffer[LINESENSOR_ADC_NUM];
 
 static uint16_t adc_value[LINESENSOR_ADC_NUM];
 
@@ -29,24 +30,27 @@ static int16_t sensor11_buffer[10];
 void initADC()
 {
 	HAL_ADC_Start_DMA(&hadc1, (uint32_t *) adc_value, LINESENSOR_ADC_NUM); //ADC start
+	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
+		max_values[i] = 2000;
+	}
 }
 
   void storeAnalogSensorBuffer(void)
 {
 	static uint8_t index;
 
-	sensor0_buffer[index] = adc_value[0];
-	sensor1_buffer[index] = adc_value[1];
-	sensor2_buffer[index] = adc_value[2];
-	sensor3_buffer[index] = adc_value[3];
-	sensor4_buffer[index] = adc_value[4];
-	sensor5_buffer[index] = adc_value[5];
-	sensor6_buffer[index] = adc_value[6];
-	sensor7_buffer[index] = adc_value[10];
-	sensor8_buffer[index] = adc_value[7];
-	sensor9_buffer[index] = adc_value[8];
-	sensor10_buffer[index] = adc_value[9];
-	sensor11_buffer[index] = adc_value[11];
+	sensor0_buffer[index] = sensor_coefficient[0] * (adc_value[0] - offset_values[0]) ;
+	sensor1_buffer[index] = sensor_coefficient[1] * (adc_value[1] - offset_values[1]) ;
+	sensor2_buffer[index] = sensor_coefficient[2] * (adc_value[2] - offset_values[2]) ;
+	sensor3_buffer[index] = sensor_coefficient[3] * (adc_value[3] - offset_values[3]) ;
+	sensor4_buffer[index] = sensor_coefficient[4] * (adc_value[4] - offset_values[4]) ;
+	sensor5_buffer[index] = sensor_coefficient[5] * (adc_value[5] - offset_values[5]) ;
+	sensor6_buffer[index] = sensor_coefficient[6] * (adc_value[6] - offset_values[6]) ;
+	sensor7_buffer[index] = sensor_coefficient[7] * (adc_value[7] - offset_values[7]) ;
+	sensor8_buffer[index] = sensor_coefficient[8] * (adc_value[8] - offset_values[8]) ;
+	sensor9_buffer[index] = sensor_coefficient[9] * (adc_value[9] - offset_values[9]) ;
+	sensor10_buffer[index] = sensor_coefficient[10] * (adc_value[10] - offset_values[10]) ;
+	sensor11_buffer[index] = sensor_coefficient[11] * (adc_value[11] - offset_values[11]) ;
 
 	index++;
 	if(index >= 10) index = 0;
@@ -69,25 +73,24 @@ void updateAnalogSensor(void) {
 
 void sensorCalibration()
 {
-	float max_values[LINESENSOR_ADC_NUM];
-	float min_values[LINESENSOR_ADC_NUM];
-
 	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
-		max_values[i] = sensor[i];
-		min_values[i] = sensor[i];
-		if(max_values[i] < sensor[i]){
-			max_values[i] = sensor[i];
+		max_values_buffer[i] = adc_value[i];
+		min_values_buffer[i] = adc_value[i];
+		if(max_values_buffer[i] < max_values[i]){
+			max_values[i] = adc_value[i];
 		}
-		else if(min_values[i] > sensor[i]){
-			min_values[i] = sensor[i];
+		else if(min_values_buffer[i] > min_values[i]){
+			min_values[i] = adc_value[i];
 		}
-	}
-
-	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
-		sensor_coefficient[i] = 1000 / (max_values[i] - min_values[i]);
-	}
-	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
-		offset_values[i] = min_values[i];
 	}
 }
 
+void calibration()
+{
+	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
+		sensor_coefficient[i] = 3000 / (min_values[i] - max_values[i]);
+	}
+	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
+		offset_values[i] = max_values[i];
+	}
+}

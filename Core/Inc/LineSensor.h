@@ -26,6 +26,7 @@ void initADC(void);
 void storeAnalogSensorBuffer(void);
 void updateAnalogSensor(void);
 void sensorCalibration();
+void calibration();
 
 
 #endif /* INC_LINESENSOR_H_ */

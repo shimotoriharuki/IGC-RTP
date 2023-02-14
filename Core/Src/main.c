@@ -324,6 +324,8 @@ int main(void)
 					  sensorCalibration();
 					  if(timer >= 3000) break;
 				  }
+				  calibration();
+				  HAL_Delay(500);
 				  setLED('G');
 			  }
 			  break;
