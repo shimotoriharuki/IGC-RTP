@@ -67,3 +67,27 @@ void updateAnalogSensor(void) {
 	sensor[11] = ( sensor11_buffer[0] + sensor11_buffer[1] + sensor11_buffer[2] + sensor11_buffer[3] + sensor11_buffer[4] + sensor11_buffer[5] + sensor11_buffer[6] + sensor11_buffer[7] + sensor11_buffer[8] + sensor11_buffer[9] ) / 10;
 }
 
+void sensorCalibration()
+{
+	float max_values[LINESENSOR_ADC_NUM];
+	float min_values[LINESENSOR_ADC_NUM];
+
+	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
+		max_values[i] = sensor[i];
+		min_values[i] = sensor[i];
+		if(max_values[i] < sensor[i]){
+			max_values[i] = sensor[i];
+		}
+		else if(min_values[i] > sensor[i]){
+			min_values[i] = sensor[i];
+		}
+	}
+
+	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
+		sensor_coefficient[i] = 1000 / (max_values[i] - min_values[i]);
+	}
+	for(uint16_t i = 0; i < LINESENSOR_ADC_NUM; i++){
+		offset_values[i] = min_values[i];
+	}
+}
+
