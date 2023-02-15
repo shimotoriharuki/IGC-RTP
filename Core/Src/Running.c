@@ -19,6 +19,7 @@ static bool velocity_update_flag;
 uint16_t cnt_log;
 
 static bool cross_line_ignore_flag;
+static bool side_line_ignore_flag;
 static bool goal_judge_flag = false;
 static bool side_line_judge_flag = false;
 static bool continuous_cnt_reset_flag = false;
@@ -139,15 +140,14 @@ void running(void)
 				  clearGoalJudgeDistance();
 			  }
 
-			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 60){
+			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 120){
 				  goal_judge_flag = true;
 				  clearGoalJudgeDistance();
 			  }
-			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 60){
+			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 120){
 				  start_goal_line_cnt++;
 				  goal_judge_flag = false;
 				  clearGoalJudgeDistance();
-
 			  }
 
 
@@ -216,7 +216,6 @@ void runningFlip()
 			//correctionTotalDistanceFromCrossLine();
 			//saveDebug(getTotalDistance());
 		}
-
 	}
 	else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){ //50
 		cross_line_ignore_flag = false;

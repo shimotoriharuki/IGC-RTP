@@ -7,6 +7,7 @@
 
 #include "LineChase.h"
 #define DELTA_T 0.001
+#define SENSOR_ALL_DARK 150
 
 static int16_t speed_l, speed_r;
 static uint8_t line_trace_enable_flag;
