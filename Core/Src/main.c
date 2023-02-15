@@ -268,7 +268,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true) { //run
 				  setLED('N');
 				  setRunMode(1);
-				  setVelocityRange(1.0, 1.5);
+				  setVelocityRange(1.4, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -283,7 +283,7 @@ int main(void)
 
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.0, 1.5);
+				  setVelocityRange(1.4, 2.5);
 				  setAccDec(5, 5);
 				  HAL_Delay(500);
 

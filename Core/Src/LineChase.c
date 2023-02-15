@@ -50,7 +50,23 @@ void calculateLineFollowingTermFlip(void){
 void lineTraceFlip(void)
 {
 	if(line_trace_enable_flag == 1){
+		float limit = MAX_COUNTER_PERIOD * 0.9;
 		float velocity_control_term = getVelocityControlTerm();
+
+		if(velocity_control_term >= limit) velocity_control_term = limit;
+		else if(velocity_control_term <= -limit) velocity_control_term = -limit;
+
+		float exceeded = 0;
+		if(velocity_control_term + line_following_term >= MAX_COUNTER_PERIOD){
+			exceeded = (velocity_control_term + line_following_term) - MAX_COUNTER_PERIOD;
+		}
+		else if(velocity_control_term - line_following_term <= -MAX_COUNTER_PERIOD){
+			exceeded = -MAX_COUNTER_PERIOD - (velocity_control_term - line_following_term) ;
+		}
+
+		velocity_control_term -= exceeded;
+		line_following_term += exceeded;
+
 		float motor_l = velocity_control_term + line_following_term;
 		float motor_r = velocity_control_term - line_following_term;
 
