@@ -21,14 +21,19 @@ uint16_t cnt_log;
 static bool cross_line_ignore_flag;
 static bool goal_judge_flag = false;
 static bool side_line_judge_flag = false;
+static bool continuous_cnt_reset_flag = false;
+static bool continuous_curve_flag = false;
 
 static uint16_t cross_line_idx;
 static uint16_t side_line_idx;
 
 static uint16_t correction_check_cnt_cross, correction_check_cnt_side;
+static uint16_t continuous_curve_check_cnt;
 
 static float min_velocity, max_velocity;
 static float acceleration, deceleration;
+
+float mon_diff_theta;
 
 bool isCrossLine()
 {
@@ -54,6 +59,31 @@ bool isCrossLine()
 	}
 
 	return flag;
+}
+
+bool isContinuousCurvature()
+{
+	static float pre_theta;
+	static float continuous_cnt;
+	bool continuous_flag = false;
+	float diff_theta = fabs(pre_theta - getTheta10mm());
+
+	if(continuous_cnt_reset_flag == true){
+		continuous_cnt_reset_flag = false;
+		continuous_cnt = 0;
+	}
+	//mon_diff_theta = fabs(getTheta10mm() - pre_theta);
+
+	if(diff_theta <= 0.005) continuous_cnt++;
+	else continuous_cnt = 0;
+
+	if(continuous_cnt >= 50) continuous_flag = true;
+
+	if(continuous_cnt >= 1000) continuous_cnt = 1000;
+
+	pre_theta = getTheta10mm();
+
+	return continuous_flag;
 }
 
 void setRunMode(uint16_t num){
@@ -155,12 +185,15 @@ void running(void)
 
 void runningFlip()
 {
-	//static uint16_t side_l_cnt, side_r_cnt;
-
 	updateTargetVelocity();
 
 	if(isTargetDistance(10) == true){
 		saveLog();
+		if(isContinuousCurvature() == true){
+			//continuous_curve_check_cnt = 0;
+			continuous_curve_flag = true;
+		}
+
 		clearDistance10mm();
 		clearTheta10mm();
 	}
@@ -198,13 +231,18 @@ void runningFlip()
 	else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 30){ //Detect side line
 		side_line_judge_flag= false;
 
-		if(mode == 1){
-			correction_check_cnt_side = 0;
-			saveSide(getTotalDistance());
-		}
-		else{
-			correctionTotalDistanceFromSideLine();
-			saveDebug(getTotalDistance());
+		if(continuous_curve_flag == true){
+			continuous_curve_flag = false;
+			continuous_cnt_reset_flag = true;
+
+			if(mode == 1){
+				correction_check_cnt_side = 0;
+				saveSide(getTotalDistance());
+			}
+			else{
+				correctionTotalDistanceFromSideLine();
+				saveDebug(getTotalDistance());
+			}
 		}
 	}
 
@@ -216,10 +254,17 @@ void runningFlip()
 	correction_check_cnt_side++;
 	if(correction_check_cnt_side >= 10000) correction_check_cnt_side = 10000;
 
-	if(correction_check_cnt_cross <= 150) setRGB('R');
+	continuous_curve_check_cnt++;
+	if(continuous_curve_check_cnt >= 10000) continuous_curve_check_cnt = 10000;
+
+	//if(correction_check_cnt_cross <= 150) setRGB('R');
+	//else setRGB('r');
+	//if(correction_check_cnt_side <= 150) setRGB('B');
+	//else setRGB('b');
+	if(continuous_curve_flag == true) setRGB('R');
 	else setRGB('r');
-	if(correction_check_cnt_side <= 150) setRGB('B');
-	else setRGB('b');
+
+
 
 
 
@@ -247,6 +292,8 @@ void runningInit()
 	cross_line_ignore_flag = false;
 	goal_judge_flag = false;
 	side_line_judge_flag = false;
+	continuous_cnt_reset_flag = true;
+	continuous_curve_flag = false;
 }
 
 void saveLog(){
@@ -297,7 +344,7 @@ void createVelocityTable(){
 		temp_theta = p_theta[i];
 
 		if(temp_theta == 0) temp_theta = 0.00001;
-		float radius = abs(temp_distance / temp_theta);
+		float radius = fabs(temp_distance / temp_theta);
 		if(radius >= 5000) radius = 5000;
 		velocity_table[i] = radius2Velocity(radius);
 	}
@@ -376,7 +423,7 @@ void correctionTotalDistanceFromCrossLine()
 {
 	while(cross_line_idx <= getCrossLogSize()){
 		float temp_crossline_distance = getCrossLog(cross_line_idx);
-		float diff = abs(temp_crossline_distance - getTotalDistance());
+		float diff = fabs(temp_crossline_distance - getTotalDistance());
 		if(diff <= 250){
 			correction_check_cnt_cross = 0;
 			setTotalDistance(temp_crossline_distance);
@@ -396,7 +443,7 @@ void correctionTotalDistanceFromSideLine()
 {
 	while(side_line_idx <= getSideLogSize()){
 		float temp_sideline_distance = getSideLog(side_line_idx);
-		float diff = abs(temp_sideline_distance - getTotalDistance());
+		float diff = fabs(temp_sideline_distance - getTotalDistance());
 		//if(diff <= 700){
 		if(diff <= 250){
 			correction_check_cnt_side = 0;

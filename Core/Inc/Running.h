@@ -22,6 +22,7 @@
 float velocity_table[6000];
 
 bool isCrossLine();
+bool isContinuousCurvature();
 
 void setRunMode(uint16_t);
 bool isTargetDistance(float);

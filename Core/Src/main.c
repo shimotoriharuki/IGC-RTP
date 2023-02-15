@@ -154,6 +154,8 @@ void init(void)
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
 	initMotor();
 
+    sensorCalibration();
+
 	HAL_Delay(200);
 	if(isBatteryLow() == true){
 		uint16_t i = 0;
@@ -182,7 +184,8 @@ int main(void)
 
   /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */  HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -248,7 +251,7 @@ int main(void)
 			  setLED('C');
 
 			  if(getSwitchStatus('R') == true){ //run
-				  setLED('M');
+				  setLED('N');
 				  setRunMode(1);
 				  setVelocityRange(0.5, 1.5);
 				  HAL_Delay(500);
@@ -262,7 +265,7 @@ int main(void)
 			  setLED('Y');
 
 			  if(getSwitchStatus('R') == true) { //run
-				  setLED('M');
+				  setLED('N');
 				  setRunMode(1);
 				  setVelocityRange(1.0, 1.5);
 				  HAL_Delay(500);
@@ -277,7 +280,7 @@ int main(void)
 
 			  if(getSwitchStatus('R') == true) { //run
 
-				  setLED('M');
+				  setLED('N');
 				  setRunMode(2);
 				  setVelocityRange(1.0, 1.5);
 				  setAccDec(5, 5);
