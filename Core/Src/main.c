@@ -121,6 +121,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 		runningFlip();
 		motorCtrlFlip();
+		droneMotorCtrlFlip();
 
 		resetEncoderCnt(); //Do not move from HERE!!
    }
@@ -313,13 +314,11 @@ int main(void)
 			  if(getSwitchStatus('R') == true) {
 				  HAL_Delay(500);
 				  setLED('Y');
-				  //timer = 0;
-				  //while(1){
-					  sensorCalibration();
-					  //if(timer >= 3000) break;
-				  //}
-				  //calibration();
-				  HAL_Delay(500);
+
+				  setDroneMotor(300, 300);
+				  HAL_Delay(1000);
+				  setDroneMotor(0, 0);
+
 				  setLED('G');
 			  }
 			  break;
@@ -673,7 +672,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4294967295;
+  htim2.Init.Period = 839;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)

@@ -72,7 +72,6 @@ bool isContinuousCurvature()
 		continuous_cnt_reset_flag = false;
 		continuous_cnt = 0;
 	}
-	//mon_diff_theta = fabs(getTheta10mm() - pre_theta);
 
 	if(diff_theta <= 0.005) continuous_cnt++;
 	else continuous_cnt = 0;
@@ -140,11 +139,11 @@ void running(void)
 				  clearGoalJudgeDistance();
 			  }
 
-			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >=30){
+			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 60){
 				  goal_judge_flag = true;
 				  clearGoalJudgeDistance();
 			  }
-			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 30){
+			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 60){
 				  start_goal_line_cnt++;
 				  goal_judge_flag = false;
 
@@ -157,11 +156,6 @@ void running(void)
 				  pattern = 20;
 			  }
 
-			  if(getCouseOutFlag() == true){
-				  pattern = 20;
-				  stopLogging();
-				  stopVelocityUpdate();
-			  }
 
 			  break;
 
@@ -175,10 +169,18 @@ void running(void)
 			  stopLineTrace();
 			  //setMotor(0, 0);
 
+			  setDroneMotor(0, 0);
+
 			  goal_flag = 1;
 
 			  break;
 		};
+
+		if(getCouseOutFlag() == true){
+			pattern = 20;
+			stopLogging();
+			stopVelocityUpdate();
+		}
 
 	}
 }
@@ -215,7 +217,7 @@ void runningFlip()
 		}
 
 	}
-	else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){
+	else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){ //50
 		cross_line_ignore_flag = false;
 	}
 
@@ -224,11 +226,11 @@ void runningFlip()
 		side_line_judge_flag = false;
 	 	clearSideLineJudgeDistance();
 	}
-	if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >=30){
+	if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >=60){
 		side_line_judge_flag= true;
 		clearSideLineJudgeDistance();
 	}
-	else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 30){ //Detect side line
+	else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 60){ //Detect side line
 		side_line_judge_flag= false;
 
 		if(continuous_curve_flag == true){
@@ -294,6 +296,9 @@ void runningInit()
 	side_line_judge_flag = false;
 	continuous_cnt_reset_flag = true;
 	continuous_curve_flag = false;
+
+	setDroneMotor(400, 400);
+	HAL_Delay(500);
 }
 
 void saveLog(){
