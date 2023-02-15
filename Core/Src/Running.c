@@ -364,7 +364,11 @@ void createVelocityTable(){
 			crossline_idx++;
 		}
 	}
+	for(uint16_t i = log_size; i < 6000; i++){
+		velocity_table[i] = max_velocity;
+	}
 
+	addDecelerationDistanceMergin(velocity_table, 160);
 	shiftVelocityTable(velocity_table, 10);
 
 	decelerateProcessing(deceleration, p_distance);
@@ -421,6 +425,29 @@ void accelerateProcessing(const float am, const float *p_distance){
 			}
 		}
 	}
+}
+
+void addDecelerationDistanceMergin(float *table, int16_t mergin_size)
+{
+	setRGB('R');
+	uint16_t idx = mergin_size;
+	float pre_target_velocity = table[idx];
+
+	while(idx <= 6000 - 1){
+		if(pre_target_velocity > table[idx]){
+			float low_velocity = table[idx];
+			for(uint16_t i = idx - mergin_size; i < idx; i++){
+				table[i] = low_velocity;
+			}
+			pre_target_velocity = table[idx];
+		}
+
+		pre_target_velocity = table[idx];
+
+		idx++;
+	}
+	setRGB('r');
+
 }
 
 void shiftVelocityTable(float *table, int16_t shitf_size)
