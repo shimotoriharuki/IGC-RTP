@@ -146,6 +146,7 @@ void running(void)
 			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 60){
 				  start_goal_line_cnt++;
 				  goal_judge_flag = false;
+				  clearGoalJudgeDistance();
 
 			  }
 
@@ -226,11 +227,12 @@ void runningFlip()
 		side_line_judge_flag = false;
 	 	clearSideLineJudgeDistance();
 	}
-	if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >=60){
+	if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >= 60){
 		side_line_judge_flag= true;
 		clearSideLineJudgeDistance();
 	}
 	else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 60){ //Detect side line
+	 	clearSideLineJudgeDistance();
 		side_line_judge_flag= false;
 
 		if(continuous_curve_flag == true){
