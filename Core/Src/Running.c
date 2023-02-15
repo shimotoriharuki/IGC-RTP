@@ -342,6 +342,8 @@ void createVelocityTable(){
 
 	uint16_t log_size = getDistanceLogSize();
 
+	uint16_t crossline_idx = 0;
+	float total_distance = 0;
 	for(uint16_t i = 0; i < log_size; i++){
 		temp_distance = p_distance[i];
 		temp_theta = p_theta[i];
@@ -350,7 +352,20 @@ void createVelocityTable(){
 		float radius = fabs(temp_distance / temp_theta);
 		if(radius >= 5000) radius = 5000;
 		velocity_table[i] = radius2Velocity(radius);
+
+		//Forced maximum speed on the crossline
+		total_distance += temp_distance;
+		float crossline_distance = getCrossLog(crossline_idx);
+		if(crossline_distance + 60 >= total_distance && total_distance >= crossline_distance - 60){
+			 velocity_table[i] = max_velocity;
+		}
+
+		if(total_distance >= crossline_distance + 60){
+			crossline_idx++;
+		}
 	}
+
+	shiftVelocityTable(velocity_table, 10);
 
 	decelerateProcessing(deceleration, p_distance);
 	accelerateProcessing(acceleration, p_distance);
@@ -406,6 +421,19 @@ void accelerateProcessing(const float am, const float *p_distance){
 			}
 		}
 	}
+}
+
+void shiftVelocityTable(float *table, int16_t shitf_size)
+{
+	for(uint16_t i = shitf_size; i < 6000; i++){
+		table[i - shitf_size] = table[i];
+	}
+
+	for(uint16_t i = 6000 - 1 - shitf_size; i < 6000; i++){
+		table[i] = max_velocity;
+	}
+
+
 }
 
 void updateTargetVelocity(){
