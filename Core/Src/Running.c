@@ -19,7 +19,7 @@ static bool velocity_update_flag;
 uint16_t cnt_log;
 
 static bool cross_line_ignore_flag;
-static bool side_line_ignore_flag;
+//static bool side_line_ignore_flag;
 static bool goal_judge_flag = false;
 static bool side_line_judge_flag = false;
 static bool continuous_cnt_reset_flag = false;
@@ -268,9 +268,6 @@ void runningFlip()
 	else setRGB('r');
 
 
-
-
-
 }
 
 void runningInit()
@@ -412,6 +409,8 @@ void accelerateProcessing(const float am, const float *p_distance){
 }
 
 void updateTargetVelocity(){
+	static float pre_target_velocity;
+
 	if(velocity_update_flag == true){
 		if(getTotalDistance() >= ref_distance){
 			ref_distance += getDistanceLog(velocity_table_idx);
@@ -422,6 +421,12 @@ void updateTargetVelocity(){
 		}
 
 		setTargetVelocity(velocity_table[velocity_table_idx]);
+
+		if(pre_target_velocity >= velocity_table[velocity_table_idx]){
+			setClearFlagOfVelocityControlI();
+		}
+
+		pre_target_velocity = velocity_table[velocity_table_idx];
 	}
 }
 

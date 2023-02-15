@@ -92,3 +92,8 @@ void stopVelocityControl(void)
 {
 	velocity_control_enable_flag = 0;
 }
+
+void setClearFlagOfVelocityControlI(void)
+{
+	i_clear_flag = 1;
+}

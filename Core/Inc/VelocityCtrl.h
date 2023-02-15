@@ -22,4 +22,6 @@ void setTargetVelocity(float);
 void startVelocityControl(void);
 void stopVelocityControl(void);
 
+void setClearFlagOfVelocityControlI();
+
 #endif /* INC_VELOCITYCTRL_H_ */
