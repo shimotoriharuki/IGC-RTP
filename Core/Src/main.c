@@ -155,6 +155,7 @@ void init(void)
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
 	initMotor();
 
+	setLED('R');
     sensorCalibration();
 
 	HAL_Delay(200);
@@ -268,7 +269,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true) { //run
 				  setLED('N');
 				  setRunMode(1);
-				  setVelocityRange(1.4, 1.5);
+				  setVelocityRange(1.8, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -283,8 +284,8 @@ int main(void)
 
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.4, 3.5);
-				  setAccDec(5, 5);
+				  setVelocityRange(1.8, 5.0);
+				  setAccDec(8, 5);
 				  HAL_Delay(500);
 
 				  running();

@@ -10,7 +10,7 @@
 #define WHEEL_RADIUS 10.5 //[mm]
 #define PI 3.1415926535
 #define ENCODER_RESOLUTION 4096
-#define REDUCTION_RATIO 0.4 //Gear reduction ratio 0.35
+#define REDUCTION_RATIO 0.35 //Gear reduction ratio 0.35
 #define VELOCITY_PER_CNT (2 * PI * WHEEL_RADIUS * REDUCTION_RATIO / ENCODER_RESOLUTION) //[m/s per cnt]
 #define DELTA_T 0.001
 

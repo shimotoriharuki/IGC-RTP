@@ -24,6 +24,7 @@ static bool goal_judge_flag = false;
 static bool side_line_judge_flag = false;
 static bool continuous_cnt_reset_flag = false;
 static bool continuous_curve_flag = false;
+static bool running_flag = false;
 
 static uint16_t cross_line_idx;
 static uint16_t side_line_idx;
@@ -168,10 +169,10 @@ void running(void)
 
 			  stopVelocityControl();
 			  stopLineTrace();
-			  //setMotor(0, 0);
 
 			  setDroneMotor(0, 0);
 
+			  running_flag = false;
 			  goal_flag = 1;
 
 			  break;
@@ -188,85 +189,86 @@ void running(void)
 
 void runningFlip()
 {
-	updateTargetVelocity();
+	if(running_flag == true){
+		updateTargetVelocity();
 
-	if(isTargetDistance(10) == true){
-		saveLog();
-		if(isContinuousCurvature() == true){
-			//continuous_curve_check_cnt = 0;
-			continuous_curve_flag = true;
+		if(isTargetDistance(10) == true){
+			saveLog();
+			if(isContinuousCurvature() == true){
+				//continuous_curve_check_cnt = 0;
+				continuous_curve_flag = true;
+			}
+
+			clearDistance10mm();
+			clearTheta10mm();
 		}
 
-		clearDistance10mm();
-		clearTheta10mm();
-	}
-
-	//--- Cross Line Process ---//
-	if(isCrossLine() == true && cross_line_ignore_flag == false){ //Cross line detect
-		cross_line_ignore_flag = true;
-		//side_line_ignore_flag = true;
-		clearCrossLineIgnoreDistance();
-		clearSideLineIgnoreDistance();
-
-		if(mode == 1){
-			correction_check_cnt_cross = 0;
-			saveCross(getTotalDistance());
-		}
-		else{
-			//correctionTotalDistanceFromCrossLine();
-			//saveDebug(getTotalDistance());
-		}
-	}
-	else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){ //50
-		cross_line_ignore_flag = false;
-	}
-
-	//--- Side marker Process---//
-	if(getSideSensorStatusR() == true){ //Right side line detect
-		side_line_judge_flag = false;
-	 	clearSideLineJudgeDistance();
-	}
-	if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >= 60){
-		side_line_judge_flag= true;
-		clearSideLineJudgeDistance();
-	}
-	else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 60){ //Detect side line
-	 	clearSideLineJudgeDistance();
-		side_line_judge_flag= false;
-
-		if(continuous_curve_flag == true){
-			continuous_curve_flag = false;
-			continuous_cnt_reset_flag = true;
+		//--- Cross Line Process ---//
+		if(isCrossLine() == true && cross_line_ignore_flag == false){ //Cross line detect
+			cross_line_ignore_flag = true;
+			//side_line_ignore_flag = true;
+			clearCrossLineIgnoreDistance();
+			clearSideLineIgnoreDistance();
 
 			if(mode == 1){
-				correction_check_cnt_side = 0;
-				saveSide(getTotalDistance());
+				correction_check_cnt_cross = 0;
+				saveCross(getTotalDistance());
 			}
 			else{
-				correctionTotalDistanceFromSideLine();
-				saveDebug(getTotalDistance());
+				//correctionTotalDistanceFromCrossLine();
+				//saveDebug(getTotalDistance());
 			}
 		}
+		else if(cross_line_ignore_flag == true && getCrossLineIgnoreDistance() >= 50){ //50
+			cross_line_ignore_flag = false;
+		}
+
+		//--- Side marker Process---//
+		if(getSideSensorStatusR() == true){ //Right side line detect
+			side_line_judge_flag = false;
+			 clearSideLineJudgeDistance();
+		}
+		if(side_line_judge_flag== false && getSideSensorStatusL() == true && getSideLineJudgeDistance() >= 60){
+			side_line_judge_flag= true;
+			clearSideLineJudgeDistance();
+		}
+		else if(side_line_judge_flag == true && getSideLineJudgeDistance() >= 60){ //Detect side line
+			 clearSideLineJudgeDistance();
+			side_line_judge_flag= false;
+
+			if(continuous_curve_flag == true){
+				continuous_curve_flag = false;
+				continuous_cnt_reset_flag = true;
+
+				if(mode == 1){
+					correction_check_cnt_side = 0;
+					saveSide(getTotalDistance());
+				}
+				else{
+					correctionTotalDistanceFromSideLine();
+					saveDebug(getTotalDistance());
+				}
+			}
+		}
+
+
+		// Debug LED //
+		correction_check_cnt_cross++;
+		if(correction_check_cnt_cross >= 10000) correction_check_cnt_cross = 10000;
+
+		correction_check_cnt_side++;
+		if(correction_check_cnt_side >= 10000) correction_check_cnt_side = 10000;
+
+		continuous_curve_check_cnt++;
+		if(continuous_curve_check_cnt >= 10000) continuous_curve_check_cnt = 10000;
+
+		//if(correction_check_cnt_cross <= 150) setRGB('R');
+		//else setRGB('r');
+		//if(correction_check_cnt_side <= 150) setRGB('B');
+		//else setRGB('b');
+		if(continuous_curve_flag == true) setRGB('R');
+		else setRGB('r');
 	}
-
-
-	// Debug LED //
-	correction_check_cnt_cross++;
-	if(correction_check_cnt_cross >= 10000) correction_check_cnt_cross = 10000;
-
-	correction_check_cnt_side++;
-	if(correction_check_cnt_side >= 10000) correction_check_cnt_side = 10000;
-
-	continuous_curve_check_cnt++;
-	if(continuous_curve_check_cnt >= 10000) continuous_curve_check_cnt = 10000;
-
-	//if(correction_check_cnt_cross <= 150) setRGB('R');
-	//else setRGB('r');
-	//if(correction_check_cnt_side <= 150) setRGB('B');
-	//else setRGB('b');
-	if(continuous_curve_flag == true) setRGB('R');
-	else setRGB('r');
-
 
 }
 
@@ -294,8 +296,9 @@ void runningInit()
 	side_line_judge_flag = false;
 	continuous_cnt_reset_flag = true;
 	continuous_curve_flag = false;
+	running_flag = true;
 
-	setDroneMotor(400, 400);
+	setDroneMotor(600, 600);
 	HAL_Delay(500);
 }
 
@@ -368,8 +371,8 @@ void createVelocityTable(){
 		velocity_table[i] = max_velocity;
 	}
 
-	addDecelerationDistanceMergin(velocity_table, 160);
-	shiftVelocityTable(velocity_table, 10);
+	addDecelerationDistanceMergin(velocity_table, 10);
+	shiftVelocityTable(velocity_table, 5);
 
 	decelerateProcessing(deceleration, p_distance);
 	accelerateProcessing(acceleration, p_distance);
@@ -381,8 +384,10 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		if(radius < 1000) velocity = min_velocity;
-		else velocity = max_velocity;
+		velocity = radius * ((max_velocity - min_velocity) / 5000) + min_velocity;
+
+		//if(radius < 1000) velocity = min_velocity;
+		//else velocity = max_velocity;
 	}
 	else if(mode == 3){
 		if(radius < 400) velocity = min_velocity;
@@ -429,7 +434,7 @@ void accelerateProcessing(const float am, const float *p_distance){
 
 void addDecelerationDistanceMergin(float *table, int16_t mergin_size)
 {
-	setRGB('R');
+	//setRGB('R');
 	uint16_t idx = mergin_size;
 	float pre_target_velocity = table[idx];
 
@@ -446,7 +451,7 @@ void addDecelerationDistanceMergin(float *table, int16_t mergin_size)
 
 		idx++;
 	}
-	setRGB('r');
+	//setRGB('r');
 
 }
 
