@@ -12,7 +12,9 @@ static float log_side[200];
 static float log_debug[200];
 static float log_distance[6000];
 static float log_theta[6000];
-static uint16_t log_distance_cnt, log_theta_cnt, log_cross_cnt, log_side_cnt, log_debug_cnt;
+static float log_gain[100];
+static float log_calibration[100];
+static uint16_t log_distance_cnt, log_theta_cnt, log_cross_cnt, log_side_cnt, log_debug_cnt, log_gain_cnt, log_calibration_cnt;
 
 void initLog(){
 	writeAdd_1 = start_adress_sector7;
@@ -20,11 +22,15 @@ void initLog(){
 	writeAdd_3 = start_adress_sector9;
 	writeAdd_4 = start_adress_sector10;
 	writeAdd_5 = start_adress_sector11;
+	//writeAdd_6 = start_adress_sector3;
+	//writeAdd_7 = start_adress_sector4;
 	readAdd_1 = start_adress_sector7;
 	readAdd_2 = start_adress_sector8;
 	readAdd_3 = start_adress_sector9;
 	readAdd_4 = start_adress_sector10;
 	readAdd_5 = start_adress_sector11;
+	//readAdd_6 = start_adress_sector3;
+	//readAdd_7 = start_adress_sector4;
 }
 
 void saveDistance(float distance){
@@ -52,8 +58,19 @@ void saveDebug(float cross){
 	writeAdd_5+= 0x04;
 }
 
+void saveGain(float gain){
+	FLASH_Write_Word_F(writeAdd_6, gain);
+	writeAdd_6+= 0x04;
+}
+
+void saveCalibration(float calibration){
+	FLASH_Write_Word_F(writeAdd_7, calibration);
+	writeAdd_7+= 0x04;
+}
 
 void ereaseLog(){
+	//FLASH_EreaseSector(FLASH_SECTOR_3);
+	//FLASH_EreaseSector(FLASH_SECTOR_4);
 	FLASH_EreaseSector(FLASH_SECTOR_7);
 	FLASH_EreaseSector(FLASH_SECTOR_8);
 	FLASH_EreaseSector(FLASH_SECTOR_9);
@@ -65,7 +82,9 @@ void ereaseLog(){
 	writeAdd_2 = start_adress_sector8;
 	writeAdd_3 = start_adress_sector9;
 	writeAdd_4 = start_adress_sector10;
-	writeAdd_5= start_adress_sector11;
+	writeAdd_5 = start_adress_sector11;
+	//writeAdd_6 = start_adress_sector3;
+	//writeAdd_7 = start_adress_sector4;
 }
 
 void ereaseDebugLog(){
@@ -90,6 +109,13 @@ uint16_t getDebugLogSize(){
 	return log_debug_cnt;
 }
 
+uint16_t getGain(){
+	return log_gain_cnt;
+}
+
+uint16_t getalibration(){
+	return log_calibration_cnt;
+}
 
 void loadDistance(){
 	uint16_t i = 0;
@@ -181,6 +207,42 @@ void loadDebug(){
 	}
 }
 
+void loadGain(){
+	uint16_t i = 0;
+	//readAdd_6= start_adress_sector3;
+	log_gain_cnt = 0;
+
+	while(1){
+		//log_gain[i] = *(float*)readAdd_6;
+		if(isnan(log_gain[i]) != 0){
+			break;
+		}
+		else{
+			log_gain_cnt++;
+		}
+		//readAdd_6 += 0x04;
+		i++;
+	}
+}
+
+void loadCalibration(){
+	uint16_t i = 0;
+	//readAdd_7= start_adress_sector4;
+	log_calibration_cnt = 0;
+
+	while(1){
+		//log_calibration[i] = *(float*)readAdd_7;
+		if(isnan(log_calibration[i]) != 0){
+			break;
+		}
+		else{
+			log_calibration_cnt++;
+		}
+		//readAdd_7 += 0x04;
+		i++;
+	}
+}
+
 
 const float *getDistanceArrayPointer(){
 	return log_distance;
@@ -208,4 +270,12 @@ float getCrossLog(uint16_t idx){
 
 float getSideLog(uint16_t idx){
 	return log_side[idx];
+}
+
+float getGainLog(uint16_t idx){
+	return log_gain[idx];
+}
+
+float getCalibrationLog(uint16_t idx){
+	return log_calibration[idx];
 }
