@@ -33,6 +33,7 @@ void loadSide();
 void loadDebug();
 
 float getDistanceLog(uint16_t);
+float getThetaLog(uint16_t);
 float getCrossLog(uint16_t);
 float getSideLog(uint16_t);
 

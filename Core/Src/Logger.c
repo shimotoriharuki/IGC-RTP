@@ -202,6 +202,10 @@ float getDistanceLog(uint16_t idx){
 	return log_distance[idx];
 }
 
+float getThetaLog(uint16_t idx){
+	return log_theta[idx];
+}
+
 float getCrossLog(uint16_t idx){
 	return log_cross[idx];
 }

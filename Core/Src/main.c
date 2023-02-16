@@ -32,6 +32,7 @@
 #include "LED.h"
 #include "Switch.h"
 #include "BatteryChecker.h"
+#include "stdio.h"
 
 /* USER CODE END Includes */
 
@@ -103,6 +104,17 @@ static void MX_ADC2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#ifdef __GNUC__
+	#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+	#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /*__GNUC__*/
+
+PUTCHAR_PROTOTYPE{
+	HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, 0xFFFF);
+	return ch;
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){ //1ms
@@ -245,7 +257,7 @@ int main(void)
 	  if(getSwitchStatus('L') == true){
 		  mode_selector++;
 		  HAL_Delay(200);
-		  if(mode_selector >= 5) mode_selector = 0;
+		  if(mode_selector >= 6) mode_selector = 0;
 	  }
 
 	  switch(mode_selector){
@@ -285,7 +297,7 @@ int main(void)
 				  setLED('N');
 				  setRunMode(2);
 				  setVelocityRange(1.8, 5.0);
-				  setAccDec(8, 5);
+				  setAccDec(8, 3);
 				  HAL_Delay(500);
 
 				  running();
@@ -322,6 +334,29 @@ int main(void)
 
 				  setLED('G');
 			  }
+			  break;
+
+		  case 5:
+			  setLED('G');
+			  if(getSwitchStatus('R') == true) {
+				  setLED('N');
+				  loadDistance();
+				  loadTheta();
+				  loadCross();
+				  loadSide();
+				  loadDebug();
+
+				  setRunMode(2);
+				  setVelocityRange(1.8, 5.0);
+				  setAccDec(8, 3);
+				  createVelocityTable();
+
+				  printf("Distance, Theta, VelocityTable\r\n");
+				  for(uint16_t i = 0; i < getDistanceLogSize(); i++){
+					 printf("%f, %f, %f\r\n", getDistanceLog(i), getThetaLog(i), getVelocityTableValue(i));
+				  }
+			  }
+
 			  break;
 	  };
 
@@ -1022,7 +1057,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;

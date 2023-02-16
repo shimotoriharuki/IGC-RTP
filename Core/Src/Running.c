@@ -490,6 +490,11 @@ void updateTargetVelocity(){
 	}
 }
 
+float getVelocityTableValue(uint16_t idx)
+{
+	return velocity_table[idx];
+}
+
 void correctionTotalDistanceFromCrossLine()
 {
 	while(cross_line_idx <= getCrossLogSize()){

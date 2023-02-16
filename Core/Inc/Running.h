@@ -44,6 +44,7 @@ void accelerateProcessing(const float, const float *);
 void addDecelerationDistanceMergin(float *, int16_t);
 void shiftVelocityTable(float *, int16_t);
 void updateTargetVelocity();
+float getVelocityTableValue(uint16_t);
 
 void correctionTotalDistanceFromCrossLine();
 void correctionTotalDistanceFromSideLine();
