@@ -359,7 +359,7 @@ void createVelocityTable(){
 
 		if(temp_theta == 0) temp_theta = 0.00001;
 		float radius = fabs(temp_distance / temp_theta);
-		if(radius >= 5000) radius = 5000;
+		if(radius >= 2000) radius = 2000;
 		velocity_table[i] = radius2Velocity(radius);
 
 		//Forced maximum speed on the crossline
@@ -390,7 +390,7 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		velocity = radius * ((max_velocity - min_velocity) / 5000) + min_velocity;
+		velocity = radius * ((max_velocity - min_velocity) / 2000) + min_velocity;
 
 		//if(radius < 1000) velocity = min_velocity;
 		//else velocity = max_velocity;
@@ -488,7 +488,7 @@ void updateTargetVelocity(){
 
 		setTargetVelocity(velocity_table[velocity_table_idx]);
 
-		if(pre_target_velocity >= velocity_table[velocity_table_idx]){
+		if(pre_target_velocity > velocity_table[velocity_table_idx]){
 			setClearFlagOfVelocityControlI();
 		}
 

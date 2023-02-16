@@ -24,7 +24,8 @@ void calculateLineFollowingTermFlip(void){
 	float kp = 0.85, ki = 0.00, kd = 0.009;
 #elif defined(I7)
 	//float kp = 0.6, ki = 0.00, kd = 0.01;
-	float kp = 0.85, ki = 0.00, kd = 0.009;
+	//float kp = 0.85, ki = 0.00, kd = 0.009;
+	float kp = 0.95, ki = 0.00, kd = 0.011;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;
