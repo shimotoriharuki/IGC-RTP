@@ -16,18 +16,22 @@
 #define FLASH_SECTOR11		0x58	//0x1011000
 
 // flash use address
-const uint32_t start_adress_sector6  = 	0x8040000; //sentor6 start address
+const uint32_t start_adress_sector3  = 	0x800c000; //sector3 start address
+const uint32_t end_adress_sector3 	 = 	0x800FFFF;
+const uint32_t start_adress_sector4  = 	0x8010000; //sector4 start address
+const uint32_t end_adress_sector4 	 = 	0x801FFFF;
+const uint32_t start_adress_sector6  = 	0x8040000; //sector6 start address
 const uint32_t end_adress_sector6 	 = 	0x805FFFF;
-const uint32_t start_adress_sector7  = 	0x8060000; //sentor7 start address
+const uint32_t start_adress_sector7  = 	0x8060000; //sector7 start address
 const uint32_t end_adress_sector7 	 = 	0x807FFFF;
-const uint32_t start_adress_sector8  = 	0x8080000; //sentor8 start address
+const uint32_t start_adress_sector8  = 	0x8080000; //sector8 start address
 const uint32_t end_adress_sector8 	 = 	0x809FFFF;
-const uint32_t start_adress_sector9  = 	0x80A0000; //sentor9 start address
+const uint32_t start_adress_sector9  = 	0x80A0000; //sector9 start address
 const uint32_t end_adress_sector9 	 = 	0x80BFFFF;
-const uint32_t start_adress_sector10 =  0x80C0000; //sentor10 start address
+const uint32_t start_adress_sector10 =  0x80C0000; //sector10 start address
 const uint32_t end_adress_sector10 	 = 	0x80DFFFF;
-const uint32_t start_adress_sector11 =  0x80E0000; //sentor11 start address
-//const uint32_t middle_adress_sector11 = 0x80E3CAF; //sentor11 midle address
+const uint32_t start_adress_sector11 =  0x80E0000; //sector11 start address
+//const uint32_t middle_adress_sector11 = 0x80E3CAF; //sector11 midle address
 const uint32_t end_adress_sector11 	 = 	0x80FFFFF;
 
 inline static void FLASH_Unlock(void)

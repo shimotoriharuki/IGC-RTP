@@ -22,6 +22,10 @@
  */
 
 // flash use address
+extern const uint32_t start_adress_sector3; //sector6 start address
+extern const uint32_t end_adress_sector3;
+extern const uint32_t start_adress_sector4; //sector6 start address
+extern const uint32_t end_adress_sector4;
 extern const uint32_t start_adress_sector6; //sector6 start address
 extern const uint32_t end_adress_sector6;
 extern const uint32_t start_adress_sector7; //sector7 start address

@@ -182,7 +182,8 @@ int main(void)
 
   /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */  HAL_Init();
+
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -296,6 +297,8 @@ int main(void)
 				  loadCross();
 				  loadSide();
 				  loadDebug();
+				  loadGain();
+				  loadCalibration();
 
 				  setRunMode(2);
 				  setVelocityRange(0.5, 1.5);

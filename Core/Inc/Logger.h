@@ -12,33 +12,43 @@
 #include "math.h"
 #include "Flash_F405.h"
 
-uint32_t writeAdd_1, writeAdd_2, writeAdd_3, writeAdd_4, writeAdd_5;
-uint32_t readAdd_1, readAdd_2, readAdd_3, readAdd_4, readAdd_5;
+uint32_t writeAdd_1, writeAdd_2, writeAdd_3, writeAdd_4, writeAdd_5, writeAdd_6, writeAdd_7;
+uint32_t readAdd_1, readAdd_2, readAdd_3, readAdd_4, readAdd_5, readAdd_6, readAdd_7;
 
 void saveDistance(float);
 void saveTheta(float);
 void saveCross(float);
 void saveSide(float);
 void saveDebug(float);
+void saveGain(float);
+void saveCalibration(float);
 void initLog(void);
 void ereaseLog(void);
 void ereaseDebugLog(void);
 uint16_t getDistanceLogSize();
 uint16_t getCrossLogSize();
 uint16_t getSideLogSize();
+uint16_t getGain();
+uint16_t getCalibration();
 void loadDistance();
 void loadTheta();
 void loadCross();
 void loadSide();
 void loadDebug();
+void loadGain();
+void loadCalibration();
 
 float getDistanceLog(uint16_t);
 float getCrossLog(uint16_t);
 float getSideLog(uint16_t);
+float getGainLog(uint16_t);
+float getCalibrationLog(uint16_t);
 
 const float *getDistanceArrayPointer();
 const float *getThetaArrayPointer();
 const float *getCrossArrayPointer();
 const float *getSideArrayPointer();
+const float *getGainArrayPointer();
+const float *getCalibrationArrayPointer();
 
 #endif /* INC_LOGGER_H_ */
