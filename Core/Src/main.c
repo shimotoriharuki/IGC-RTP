@@ -170,7 +170,7 @@ void init(void)
 	setLED('R');
     sensorCalibration();
 
-	HAL_Delay(200);
+	HAL_Delay(500);
 	if(isBatteryLow() == true){
 		uint16_t i = 0;
 		for(i = 0; i < 10; i++){

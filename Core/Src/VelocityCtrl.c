@@ -30,7 +30,8 @@ void calculateVelocityControlFlip(void)
 #ifdef RYUKU
 	float kp = 1500, ki = 5000, kd = 0.;
 #elif defined(I7)
-	float kp = 2500, ki = 20000, kd = 0;
+	//float kp = 2500, ki = 20000, kd = 0;
+	float kp = 1500, ki = 5000, kd = 0.;
 #endif
 
 	float diff = 0.;
