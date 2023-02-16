@@ -19,7 +19,6 @@
 #include "LED.h"
 
 
-float velocity_table[6000];
 
 bool isCrossLine();
 bool isContinuousCurvature();

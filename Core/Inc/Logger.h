@@ -26,6 +26,7 @@ void ereaseDebugLog(void);
 uint16_t getDistanceLogSize();
 uint16_t getCrossLogSize();
 uint16_t getSideLogSize();
+uint16_t getDebugLogSize();
 void loadDistance();
 void loadTheta();
 void loadCross();
@@ -36,6 +37,7 @@ float getDistanceLog(uint16_t);
 float getThetaLog(uint16_t);
 float getCrossLog(uint16_t);
 float getSideLog(uint16_t);
+float getDebugLog(uint16_t);
 
 const float *getDistanceArrayPointer();
 const float *getThetaArrayPointer();

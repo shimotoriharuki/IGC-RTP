@@ -7,6 +7,8 @@
 
 #include "Running.h"
 
+static float velocity_table[6000];
+
 uint8_t mon_is_crossline;
 uint16_t velocity_table_idx;
 uint16_t mode;
@@ -246,7 +248,7 @@ void runningFlip()
 				}
 				else{
 					correctionTotalDistanceFromSideLine();
-					saveDebug(getTotalDistance());
+					//saveDebug(getTotalDistance());
 				}
 			}
 		}
@@ -306,6 +308,10 @@ void saveLog(){
 	if(logging_flag == true){
 		saveDistance(getDistance10mm());
 		saveTheta(getTheta10mm());
+	}
+	else if(velocity_update_flag == true){
+		saveDebug(getTargetVelocity());
+		saveDebug(getCurrentVelocity());
 	}
 }
 
@@ -483,14 +489,14 @@ void updateTargetVelocity(){
 		setTargetVelocity(velocity_table[velocity_table_idx]);
 
 		if(pre_target_velocity >= velocity_table[velocity_table_idx]){
-			setClearFlagOfVelocityControlI();
+			//setClearFlagOfVelocityControlI();
 		}
 
 		pre_target_velocity = velocity_table[velocity_table_idx];
 	}
 }
 
-float getVelocityTableValue(uint16_t idx)
+float getDebugVelocityTableValue(uint16_t idx)
 {
 	return velocity_table[idx];
 }

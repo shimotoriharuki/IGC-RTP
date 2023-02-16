@@ -33,6 +33,7 @@
 #include "Switch.h"
 #include "BatteryChecker.h"
 #include "stdio.h"
+#include "Logger.h"
 
 /* USER CODE END Includes */
 
@@ -351,9 +352,17 @@ int main(void)
 				  setAccDec(8, 3);
 				  createVelocityTable();
 
-				  printf("Distance, Theta, VelocityTable\r\n");
+				  printf("Distance, Theta\r\n");
 				  for(uint16_t i = 0; i < getDistanceLogSize(); i++){
-					 printf("%f, %f, %f\r\n", getDistanceLog(i), getThetaLog(i), getVelocityTableValue(i));
+					 printf("%f, %f\r\n", getDistanceLog(i), getThetaLog(i));
+				  }
+
+				  printf("9999, 9999\r\n");
+
+				  printf("TargetVelocity, CurrentVelocity\r\n");
+				  uint16_t size = getDebugLogSize()/2;
+				  for(uint16_t i = 0; i < size; i = i+2){
+					 printf("%f, %f\r\n", getDebugLog(i), getDebugLog(i + 1));
 				  }
 			  }
 
@@ -1057,7 +1066,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 9600;
+  huart1.Init.BaudRate = 57600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
