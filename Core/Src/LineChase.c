@@ -68,11 +68,13 @@ void lineTraceFlip(void)
 		velocity_control_term -= exceeded;
 		line_following_term += exceeded;
 
-		//float motor_l = velocity_control_term + line_following_term;
-		//float motor_r = velocity_control_term - line_following_term;
+		float motor_l = velocity_control_term + line_following_term;
+		float motor_r = velocity_control_term - line_following_term;
 
+		/*
 		float motor_l = velocity_control_term ;
 		float motor_r = velocity_control_term ;
+		*/
 
 		mon_velo_term = velocity_control_term;
 		setMotor(motor_l, motor_r);
