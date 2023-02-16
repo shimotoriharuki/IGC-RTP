@@ -22,15 +22,15 @@ void initLog(){
 	writeAdd_3 = start_adress_sector9;
 	writeAdd_4 = start_adress_sector10;
 	writeAdd_5 = start_adress_sector11;
-	writeAdd_6 = start_adress_sector3;
-	writeAdd_7 = start_adress_sector4;
+	//writeAdd_6 = start_adress_sector3;
+	//writeAdd_7 = start_adress_sector4;
 	readAdd_1 = start_adress_sector7;
 	readAdd_2 = start_adress_sector8;
 	readAdd_3 = start_adress_sector9;
 	readAdd_4 = start_adress_sector10;
 	readAdd_5 = start_adress_sector11;
-	readAdd_6 = start_adress_sector3;
-	readAdd_7 = start_adress_sector4;
+	//readAdd_6 = start_adress_sector3;
+	//readAdd_7 = start_adress_sector4;
 }
 
 void saveDistance(float distance){
@@ -69,8 +69,8 @@ void saveCalibration(float calibration){
 }
 
 void ereaseLog(){
-	FLASH_EreaseSector(FLASH_SECTOR_3);
-	FLASH_EreaseSector(FLASH_SECTOR_4);
+	//FLASH_EreaseSector(FLASH_SECTOR_3);
+	//FLASH_EreaseSector(FLASH_SECTOR_4);
 	FLASH_EreaseSector(FLASH_SECTOR_7);
 	FLASH_EreaseSector(FLASH_SECTOR_8);
 	FLASH_EreaseSector(FLASH_SECTOR_9);
@@ -83,8 +83,8 @@ void ereaseLog(){
 	writeAdd_3 = start_adress_sector9;
 	writeAdd_4 = start_adress_sector10;
 	writeAdd_5 = start_adress_sector11;
-	writeAdd_6 = start_adress_sector3;
-	writeAdd_7 = start_adress_sector4;
+	//writeAdd_6 = start_adress_sector3;
+	//writeAdd_7 = start_adress_sector4;
 }
 
 void ereaseDebugLog(){
@@ -209,36 +209,36 @@ void loadDebug(){
 
 void loadGain(){
 	uint16_t i = 0;
-	readAdd_6= start_adress_sector3;
+	//readAdd_6= start_adress_sector3;
 	log_gain_cnt = 0;
 
 	while(1){
-		log_gain[i] = *(float*)readAdd_6;
+		//log_gain[i] = *(float*)readAdd_6;
 		if(isnan(log_gain[i]) != 0){
 			break;
 		}
 		else{
 			log_gain_cnt++;
 		}
-		readAdd_6 += 0x04;
+		//readAdd_6 += 0x04;
 		i++;
 	}
 }
 
 void loadCalibration(){
 	uint16_t i = 0;
-	readAdd_6= start_adress_sector4;
+	//readAdd_7= start_adress_sector4;
 	log_calibration_cnt = 0;
 
 	while(1){
-		log_calibration[i] = *(float*)readAdd_7;
+		//log_calibration[i] = *(float*)readAdd_7;
 		if(isnan(log_calibration[i]) != 0){
 			break;
 		}
 		else{
 			log_calibration_cnt++;
 		}
-		readAdd_7 += 0x04;
+		//readAdd_7 += 0x04;
 		i++;
 	}
 }

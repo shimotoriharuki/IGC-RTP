@@ -16,10 +16,10 @@
 #define FLASH_SECTOR11		0x58	//0x1011000
 
 // flash use address
-const uint32_t start_adress_sector3  = 	0x800c000; //sector3 start address
-const uint32_t end_adress_sector3 	 = 	0x800FFFF;
-const uint32_t start_adress_sector4  = 	0x8010000; //sector4 start address
-const uint32_t end_adress_sector4 	 = 	0x801FFFF;
+//const uint32_t start_adress_sector3  = 	0x800c000; //sector3 start address
+//const uint32_t end_adress_sector3 	 = 	0x800FFFF;
+//const uint32_t start_adress_sector4  = 	0x8010000; //sector4 start address
+//const uint32_t end_adress_sector4 	 = 	0x801FFFF;
 const uint32_t start_adress_sector6  = 	0x8040000; //sector6 start address
 const uint32_t end_adress_sector6 	 = 	0x805FFFF;
 const uint32_t start_adress_sector7  = 	0x8060000; //sector7 start address
