@@ -298,7 +298,7 @@ int main(void)
 				  setLED('N');
 				  setRunMode(2);
 				  setVelocityRange(1.8, 5.0);
-				  setAccDec(8, 5);
+				  setAccDec(8, 3);
 				  HAL_Delay(500);
 
 				  running();
@@ -367,7 +367,7 @@ int main(void)
 				  printf("9999, 9999\r\n");
 
 				  printf("TargetVelocity, CurrentVelocity\r\n");
-				  uint16_t size = getDebugLogSize()/2;
+				  uint16_t size = getDebugLogSize();
 				  for(uint16_t i = 0; i < size; i = i+2){
 					 printf("%f, %f\r\n", getDebugLog(i), getDebugLog(i + 1));
 				  }

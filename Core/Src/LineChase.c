@@ -21,11 +21,11 @@ void calculateLineFollowingTermFlip(void){
 	float p, d;
 	static double i;
 #ifdef RYUKU
-	float kp = 0.85, ki = 0.00, kd = 0.009;
+	float kp = 0.85, ki = 0.00, kd = 0.025;
 #elif defined(I7)
 	//float kp = 0.6, ki = 0.00, kd = 0.01;
 	//float kp = 0.85, ki = 0.00, kd = 0.009;
-	float kp = 0.95, ki = 0.00, kd = 0.011;
+	float kp = 1.0, ki = 0.00, kd = 0.02;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;
@@ -37,7 +37,7 @@ void calculateLineFollowingTermFlip(void){
 			i_clear_flag = 0;
 		}
 
-		diff = ( ( sensor[0] + sensor[1] + sensor[2] + sensor[3] + sensor[4] + sensor[5] ) / 6 ) - ( ( sensor[6] + sensor[7] + sensor[8] + sensor[9] + sensor[10] + sensor[11] ) / 6 );
+		diff = ( ( sensor[0] * 2.0 + sensor[1] * 1.8 + sensor[2] * 1.6 + sensor[3] * 1.4 + sensor[4] * 1.2 + sensor[5] * 1.0 ) / 6 ) - ( ( sensor[6] * 1.0 + sensor[7] * 1.2 + sensor[8] * 1.4 + sensor[9] * 1.6 + sensor[10] * 1.8 + sensor[11] * 2.0 ) / 6 );
 
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御

@@ -31,7 +31,7 @@ void calculateVelocityControlFlip(void)
 	float kp = 1500, ki = 5000, kd = 0.;
 #elif defined(I7)
 	//float kp = 2500, ki = 5000, kd = 0;
-	float kp = 5800, ki = 58000, kd = 0.;
+	float kp = 5800, ki = 50000, kd = 0.;
 #endif
 
 	float diff = 0.;
