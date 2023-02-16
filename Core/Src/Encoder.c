@@ -10,14 +10,14 @@
 #define MAX_ENCODER_CNT 65535
 #define CNT_OFFSET 10000 //32768
 
-#define WHEEL_RADIUS 10.5 //[mm]
 #define PI 3.1415926535
 #define ENCODER_RESOLUTION 4096
 #ifdef RYUKU
-
-#define REDUCTION_RATIO 0.4 //Gear reduction ratio
+	#define WHEEL_RADIUS 10.5 //[mm]
+	#define REDUCTION_RATIO 0.4 //Gear reduction ratio
 #elif defined(I7)
-#define REDUCTION_RATIO 0.4 //Gear reduction ratio
+	#define WHEEL_RADIUS 10.5 //[mm]
+	#define REDUCTION_RATIO 0.4 //Gear reduction ratio
 #endif
 
 #define DISTANCE_PER_CNT (2 * PI * WHEEL_RADIUS * REDUCTION_RATIO / ENCODER_RESOLUTION) //[mm per cnt]
