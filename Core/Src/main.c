@@ -329,7 +329,14 @@ int main(void)
 				  HAL_Delay(500);
 				  setLED('Y');
 
-				  setDroneMotor(300, 300);
+				  startVelocityControl();
+				  startLineTrace();
+				  setTargetVelocity(0);
+				  HAL_Delay(1000);
+				  stopVelocityControl();
+				  stopLineTrace();
+
+				  //setDroneMotor(300, 300);
 				  HAL_Delay(1000);
 				  setDroneMotor(0, 0);
 

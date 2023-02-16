@@ -30,8 +30,8 @@ void calculateVelocityControlFlip(void)
 #ifdef RYUKU
 	float kp = 1500, ki = 5000, kd = 0.;
 #elif defined(I7)
-	float kp = 2500, ki = 20000, kd = 0;
-	//float kp = 1500, ki = 5000, kd = 0.;
+	//float kp = 2500, ki = 5000, kd = 0;
+	float kp = 1500, ki = 5000, kd = 0.;
 #endif
 
 	float diff = 0.;
@@ -45,13 +45,13 @@ void calculateVelocityControlFlip(void)
 		}
 
 		diff = target_velocity - current_velocity;
-		mon_diff = diff;
+		//mon_diff = diff;
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御
 		d = kd * (diff - pre_diff) / DELTA_T; //D制御
 
-		if(i >= 100) i = 100;
-		if(i <= -100) i = -100;
+		if(i >= 1000) i = 1000;
+		if(i <= -1000) i = -1000;
 
 		velocity_control_term = p + i + d;
 

@@ -489,7 +489,7 @@ void updateTargetVelocity(){
 		setTargetVelocity(velocity_table[velocity_table_idx]);
 
 		if(pre_target_velocity >= velocity_table[velocity_table_idx]){
-			//setClearFlagOfVelocityControlI();
+			setClearFlagOfVelocityControlI();
 		}
 
 		pre_target_velocity = velocity_table[velocity_table_idx];
