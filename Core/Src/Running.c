@@ -79,7 +79,8 @@ bool isContinuousCurvature()
 		continuous_cnt = 0;
 	}
 
-	if(diff_theta <= 0.005) continuous_cnt++;
+	//if(diff_theta <= 0.005) continuous_cnt++;
+	if(diff_theta <= 0.010) continuous_cnt++;
 	else continuous_cnt = 0;
 
 	if(continuous_cnt >= 40) continuous_flag = true;

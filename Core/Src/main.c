@@ -345,7 +345,7 @@ int main(void)
 				  setRunMode(2);
 				  setVelocityRange(1.7, 6.0);
 				  setAccDec(8, 3);
-				  setStraightRadius(700);
+				  setStraightRadius(1500);
 				  HAL_Delay(500);
 
 				  running();
