@@ -210,6 +210,7 @@ void runningFlip()
 		//--- Cross Line Process ---//
 		if(isCrossLine() == true && cross_line_ignore_flag == false){ //Cross line detect
 			cross_line_ignore_flag = true;
+			continuous_curve_flag = true;
 			//side_line_ignore_flag = true;
 			clearCrossLineIgnoreDistance();
 			clearSideLineIgnoreDistance();
