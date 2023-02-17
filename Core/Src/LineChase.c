@@ -7,7 +7,7 @@
 
 #include "LineChase.h"
 #define DELTA_T 0.001
-#define SENSOR_ALL_DARK 150
+#define SENSOR_ALL_DARK 100
 
 static int16_t speed_l, speed_r;
 static uint8_t line_trace_enable_flag;
@@ -37,7 +37,7 @@ void calculateLineFollowingTermFlip(void){
 			i_clear_flag = 0;
 		}
 
-		diff = ( ( sensor[0] * 2.0 + sensor[1] * 1.8 + sensor[2] * 1.6 + sensor[3] * 1.4 + sensor[4] * 1.2 + sensor[5] * 1.0 ) / 6 ) - ( ( sensor[6] * 1.0 + sensor[7] * 1.2 + sensor[8] * 1.4 + sensor[9] * 1.6 + sensor[10] * 1.8 + sensor[11] * 2.0 ) / 6 );
+		diff = ( ( sensor[0] * 3.0 + sensor[1] * 2.6 + sensor[2] * 2.2 + sensor[3] * 1.8 + sensor[4] * 1.4 + sensor[5] * 1.0 ) / 6 ) - ( ( sensor[6] * 1.0 + sensor[7] * 1.4 + sensor[8] * 1.8 + sensor[9] * 2.2 + sensor[10] * 2.6 + sensor[11] * 3.0 ) / 6 );
 
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御

@@ -300,7 +300,7 @@ void runningInit()
 	continuous_curve_flag = false;
 	running_flag = true;
 
-	setDroneMotor(600, 600);
+	setDroneMotor(600, 600); //600, 600
 	HAL_Delay(500);
 }
 
@@ -377,13 +377,15 @@ void createVelocityTable(){
 		velocity_table[i] = max_velocity;
 	}
 
+
 	addDecelerationDistanceMergin(velocity_table, 10);
 	shiftVelocityTable(velocity_table, 5);
+
+	velocity_table[0] = min_velocity;
 
 	decelerateProcessing(deceleration, p_distance);
 	accelerateProcessing(acceleration, p_distance);
 
-	velocity_table[0] = min_velocity;
 }
 
 float radius2Velocity(float radius){
@@ -487,6 +489,19 @@ void updateTargetVelocity(){
 		}
 
 		setTargetVelocity(velocity_table[velocity_table_idx]);
+
+
+		/*
+		if(getCurrentVelocity() > velocity_table[velocity_table_idx]+0.5){
+			setClearFlagOfVelocityControlI();
+		}
+		*/
+		/*
+		float diff = pre_target_velocity - velocity_table[velocity_table_idx];
+		if(diff > 0.01){
+			setClearFlagOfVelocityControlI();
+		}
+		*/
 
 		if(pre_target_velocity > velocity_table[velocity_table_idx]){
 			setClearFlagOfVelocityControlI();

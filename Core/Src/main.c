@@ -127,8 +127,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		updateAnalogSensor();
 		updateSideSensorStatus();
 
-		calculateLineFollowingTermFlip();
 		calculateVelocityControlFlip();
+		calculateLineFollowingTermFlip();
 		lineTraceFlip();
 		checkCourseOut();
 
@@ -268,7 +268,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true){ //run
 				  setLED('N');
 				  setRunMode(1);
-				  setVelocityRange(1.0, 1.5);
+				  setVelocityRange(1.5, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -281,8 +281,9 @@ int main(void)
 
 			  if(getSwitchStatus('R') == true) { //run
 				  setLED('N');
-				  setRunMode(1);
-				  setVelocityRange(1.8, 1.5);
+				  setRunMode(2);
+				  setVelocityRange(1.8, 5.0);
+				  setAccDec(8, 3);
 				  HAL_Delay(500);
 
 				  running();
@@ -297,7 +298,7 @@ int main(void)
 
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.8, 5.0);
+				  setVelocityRange(1.8, 6.0);
 				  setAccDec(8, 3);
 				  HAL_Delay(500);
 
