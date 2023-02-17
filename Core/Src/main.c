@@ -275,7 +275,7 @@ int main(void)
 
 	  switch(mode_selector){
 		  case 0:
-			  setLED('C');
+			  setLED('B');
 
 			  if(getSwitchStatus('R') == true){ //run
 				  setLED('N');
@@ -289,14 +289,14 @@ int main(void)
 			  break;
 
 		  case 1:
-			  setLED('Y');
+			  setLED('C');
 
 			  if(getSwitchStatus('R') == true) { //run
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.7, 4.0);
-				  setAccDec(8, 2);
-				  setStraightRadius(2000);
+				  setVelocityRange(1.7, 3.0);
+				  setAccDec(5, 2);
+				  setStraightRadius(1000);
 				  HAL_Delay(500);
 
 				  running();
@@ -305,15 +305,15 @@ int main(void)
 			  break;
 
 		  case 2:
-			  setLED('M');
+			  setLED('Y');
 
 			  if(getSwitchStatus('R') == true) { //run
 
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.7, 6.0);
+				  setVelocityRange(1.7, 4.0);
 				  setAccDec(8, 3);
-				  setStraightRadius(800);
+				  setStraightRadius(2000);
 				  HAL_Delay(500);
 
 				  running();
@@ -322,18 +322,17 @@ int main(void)
 			  break;
 
 		  case 3:
-			  setLED('B');
+			  setLED('M');
 			  if(getSwitchStatus('R') == true) {
-				  loadDistance();
-				  loadTheta();
-				  loadCross();
-				  loadSide();
-				  loadDebug();
 
+				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(0.5, 1.5);
-				  setAccDec(10, 10);
-				  createVelocityTable();
+				  setVelocityRange(1.7, 5.0);
+				  setAccDec(8, 3);
+				  setStraightRadius(1500);
+				  HAL_Delay(500);
+
+				  running();
 			  }
 
 			  break;
@@ -341,21 +340,15 @@ int main(void)
 		  case 4:
 			  setLED('R');
 			  if(getSwitchStatus('R') == true) {
+
+				  setLED('N');
+				  setRunMode(2);
+				  setVelocityRange(1.7, 6.0);
+				  setAccDec(8, 3);
+				  setStraightRadius(700);
 				  HAL_Delay(500);
-				  setLED('Y');
 
-				  startVelocityControl();
-				  startLineTrace();
-				  setTargetVelocity(0);
-				  HAL_Delay(1000);
-				  stopVelocityControl();
-				  stopLineTrace();
-
-				  //setDroneMotor(300, 300);
-				  HAL_Delay(1000);
-				  setDroneMotor(0, 0);
-
-				  setLED('G');
+				  running();
 			  }
 			  break;
 
