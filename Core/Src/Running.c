@@ -169,10 +169,17 @@ void running(void)
 		  case 20:
 			  setLED('B');
 
-			  setTargetVelocity(-1.0);
-			  HAL_Delay(100);
-			  setTargetVelocity(0);
-			  HAL_Delay(500);
+			  if(mode == 1){
+				  setTargetVelocity(0);
+				  HAL_Delay(500);
+
+			  }
+			  else{
+				  setTargetVelocity(-2.0);
+				  HAL_Delay(100);
+				  setTargetVelocity(0);
+				  HAL_Delay(500);
+			  }
 
 			  stopVelocityControl();
 			  stopLineTrace();
@@ -383,8 +390,8 @@ void createVelocityTable(){
 		velocity_table[i] = max_velocity;
 	}
 
-	addDecelerationDistanceMergin(velocity_table, 20);
-	shiftVelocityTable(velocity_table, 1);
+	addDecelerationDistanceMergin(velocity_table, 10); //20
+	//shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
 

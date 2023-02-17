@@ -327,8 +327,8 @@ int main(void)
 
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.7, 5.0);
-				  setAccDec(7, 2);
+				  setVelocityRange(1.6, 5.0);
+				  setAccDec(7, 3);
 				  setStraightRadius(1000);
 				  HAL_Delay(500);
 
