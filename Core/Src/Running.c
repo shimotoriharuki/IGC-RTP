@@ -230,7 +230,7 @@ void runningFlip()
 				saveCross(getTotalDistance());
 			}
 			else{
-				//correctionTotalDistanceFromCrossLine();
+				correctionTotalDistanceFromCrossLine();
 				//saveDebug(getTotalDistance());
 			}
 		}
@@ -277,10 +277,10 @@ void runningFlip()
 		continuous_curve_check_cnt++;
 		if(continuous_curve_check_cnt >= 10000) continuous_curve_check_cnt = 10000;
 
-		//if(correction_check_cnt_cross <= 150) setRGB('R');
-		//else setRGB('r');
-		//if(correction_check_cnt_side <= 150) setRGB('B');
-		//else setRGB('b');
+		if(correction_check_cnt_cross <= 150) setRGB('G');
+		else setRGB('r');
+		if(correction_check_cnt_side <= 150) setRGB('B');
+		else setRGB('b');
 		if(continuous_curve_flag == true) setRGB('R');
 		else setRGB('r');
 	}
@@ -404,20 +404,21 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		velocity = radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity; // quadratic function
-		//velocity = 1e-3 * radius * radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity; // quadratic function
+		velocity = 1e-3 * radius * radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity; // quadratic function
 
 		//if(radius < 1000) velocity = min_velocity;
 		//else velocity = max_velocity;
 	}
 	else if(mode == 3){
+		velocity = radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity; // quadratic function
+		/*
 		if(radius < 400) velocity = min_velocity;
 		else if(radius < 500) velocity = 1.5;
 		else if(radius < 650) velocity = 1.8;
 		else if(radius < 1500) velocity = 2.0;
 		else if(radius < 2000) velocity = 2.5;
 		else velocity = max_velocity;
-
+		*/
 	}
 
 	return velocity;
