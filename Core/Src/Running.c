@@ -6,6 +6,7 @@
  */
 
 #include "Running.h"
+//#define STRAIGHT_RADIUS 1500
 
 static float velocity_table[6000];
 
@@ -36,6 +37,7 @@ static uint16_t continuous_curve_check_cnt;
 
 static float min_velocity, max_velocity;
 static float acceleration, deceleration;
+static float straight_radius;
 
 float mon_diff_theta;
 
@@ -80,7 +82,7 @@ bool isContinuousCurvature()
 	if(diff_theta <= 0.005) continuous_cnt++;
 	else continuous_cnt = 0;
 
-	if(continuous_cnt >= 50) continuous_flag = true;
+	if(continuous_cnt >= 40) continuous_flag = true;
 
 	if(continuous_cnt >= 1000) continuous_cnt = 1000;
 
@@ -300,7 +302,7 @@ void runningInit()
 	continuous_curve_flag = false;
 	running_flag = true;
 
-	setDroneMotor(600, 600); //600, 600
+	setDroneMotor(700, 700); //600, 600
 	HAL_Delay(500);
 }
 
@@ -359,7 +361,7 @@ void createVelocityTable(){
 
 		if(temp_theta == 0) temp_theta = 0.00001;
 		float radius = fabs(temp_distance / temp_theta);
-		if(radius >= 1000) radius = 1000;
+		if(radius >= straight_radius) radius = straight_radius;
 		velocity_table[i] = radius2Velocity(radius);
 
 		//Forced maximum speed on the crossline
@@ -379,7 +381,7 @@ void createVelocityTable(){
 
 
 	addDecelerationDistanceMergin(velocity_table, 10);
-	shiftVelocityTable(velocity_table, 5);
+	shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
 
@@ -392,7 +394,7 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		velocity = radius * ((max_velocity - min_velocity) / 1000) + min_velocity;
+		velocity = radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity;
 
 		//if(radius < 1000) velocity = min_velocity;
 		//else velocity = max_velocity;
@@ -567,4 +569,9 @@ void setAccDec(float acc, float dec)
 {
 	acceleration = acc;
 	deceleration = dec;
+}
+
+void setStraightRadius(float radius)
+{
+	straight_radius = radius;
 }

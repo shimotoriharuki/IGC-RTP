@@ -50,5 +50,6 @@ void correctionTotalDistanceFromSideLine();
 
 void setVelocityRange(float, float);
 void setAccDec(float, float);
+void setStraightRadius(float);
 
 #endif /* INC_RUNNING_H_ */

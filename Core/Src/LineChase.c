@@ -23,9 +23,9 @@ void calculateLineFollowingTermFlip(void){
 #ifdef RYUKU
 	float kp = 0.85, ki = 0.00, kd = 0.025;
 #elif defined(I7)
-	//float kp = 0.6, ki = 0.00, kd = 0.01;
+	float kp = 0.6, ki = 0.00, kd = 0.006;
 	//float kp = 0.85, ki = 0.00, kd = 0.009;
-	float kp = 1.0, ki = 0.00, kd = 0.02;
+	//float kp = 1.0, ki = 0.00, kd = 0.02;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;

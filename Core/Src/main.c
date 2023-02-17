@@ -257,7 +257,7 @@ int main(void)
 
 	  if(getSwitchStatus('L') == true){
 		  mode_selector++;
-		  HAL_Delay(200);
+		  HAL_Delay(500);
 		  if(mode_selector >= 6) mode_selector = 0;
 	  }
 
@@ -268,7 +268,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true){ //run
 				  setLED('N');
 				  setRunMode(1);
-				  setVelocityRange(1.5, 1.5);
+				  setVelocityRange(1.7, 1.7);
 				  HAL_Delay(500);
 
 				  running();
@@ -282,8 +282,9 @@ int main(void)
 			  if(getSwitchStatus('R') == true) { //run
 				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.8, 5.0);
-				  setAccDec(8, 3);
+				  setVelocityRange(1.7, 4.0);
+				  setAccDec(8, 2);
+				  setStraightRadius(2000);
 				  HAL_Delay(500);
 
 				  running();
@@ -300,6 +301,7 @@ int main(void)
 				  setRunMode(2);
 				  setVelocityRange(1.8, 6.0);
 				  setAccDec(8, 3);
+				  setStraightRadius(1500);
 				  HAL_Delay(500);
 
 				  running();
