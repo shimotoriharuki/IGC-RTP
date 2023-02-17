@@ -11,7 +11,7 @@
 #include "MPU6500.h"
 #include "math.h"
 
-#define R_IMU 0.8 //0.03 Lowpath filter constant. The smaller it is, the more effective/
+#define R_IMU 0.80 //0.03 Lowpath filter constant. The smaller it is, the more effective/
 
 
 uint8_t initGyro();

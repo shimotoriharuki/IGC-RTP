@@ -167,9 +167,11 @@ void running(void)
 			  break;
 
 		  case 20:
-			  //setLED('B');
+			  setLED('B');
 
-			  setTargetVelocity(0.0);
+			  setTargetVelocity(-1.0);
+			  HAL_Delay(100);
+			  setTargetVelocity(0);
 			  HAL_Delay(500);
 
 			  stopVelocityControl();
@@ -381,7 +383,7 @@ void createVelocityTable(){
 		velocity_table[i] = max_velocity;
 	}
 
-	addDecelerationDistanceMergin(velocity_table, 10);
+	addDecelerationDistanceMergin(velocity_table, 20);
 	shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
@@ -395,7 +397,8 @@ float radius2Velocity(float radius){
 	float velocity;
 
 	if(mode == 2){
-		velocity = radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity;
+		velocity = radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity; // quadratic function
+		//velocity = 1e-3 * radius * radius * ((max_velocity - min_velocity) / straight_radius) + min_velocity; // quadratic function
 
 		//if(radius < 1000) velocity = min_velocity;
 		//else velocity = max_velocity;
