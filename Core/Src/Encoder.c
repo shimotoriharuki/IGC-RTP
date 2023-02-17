@@ -17,7 +17,7 @@
 
 #define REDUCTION_RATIO 0.4 //Gear reduction ratio
 #elif defined(I7)
-#define REDUCTION_RATIO 0.4 //Gear reduction ratio
+#define REDUCTION_RATIO 0.35 //Gear reduction ratio
 #endif
 
 #define DISTANCE_PER_CNT (2 * PI * WHEEL_RADIUS * REDUCTION_RATIO / ENCODER_RESOLUTION) //[mm per cnt]

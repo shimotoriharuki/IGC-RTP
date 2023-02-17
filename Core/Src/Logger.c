@@ -9,7 +9,7 @@
 
 static float log_cross[200];
 static float log_side[200];
-static float log_debug[200];
+static float log_debug[12000];
 static float log_distance[6000];
 static float log_theta[6000];
 static uint16_t log_distance_cnt, log_theta_cnt, log_cross_cnt, log_side_cnt, log_debug_cnt;
@@ -47,8 +47,8 @@ void saveSide(float side){
 	writeAdd_4 += 0x04;
 }
 
-void saveDebug(float cross){
-	FLASH_Write_Word_F(writeAdd_5, cross);
+void saveDebug(float value){
+	FLASH_Write_Word_F(writeAdd_5, value);
 	writeAdd_5+= 0x04;
 }
 
@@ -202,10 +202,18 @@ float getDistanceLog(uint16_t idx){
 	return log_distance[idx];
 }
 
+float getThetaLog(uint16_t idx){
+	return log_theta[idx];
+}
+
 float getCrossLog(uint16_t idx){
 	return log_cross[idx];
 }
 
 float getSideLog(uint16_t idx){
 	return log_side[idx];
+}
+
+float getDebugLog(uint16_t idx){
+	return log_debug[idx];
 }

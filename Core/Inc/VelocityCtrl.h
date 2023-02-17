@@ -17,9 +17,12 @@ void calculateVelocityControlFlip(void);
 float getVelocityControlTerm(void);
 
 float getCurrentVelocity(void);
+float getTargetVelocity(void);
 void setTargetVelocity(float);
 
 void startVelocityControl(void);
 void stopVelocityControl(void);
+
+void setClearFlagOfVelocityControlI();
 
 #endif /* INC_VELOCITYCTRL_H_ */

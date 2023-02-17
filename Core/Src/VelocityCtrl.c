@@ -7,10 +7,10 @@
 
 #include "VelocityCtrl.h"
 
-#define WHEEL_RADIUS 10.5 //[mm]
+#define WHEEL_RADIUS 11.25 //[mm]
 #define PI 3.1415926535
 #define ENCODER_RESOLUTION 4096
-#define REDUCTION_RATIO 0.4 //Gear reduction ratio 0.35
+#define REDUCTION_RATIO 0.35 //Gear reduction ratio 0.35
 #define VELOCITY_PER_CNT (2 * PI * WHEEL_RADIUS * REDUCTION_RATIO / ENCODER_RESOLUTION) //[m/s per cnt]
 #define DELTA_T 0.001
 
@@ -30,7 +30,8 @@ void calculateVelocityControlFlip(void)
 #ifdef RYUKU
 	float kp = 1500, ki = 5000, kd = 0.;
 #elif defined(I7)
-	float kp = 2500, ki = 20000, kd = 0;
+	//float kp = 2500, ki = 5000, kd = 0;
+	float kp = 5800, ki = 70000, kd = 0.;
 #endif
 
 	float diff = 0.;
@@ -44,13 +45,13 @@ void calculateVelocityControlFlip(void)
 		}
 
 		diff = target_velocity - current_velocity;
-		mon_diff = diff;
+		//mon_diff = diff;
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御
 		d = kd * (diff - pre_diff) / DELTA_T; //D制御
 
-		if(i >= 100) i = 100;
-		if(i <= -100) i = -100;
+		//if(i >= 1000) i = 1000;
+		//if(i <= -1000) i = -1000;
 
 		velocity_control_term = p + i + d;
 
@@ -82,6 +83,11 @@ float getCurrentVelocity(void)
 	return current_velocity;
 }
 
+float getTargetVelocity()
+{
+	return target_velocity;
+}
+
 void startVelocityControl(void)
 {
 	velocity_control_enable_flag = 1;
@@ -91,4 +97,9 @@ void startVelocityControl(void)
 void stopVelocityControl(void)
 {
 	velocity_control_enable_flag = 0;
+}
+
+void setClearFlagOfVelocityControlI(void)
+{
+	i_clear_flag = 1;
 }

@@ -32,6 +32,8 @@
 #include "LED.h"
 #include "Switch.h"
 #include "BatteryChecker.h"
+#include "stdio.h"
+#include "Logger.h"
 
 /* USER CODE END Includes */
 
@@ -103,6 +105,17 @@ static void MX_ADC2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#ifdef __GNUC__
+	#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+	#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /*__GNUC__*/
+
+PUTCHAR_PROTOTYPE{
+	HAL_UART_Transmit(&huart1, (uint8_t*)&ch, 1, 0xFFFF);
+	return ch;
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
    if(htim->Instance == TIM6){ //1ms
@@ -114,13 +127,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		updateAnalogSensor();
 		updateSideSensorStatus();
 
-		calculateLineFollowingTermFlip();
 		calculateVelocityControlFlip();
+		calculateLineFollowingTermFlip();
 		lineTraceFlip();
 		checkCourseOut();
 
 		runningFlip();
 		motorCtrlFlip();
+		droneMotorCtrlFlip();
 
 		resetEncoderCnt(); //Do not move from HERE!!
    }
@@ -154,7 +168,10 @@ void init(void)
 	HAL_TIM_Base_Start_IT(&htim7); //Timer interrupt
 	initMotor();
 
-	HAL_Delay(200);
+	setLED('R');
+    sensorCalibration();
+
+	HAL_Delay(500);
 	if(isBatteryLow() == true){
 		uint16_t i = 0;
 		for(i = 0; i < 10; i++){
@@ -182,7 +199,8 @@ int main(void)
 
   /* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */  HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -240,7 +258,7 @@ int main(void)
 	  if(getSwitchStatus('L') == true){
 		  mode_selector++;
 		  HAL_Delay(200);
-		  if(mode_selector >= 5) mode_selector = 0;
+		  if(mode_selector >= 6) mode_selector = 0;
 	  }
 
 	  switch(mode_selector){
@@ -248,9 +266,9 @@ int main(void)
 			  setLED('C');
 
 			  if(getSwitchStatus('R') == true){ //run
-				  setLED('M');
+				  setLED('N');
 				  setRunMode(1);
-				  setVelocityRange(0.5, 1.5);
+				  setVelocityRange(1.5, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -262,9 +280,10 @@ int main(void)
 			  setLED('Y');
 
 			  if(getSwitchStatus('R') == true) { //run
-				  setLED('M');
-				  setRunMode(1);
-				  setVelocityRange(1.0, 1.5);
+				  setLED('N');
+				  setRunMode(2);
+				  setVelocityRange(1.8, 5.0);
+				  setAccDec(8, 3);
 				  HAL_Delay(500);
 
 				  running();
@@ -277,10 +296,10 @@ int main(void)
 
 			  if(getSwitchStatus('R') == true) { //run
 
-				  setLED('M');
+				  setLED('N');
 				  setRunMode(2);
-				  setVelocityRange(1.0, 1.5);
-				  setAccDec(5, 5);
+				  setVelocityRange(1.8, 6.0);
+				  setAccDec(8, 3);
 				  HAL_Delay(500);
 
 				  running();
@@ -310,15 +329,51 @@ int main(void)
 			  if(getSwitchStatus('R') == true) {
 				  HAL_Delay(500);
 				  setLED('Y');
-				  //timer = 0;
-				  //while(1){
-					  sensorCalibration();
-					  //if(timer >= 3000) break;
-				  //}
-				  //calibration();
-				  HAL_Delay(500);
+
+				  startVelocityControl();
+				  startLineTrace();
+				  setTargetVelocity(0);
+				  HAL_Delay(1000);
+				  stopVelocityControl();
+				  stopLineTrace();
+
+				  //setDroneMotor(300, 300);
+				  HAL_Delay(1000);
+				  setDroneMotor(0, 0);
+
 				  setLED('G');
 			  }
+			  break;
+
+		  case 5:
+			  setLED('G');
+			  if(getSwitchStatus('R') == true) {
+				  setLED('N');
+				  loadDistance();
+				  loadTheta();
+				  loadCross();
+				  loadSide();
+				  loadDebug();
+
+				  setRunMode(2);
+				  setVelocityRange(1.8, 5.0);
+				  setAccDec(8, 3);
+				  createVelocityTable();
+
+				  printf("Distance, Theta\r\n");
+				  for(uint16_t i = 0; i < getDistanceLogSize(); i++){
+					 printf("%f, %f\r\n", getDistanceLog(i), getThetaLog(i));
+				  }
+
+				  printf("9999, 9999\r\n");
+
+				  printf("TargetVelocity, CurrentVelocity\r\n");
+				  uint16_t size = getDebugLogSize();
+				  for(uint16_t i = 0; i < size; i = i+2){
+					 printf("%f, %f\r\n", getDebugLog(i), getDebugLog(i + 1));
+				  }
+			  }
+
 			  break;
 	  };
 
@@ -634,7 +689,7 @@ static void MX_SPI3_Init(void)
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -670,7 +725,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4294967295;
+  htim2.Init.Period = 839;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
@@ -1019,7 +1074,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 57600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;

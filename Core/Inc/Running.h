@@ -19,9 +19,9 @@
 #include "LED.h"
 
 
-float velocity_table[6000];
 
 bool isCrossLine();
+bool isContinuousCurvature();
 
 void setRunMode(uint16_t);
 bool isTargetDistance(float);
@@ -40,7 +40,10 @@ void createVelocityTable();
 float radius2Velocity(float);
 void decelerateProcessing(const float, const float *);
 void accelerateProcessing(const float, const float *);
+void addDecelerationDistanceMergin(float *, int16_t);
+void shiftVelocityTable(float *, int16_t);
 void updateTargetVelocity();
+float getVelocityTableValue(uint16_t);
 
 void correctionTotalDistanceFromCrossLine();
 void correctionTotalDistanceFromSideLine();

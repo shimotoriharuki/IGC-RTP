@@ -7,6 +7,7 @@
 
 #include "LineChase.h"
 #define DELTA_T 0.001
+#define SENSOR_ALL_DARK 100
 
 static int16_t speed_l, speed_r;
 static uint8_t line_trace_enable_flag;
@@ -20,9 +21,11 @@ void calculateLineFollowingTermFlip(void){
 	float p, d;
 	static double i;
 #ifdef RYUKU
-	float kp = 0.85, ki = 0.00, kd = 0.009;
+	float kp = 0.85, ki = 0.00, kd = 0.025;
 #elif defined(I7)
-	float kp = 0.6, ki = 0.00, kd = 0.01;
+	//float kp = 0.6, ki = 0.00, kd = 0.01;
+	//float kp = 0.85, ki = 0.00, kd = 0.009;
+	float kp = 1.0, ki = 0.00, kd = 0.02;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;
@@ -34,7 +37,7 @@ void calculateLineFollowingTermFlip(void){
 			i_clear_flag = 0;
 		}
 
-		diff = ( ( sensor[0] + sensor[1] + sensor[2] + sensor[3] + sensor[4] + sensor[5] ) / 6 ) - ( ( sensor[6] + sensor[7] + sensor[8] + sensor[9] + sensor[10] + sensor[11] ) / 6 );
+		diff = ( ( sensor[0] * 3.0 + sensor[1] * 2.6 + sensor[2] * 2.2 + sensor[3] * 1.8 + sensor[4] * 1.4 + sensor[5] * 1.0 ) / 6 ) - ( ( sensor[6] * 1.0 + sensor[7] * 1.4 + sensor[8] * 1.8 + sensor[9] * 2.2 + sensor[10] * 2.6 + sensor[11] * 3.0 ) / 6 );
 
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御
@@ -49,9 +52,30 @@ void calculateLineFollowingTermFlip(void){
 void lineTraceFlip(void)
 {
 	if(line_trace_enable_flag == 1){
+		float limit = MAX_COUNTER_PERIOD * 0.9;
 		float velocity_control_term = getVelocityControlTerm();
+
+		if(velocity_control_term >= limit) velocity_control_term = limit;
+		else if(velocity_control_term <= -limit) velocity_control_term = -limit;
+
+		float exceeded = 0;
+		if(velocity_control_term + line_following_term >= MAX_COUNTER_PERIOD){
+			exceeded = (velocity_control_term + line_following_term) - MAX_COUNTER_PERIOD;
+		}
+		else if(velocity_control_term - line_following_term <= -MAX_COUNTER_PERIOD){
+			exceeded = -MAX_COUNTER_PERIOD - (velocity_control_term - line_following_term) ;
+		}
+
+		velocity_control_term -= exceeded;
+		line_following_term += exceeded;
+
 		float motor_l = velocity_control_term + line_following_term;
 		float motor_r = velocity_control_term - line_following_term;
+
+		/*
+		float motor_l = velocity_control_term ;
+		float motor_r = velocity_control_term ;
+		*/
 
 		mon_velo_term = velocity_control_term;
 		setMotor(motor_l, motor_r);

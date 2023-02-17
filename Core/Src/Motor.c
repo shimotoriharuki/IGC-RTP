@@ -7,11 +7,11 @@
 
 #include <Motor.h>
 
-TIM_HandleTypeDef htim8;
+TIM_HandleTypeDef htim8, htim2;
 
 static int16_t motor_l, motor_r;
+static int16_t drone_motor_l, drone_motor_r;
 int16_t mon_rev_l, mon_rev_r;
-
 
 void initMotor(void)
 {
@@ -19,6 +19,9 @@ void initMotor(void)
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_2); //PWM start
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3); //PWM start
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4); //PWM start
+
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3); //PWM start
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4); //PWM start
 
 	//motor driver wakeup
 	__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
@@ -65,38 +68,16 @@ void motorCtrlFlip(void)
 	mon_rev_l = reverse_motor_l;
 	mon_rev_r = reverse_motor_r;
 
-/*
-	if(reverse_motor_l >= 0) {
-		motor_pwm_l = reversVe_motor_l;
-		// motor1
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, motor_pwm_l);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, MAX_COUNTER_PERIOD);
+}
 
-	}
-	else {
-		motor_pwm_l = reverse_motor_l * (-1) ;
-		// motor1
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_3, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_4, motor_pwm_l);
-	}
+void droneMotorCtrlFlip(void)
+{
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, drone_motor_l);
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_4, drone_motor_r);
 
+	mon_rev_l = drone_motor_l;
+	mon_rev_r = drone_motor_r;
 
-	if(reverse_motor_r >= 0) {
-		motor_pwm_r = reverse_motor_r;
-		//motor2
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, MAX_COUNTER_PERIOD);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, motor_pwm_r);
-	}
-	else {
-		motor_pwm_r = reverse_motor_r * (-1);
-		//motor2
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, motor_pwm_r);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
-	}
-		//motor2
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_1, motor_pwm_r);
-		__HAL_TIM_SET_COMPARE(&htim8, TIM_CHANNEL_2, MAX_COUNTER_PERIOD);
-		*/
 }
 
 void setMotor(int16_t l, int16_t r)
@@ -109,5 +90,17 @@ void setMotor(int16_t l, int16_t r)
 
 	motor_l = l;
 	motor_r = r;
+}
 
+
+void setDroneMotor(int16_t l, int16_t r)
+{
+	l = abs(l);
+	r = abs(r);
+
+	if(l >= DRONE_MAX_COUNTER_PERIOD) l = DRONE_MAX_COUNTER_PERIOD;
+	if(r >= DRONE_MAX_COUNTER_PERIOD) r = DRONE_MAX_COUNTER_PERIOD;
+
+	drone_motor_l = l;
+	drone_motor_r = r;
 }
