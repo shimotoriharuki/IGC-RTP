@@ -379,7 +379,6 @@ void createVelocityTable(){
 		velocity_table[i] = max_velocity;
 	}
 
-
 	addDecelerationDistanceMergin(velocity_table, 10);
 	shiftVelocityTable(velocity_table, 1);
 

@@ -7,7 +7,7 @@
 
 #include "LineChase.h"
 #define DELTA_T 0.001
-#define SENSOR_ALL_DARK 100
+#define SENSOR_ALL_DARK 50
 
 static int16_t speed_l, speed_r;
 static uint8_t line_trace_enable_flag;
@@ -23,9 +23,8 @@ void calculateLineFollowingTermFlip(void){
 #ifdef RYUKU
 	float kp = 0.85, ki = 0.00, kd = 0.025;
 #elif defined(I7)
-	float kp = 0.6, ki = 0.00, kd = 0.006;
-	//float kp = 0.85, ki = 0.00, kd = 0.009;
-	//float kp = 1.0, ki = 0.00, kd = 0.02;
+	//float kp = 0.6, ki = 0.00, kd = 0.006;
+	float kp = 0.6, ki = 0.00, kd = 0.007;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;
@@ -37,7 +36,7 @@ void calculateLineFollowingTermFlip(void){
 			i_clear_flag = 0;
 		}
 
-		diff = ( ( sensor[0] * 3.0 + sensor[1] * 2.6 + sensor[2] * 2.2 + sensor[3] * 1.8 + sensor[4] * 1.4 + sensor[5] * 1.0 ) / 6 ) - ( ( sensor[6] * 1.0 + sensor[7] * 1.4 + sensor[8] * 1.8 + sensor[9] * 2.2 + sensor[10] * 2.6 + sensor[11] * 3.0 ) / 6 );
+		diff = ( ( sensor[0] * 3.2 + sensor[1] * 2.8 + sensor[2] * 2.4 + sensor[3] * 2.0 + sensor[4] * 1.6 + sensor[5] * 1.2 ) / 6 ) - ( ( sensor[6] * 1.2 + sensor[7] * 1.6 + sensor[8] * 2.0 + sensor[9] * 2.4 + sensor[10] * 2.8 + sensor[11] * 3.2 ) / 6 );
 
 		p = kp * diff; //P制御
 		i += ki * diff * DELTA_T; //I制御

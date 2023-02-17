@@ -161,7 +161,19 @@ void init(void)
 	initADC();
 	initBatteryChecker();
 	initLog();
+	setLED('N');
 	initGyro();
+	if(initGyro() == 1){
+		setRGB('B');
+		HAL_Delay(1000);
+		setRGB('b');
+	}
+	else{
+		setRGB('R');
+		HAL_Delay(1000);
+		setRGB('r');
+
+	}
 	second_run_flag = 1;
 
 	HAL_TIM_Base_Start_IT(&htim6); //Timer interrupt
@@ -300,8 +312,8 @@ int main(void)
 				  setLED('N');
 				  setRunMode(2);
 				  setVelocityRange(1.7, 6.0);
-				  setAccDec(8, 2);
-				  setStraightRadius(2000);
+				  setAccDec(8, 3);
+				  setStraightRadius(800);
 				  HAL_Delay(500);
 
 				  running();

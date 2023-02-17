@@ -11,10 +11,10 @@
 #include "MPU6500.h"
 #include "math.h"
 
-#define R_IMU 0.03 //0.03 Lowpath filter constant. The smaller it is, the more effective/
+#define R_IMU 0.5 //0.03 Lowpath filter constant. The smaller it is, the more effective/
 
 
-void initGyro();
+uint8_t initGyro();
 void updateIMUValue();
 float getOmega();
 float getTheta10mm();
