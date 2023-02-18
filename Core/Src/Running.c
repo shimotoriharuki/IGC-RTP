@@ -80,7 +80,8 @@ bool isContinuousCurvature()
 	}
 
 	//if(diff_theta <= 0.005) continuous_cnt++;
-	if(diff_theta <= 0.010) continuous_cnt++;
+	//if(diff_theta <= 0.010) continuous_cnt++;
+	if(diff_theta <= 0.020) continuous_cnt++;
 	else continuous_cnt = 0;
 
 	if(continuous_cnt >= 40) continuous_flag = true;
@@ -390,7 +391,7 @@ void createVelocityTable(){
 		velocity_table[i] = max_velocity;
 	}
 
-	addDecelerationDistanceMergin(velocity_table, 10); //20
+	addDecelerationDistanceMergin(velocity_table, 15); //20
 	//shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
