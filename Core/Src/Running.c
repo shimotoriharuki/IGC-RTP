@@ -147,11 +147,11 @@ void running(void)
 				  clearGoalJudgeDistance();
 			  }
 
-			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 120){
+			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 50){
 				  goal_judge_flag = true;
 				  clearGoalJudgeDistance();
 			  }
-			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 120){
+			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 50){
 				  start_goal_line_cnt++;
 				  goal_judge_flag = false;
 				  clearGoalJudgeDistance();
@@ -176,7 +176,7 @@ void running(void)
 
 			  }
 			  else{
-				  setTargetVelocity(-2.0);
+				  setTargetVelocity(-4.0);
 				  HAL_Delay(100);
 				  setTargetVelocity(0);
 				  HAL_Delay(500);
@@ -388,7 +388,8 @@ void createVelocityTable(){
 		}
 	}
 	for(uint16_t i = log_size; i < 6000; i++){
-		velocity_table[i] = max_velocity;
+		//velocity_table[i] = max_velocity;
+		velocity_table[i] = 3.0;
 	}
 
 	addDecelerationDistanceMergin(velocity_table, 15); //20
