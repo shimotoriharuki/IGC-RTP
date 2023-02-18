@@ -278,7 +278,7 @@ void runningFlip()
 		if(continuous_curve_check_cnt >= 10000) continuous_curve_check_cnt = 10000;
 
 		if(correction_check_cnt_cross <= 150) setRGB('G');
-		else setRGB('r');
+		else setRGB('g');
 		if(correction_check_cnt_side <= 150) setRGB('B');
 		else setRGB('b');
 		if(continuous_curve_flag == true) setRGB('R');
