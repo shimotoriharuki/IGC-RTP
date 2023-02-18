@@ -392,6 +392,7 @@ void createVelocityTable(){
 		velocity_table[i] = 3.0;
 	}
 
+
 	addDecelerationDistanceMergin(velocity_table, 15); //20
 	//shiftVelocityTable(velocity_table, 1);
 
