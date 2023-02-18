@@ -176,7 +176,7 @@ void running(void)
 
 			  }
 			  else{
-				  setTargetVelocity(-4.0);
+				  setTargetVelocity(-2.0);
 				  HAL_Delay(100);
 				  setTargetVelocity(0);
 				  HAL_Delay(500);
@@ -394,7 +394,7 @@ void createVelocityTable(){
 
 
 	addDecelerationDistanceMergin(velocity_table, 10); //15
-	addAccelerationDistanceMergin(velocity_table, 10);
+	addAccelerationDistanceMergin(velocity_table, 8);
 	//shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
@@ -483,15 +483,16 @@ void addDecelerationDistanceMergin(float *table, int16_t mergin_size)
 
 void addAccelerationDistanceMergin(float *table, int16_t mergin_size)
 {
-	uint16_t idx = mergin_size;
+	uint16_t idx = 0;
 	float pre_target_velocity = table[idx];
 
-	while(idx <= 6000 - 1){
+	while(idx <= 6000 - 1 - mergin_size){
 		if(pre_target_velocity < table[idx]){
 			float low_velocity = pre_target_velocity;
 			for(uint16_t i = idx; i < idx + mergin_size; i++){
 				table[i] = low_velocity;
 			}
+			idx += mergin_size;
 			pre_target_velocity = table[idx];
 		}
 

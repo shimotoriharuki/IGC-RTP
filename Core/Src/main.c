@@ -326,7 +326,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true) {
 
 				  setLED('N');
-				  setRunMode(2);
+				  setRunMode(3);
 				  setVelocityRange(1.6, 5.0);
 				  setAccDec(6, 2);
 				  setStraightRadius(1000); //Do Not Change
