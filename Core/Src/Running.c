@@ -393,7 +393,8 @@ void createVelocityTable(){
 	}
 
 
-	addDecelerationDistanceMergin(velocity_table, 15); //20
+	addDecelerationDistanceMergin(velocity_table, 10); //15
+	addAccelerationDistanceMergin(velocity_table, 10);
 	//shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
@@ -467,6 +468,28 @@ void addDecelerationDistanceMergin(float *table, int16_t mergin_size)
 		if(pre_target_velocity > table[idx]){
 			float low_velocity = table[idx];
 			for(uint16_t i = idx - mergin_size; i < idx; i++){
+				table[i] = low_velocity;
+			}
+			pre_target_velocity = table[idx];
+		}
+
+		pre_target_velocity = table[idx];
+
+		idx++;
+	}
+	//setRGB('r');
+
+}
+
+void addAccelerationDistanceMergin(float *table, int16_t mergin_size)
+{
+	uint16_t idx = mergin_size;
+	float pre_target_velocity = table[idx];
+
+	while(idx <= 6000 - 1){
+		if(pre_target_velocity < table[idx]){
+			float low_velocity = pre_target_velocity;
+			for(uint16_t i = idx; i < idx + mergin_size; i++){
 				table[i] = low_velocity;
 			}
 			pre_target_velocity = table[idx];

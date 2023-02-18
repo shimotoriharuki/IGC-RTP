@@ -310,7 +310,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true) { //run
 
 				  setLED('N');
-				  setRunMode(2);
+				  setRunMode(3);
 				  setVelocityRange(1.7, 4.0);
 				  setAccDec(8, 3);
 				  setStraightRadius(1000); //Do Not Change
@@ -326,7 +326,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true) {
 
 				  setLED('N');
-				  setRunMode(3);
+				  setRunMode(2);
 				  setVelocityRange(1.6, 5.0);
 				  setAccDec(6, 2);
 				  setStraightRadius(1000); //Do Not Change
@@ -342,7 +342,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true) {
 
 				  setLED('N');
-				  setRunMode(2);
+				  setRunMode(3);
 				  setVelocityRange(1.7, 6.0);
 				  setAccDec(8, 3);
 				  setStraightRadius(1000); //Do Not Change

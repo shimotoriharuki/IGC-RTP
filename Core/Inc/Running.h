@@ -41,6 +41,7 @@ float radius2Velocity(float);
 void decelerateProcessing(const float, const float *);
 void accelerateProcessing(const float, const float *);
 void addDecelerationDistanceMergin(float *, int16_t);
+void addAccelerationDistanceMergin(float *, int16_t);
 void shiftVelocityTable(float *, int16_t);
 void updateTargetVelocity();
 float getVelocityTableValue(uint16_t);
