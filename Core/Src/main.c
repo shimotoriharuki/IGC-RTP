@@ -296,7 +296,7 @@ int main(void)
 				  setRunMode(2);
 				  setVelocityRange(1.7, 3.0);
 				  setAccDec(5, 2);
-				  setStraightRadius(1000);
+				  setStraightRadius(1000); //Do Not Change
 				  HAL_Delay(500);
 
 				  running();
@@ -313,7 +313,7 @@ int main(void)
 				  setRunMode(2);
 				  setVelocityRange(1.7, 4.0);
 				  setAccDec(8, 3);
-				  setStraightRadius(1000);
+				  setStraightRadius(1000); //Do Not Change
 				  HAL_Delay(500);
 
 				  running();
@@ -329,7 +329,7 @@ int main(void)
 				  setRunMode(3);
 				  setVelocityRange(1.6, 5.0);
 				  setAccDec(7, 2);
-				  setStraightRadius(1000);
+				  setStraightRadius(1000); //Do Not Change
 				  HAL_Delay(500);
 
 				  running();
@@ -345,7 +345,7 @@ int main(void)
 				  setRunMode(2);
 				  setVelocityRange(1.7, 6.0);
 				  setAccDec(8, 3);
-				  setStraightRadius(1000);
+				  setStraightRadius(1000); //Do Not Change
 				  HAL_Delay(500);
 
 				  running();
