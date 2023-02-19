@@ -147,11 +147,11 @@ void running(void)
 				  clearGoalJudgeDistance();
 			  }
 
-			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 50){
+			  if(goal_judge_flag == false && getSideSensorStatusR() == true && getGoalJudgeDistance() >= 70){
 				  goal_judge_flag = true;
 				  clearGoalJudgeDistance();
 			  }
-			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 50){
+			  else if(goal_judge_flag == true && getGoalJudgeDistance() >= 70){
 				  start_goal_line_cnt++;
 				  goal_judge_flag = false;
 				  clearGoalJudgeDistance();
@@ -389,12 +389,12 @@ void createVelocityTable(){
 	}
 	for(uint16_t i = log_size; i < 6000; i++){
 		//velocity_table[i] = max_velocity;
-		velocity_table[i] = 3.0;
+		velocity_table[i] = 3.5;
 	}
 
 
 	addDecelerationDistanceMergin(velocity_table, 8); //10
-	addAccelerationDistanceMergin(velocity_table, 12);
+	addAccelerationDistanceMergin(velocity_table, 15); //12
 	//shiftVelocityTable(velocity_table, 1);
 
 	velocity_table[0] = min_velocity;
