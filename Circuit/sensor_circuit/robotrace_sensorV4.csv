@@ -1,0 +1,15 @@
+Reference, Quantity, Value, Footprint, Datasheet
+C1 C2 C3 C8 C7 C6 C5 C4 C10 C9 C11 C13 C12 C14 ,14,0.1É ,Capacitor_SMD:C_0603_1608Metric,~
+D1 D2 D15 D17 D21 D19 ,6,LED,LED_SMD:LED_0603_1608Metric_Castellated,~
+D9 D3 D8 D14 D7 D13 D6 D12 D5 D11 D4 D10 D16 D18 D20 D22 ,16,IRLED,LED_SMD:LED_0603_1608Metric_Castellated,~
+J1 ,1,line_sens,mcr0:CN-FFC-SMT2(CN-FFC(0.5)16PD),~
+J2 ,1,maker_outL,Connectors_JST:JST_SH_BM03B-SRSS-TB_03x1.00mm_Straight,~
+J3 ,1,maker_outR,Connectors_JST:JST_SH_BM03B-SRSS-TB_03x1.00mm_Straight,~
+Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 ,12,PT,LED_SMD:LED_0603_1608Metric_Castellated,~
+R1 R2 R15 R18 R24 R21 ,6,1k,Resistor_SMD:R_0603_1608Metric,~
+R16 R19 R22 R25 ,4,100,Resistor_SMD:R_0603_1608Metric,~
+R3 R8 R7 R6 R5 R4 R17 R20 R23 R26 ,10,10k,Resistor_SMD:R_0603_1608Metric,~
+R9 R14 R13 R12 R11 R10 ,6,4,Resistor_SMD:R_0603_1608Metric,~
+U1 U6 U5 U4 U3 U2 ,6,NJU6080,TO_SOT_Packages_SMD:SOT-23-6,
+U7 U9 U10 U12 ,4,S7136,mcr0:S7136,"https://akizukidenshi.com/catalog/g/gI-02425/			"
+U8 U11 ,2,TC7S32F,Package_SO:TSOP-5_1.65x3.05mm_P0.95mm,http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf

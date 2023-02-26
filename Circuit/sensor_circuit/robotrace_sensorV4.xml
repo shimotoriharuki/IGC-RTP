@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>C:\Users\hayat\Documents\KiCADProject\robotrace_sensorV4\robotrace_sensorV4.sch</source>
+    <date>2022/12/06 13:52:00</date>
+    <tool>Eeschema (5.1.2)-2</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>robotrace_sensorV4.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="2" name="/maker_sensorL/" tstamps="/63BC5A86/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>maker_sensorL.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+    <sheet number="3" name="/maker_sensorR/" tstamps="/63C0BC5B/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>maker_sensorR.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="J1">
+      <value>line_sens</value>
+      <footprint>mcr0:CN-FFC-SMT2(CN-FFC(0.5)16PD)</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x16" description="Generic connector, single row, 01x16, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5D645552</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FD8C566</tstamp>
+    </comp>
+    <comp ref="Q2">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDEEAB6</tstamp>
+    </comp>
+    <comp ref="Q3">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDF2D7A</tstamp>
+    </comp>
+    <comp ref="Q4">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDF2D80</tstamp>
+    </comp>
+    <comp ref="Q5">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDF796E</tstamp>
+    </comp>
+    <comp ref="Q6">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDF7974</tstamp>
+    </comp>
+    <comp ref="Q7">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDF797A</tstamp>
+    </comp>
+    <comp ref="Q8">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FDF7980</tstamp>
+    </comp>
+    <comp ref="Q9">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FE02310</tstamp>
+    </comp>
+    <comp ref="Q10">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FE02316</tstamp>
+    </comp>
+    <comp ref="Q11">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FE0231C</tstamp>
+    </comp>
+    <comp ref="Q12">
+      <value>PT</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_Photo_NPN_CE" description="NPN phototransistor, collector/emitter"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FE02322</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>60180101</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6018089C</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>NJU6080</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23-6</footprint>
+      <libsource lib="mylib" part="NJU6080" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>639B6BEA</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>4</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>639BA60C</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63A1B8D5</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63A22BC0</tstamp>
+    </comp>
+    <comp ref="D9">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63A7BDC0</tstamp>
+    </comp>
+    <comp ref="D3">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63A7BA86</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>LED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FFA4B59</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FFA4B5F</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>LED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FFA4B74</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5FFA4B7A</tstamp>
+    </comp>
+    <comp ref="D8">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B21635</tstamp>
+    </comp>
+    <comp ref="D14">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B2162F</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B21615</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B21603</tstamp>
+    </comp>
+    <comp ref="R14">
+      <value>4</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B215EE</tstamp>
+    </comp>
+    <comp ref="U6">
+      <value>NJU6080</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23-6</footprint>
+      <libsource lib="mylib" part="NJU6080" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B215E8</tstamp>
+    </comp>
+    <comp ref="D7">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B215E0</tstamp>
+    </comp>
+    <comp ref="D13">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B215DA</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B215C0</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B215AE</tstamp>
+    </comp>
+    <comp ref="R13">
+      <value>4</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B21599</tstamp>
+    </comp>
+    <comp ref="U5">
+      <value>NJU6080</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23-6</footprint>
+      <libsource lib="mylib" part="NJU6080" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B21593</tstamp>
+    </comp>
+    <comp ref="D6">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B04861</tstamp>
+    </comp>
+    <comp ref="D12">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B0485B</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B04841</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B0482F</tstamp>
+    </comp>
+    <comp ref="R12">
+      <value>4</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B0481A</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>NJU6080</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23-6</footprint>
+      <libsource lib="mylib" part="NJU6080" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B04814</tstamp>
+    </comp>
+    <comp ref="D5">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B0480C</tstamp>
+    </comp>
+    <comp ref="D11">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B04806</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B047EC</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B047DA</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>4</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B047C5</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>NJU6080</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23-6</footprint>
+      <libsource lib="mylib" part="NJU6080" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63B047BF</tstamp>
+    </comp>
+    <comp ref="D4">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63AF27A7</tstamp>
+    </comp>
+    <comp ref="D10">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63AF27A1</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63AF2787</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63AF2775</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>4</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63AF2760</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>NJU6080</value>
+      <footprint>TO_SOT_Packages_SMD:SOT-23-6</footprint>
+      <libsource lib="mylib" part="NJU6080" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>63AF275A</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>maker_outL</value>
+      <footprint>Connectors_JST:JST_SH_BM03B-SRSS-TB_03x1.00mm_Straight</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD7870</tstamp>
+    </comp>
+    <comp ref="R16">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD787F</tstamp>
+    </comp>
+    <comp ref="R17">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD7885</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD7894</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78A2</tstamp>
+    </comp>
+    <comp ref="D16">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78B4</tstamp>
+    </comp>
+    <comp ref="U7">
+      <value>S7136</value>
+      <footprint>mcr0:S7136</footprint>
+      <libsource lib="mylib" part="S7136" description=""/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78C3</tstamp>
+    </comp>
+    <comp ref="U9">
+      <value>S7136</value>
+      <footprint>mcr0:S7136</footprint>
+      <libsource lib="mylib" part="S7136" description=""/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78D4</tstamp>
+    </comp>
+    <comp ref="D18">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78E3</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78F5</tstamp>
+    </comp>
+    <comp ref="R20">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD78FB</tstamp>
+    </comp>
+    <comp ref="R19">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD7901</tstamp>
+    </comp>
+    <comp ref="U8">
+      <value>TC7S32F</value>
+      <footprint>Package_SO:TSOP-5_1.65x3.05mm_P0.95mm</footprint>
+      <datasheet>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</datasheet>
+      <libsource lib="74xGxx" part="74AHC1G32" description="Single OR Gate, Low-Voltage CMOS"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>63BD7907</tstamp>
+    </comp>
+    <comp ref="D15">
+      <value>LED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>638E7ABF</tstamp>
+    </comp>
+    <comp ref="R15">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>638E7AC5</tstamp>
+    </comp>
+    <comp ref="D17">
+      <value>LED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>638FBF8F</tstamp>
+    </comp>
+    <comp ref="R18">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorL/" tstamps="/63BC5A86/"/>
+      <tstamp>638FBF95</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>maker_outR</value>
+      <footprint>Connectors_JST:JST_SH_BM03B-SRSS-TB_03x1.00mm_Straight</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C292C0</tstamp>
+    </comp>
+    <comp ref="R22">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C292CF</tstamp>
+    </comp>
+    <comp ref="R23">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C292D5</tstamp>
+    </comp>
+    <comp ref="C13">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C292E4</tstamp>
+    </comp>
+    <comp ref="C12">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C292F2</tstamp>
+    </comp>
+    <comp ref="D20">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29304</tstamp>
+    </comp>
+    <comp ref="U10">
+      <value>S7136</value>
+      <footprint>mcr0:S7136</footprint>
+      <libsource lib="mylib" part="S7136" description=""/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29313</tstamp>
+    </comp>
+    <comp ref="U12">
+      <value>S7136</value>
+      <footprint>mcr0:S7136</footprint>
+      <libsource lib="mylib" part="S7136" description=""/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29324</tstamp>
+    </comp>
+    <comp ref="D22">
+      <value>IRLED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29333</tstamp>
+    </comp>
+    <comp ref="C14">
+      <value>0.1μ</value>
+      <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C_Small" description="Unpolarized capacitor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29345</tstamp>
+    </comp>
+    <comp ref="R26">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C2934B</tstamp>
+    </comp>
+    <comp ref="R25">
+      <value>100</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29351</tstamp>
+    </comp>
+    <comp ref="U11">
+      <value>TC7S32F</value>
+      <footprint>Package_SO:TSOP-5_1.65x3.05mm_P0.95mm</footprint>
+      <datasheet>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</datasheet>
+      <libsource lib="74xGxx" part="74AHC1G32" description="Single OR Gate, Low-Voltage CMOS"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>63C29357</tstamp>
+    </comp>
+    <comp ref="R24">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>64108A35</tstamp>
+    </comp>
+    <comp ref="D21">
+      <value>LED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>64108A3C</tstamp>
+    </comp>
+    <comp ref="D19">
+      <value>LED</value>
+      <footprint>LED_SMD:LED_0603_1608Metric_Castellated</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="LED_Small_ALT" description="Light emitting diode, small symbol, filled shape"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>6411D7BD</tstamp>
+    </comp>
+    <comp ref="R21">
+      <value>1k</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <sheetpath names="/maker_sensorR/" tstamps="/63C0BC5B/"/>
+      <tstamp>6411D7B7</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="74xGxx" part="74LVC1G32">
+      <aliases>
+        <alias>74AHC1G32</alias>
+        <alias>74AHCT1G32</alias>
+        <alias>74AUC1G32</alias>
+        <alias>74AUP1G32</alias>
+      </aliases>
+      <description>Single OR Gate, Low-Voltage CMOS</description>
+      <docs>http://www.ti.com/lit/sg/scyt129e/scyt129e.pdf</docs>
+      <footprints>
+        <fp>SOT*</fp>
+        <fp>SG-*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LVC1G32</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="input"/>
+        <pin num="2" name="~" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="~" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x03">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x16">
+      <description>Generic connector, single row, 01x16, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x16</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+        <pin num="16" name="Pin_16" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Small">
+      <description>Unpolarized capacitor, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED_Small_ALT">
+      <description>Light emitting diode, small symbol, filled shape</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_Small_ALT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Q_Photo_NPN">
+      <aliases>
+        <alias>Q_Photo_NPN_CE</alias>
+      </aliases>
+      <description>NPN phototransistor, collector/emitter</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_Photo_NPN</field>
+      </fields>
+      <pins>
+        <pin num="1" name="C" type="passive"/>
+        <pin num="2" name="E" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Small">
+      <description>Resistor, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_Small</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="mylib" part="NJU6080">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">NJU6080</field>
+      </fields>
+      <pins>
+        <pin num="1" name="PWM" type="passive"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="Rs" type="passive"/>
+        <pin num="4" name="LED" type="passive"/>
+        <pin num="5" name="EN" type="passive"/>
+        <pin num="6" name="VDD" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="mylib" part="S7136">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">S7136</field>
+      </fields>
+      <pins>
+        <pin num="1" name="cathode" type="openCol"/>
+        <pin num="2" name="Vcc" type="passive"/>
+        <pin num="3" name="Vout" type="output"/>
+        <pin num="4" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="74xGxx">
+      <uri>C:\Program Files\KiCad\share\kicad\library/74xGxx.lib</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>C:\Program Files\KiCad\share\kicad\library/Device.lib</uri>
+    </library>
+    <library logical="mylib">
+      <uri>C:/Users/hayat/Documents/KiCADProject/kicad_library/mylib.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5V">
+      <node ref="R3" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="U1" pin="5"/>
+      <node ref="U1" pin="6"/>
+      <node ref="R18" pin="1"/>
+      <node ref="U8" pin="5"/>
+      <node ref="R19" pin="1"/>
+      <node ref="R20" pin="1"/>
+      <node ref="C11" pin="1"/>
+      <node ref="U3" pin="5"/>
+      <node ref="U3" pin="6"/>
+      <node ref="D4" pin="2"/>
+      <node ref="C5" pin="1"/>
+      <node ref="D3" pin="2"/>
+      <node ref="C8" pin="1"/>
+      <node ref="R8" pin="1"/>
+      <node ref="R2" pin="1"/>
+      <node ref="D8" pin="2"/>
+      <node ref="J1" pin="16"/>
+      <node ref="C2" pin="1"/>
+      <node ref="R21" pin="1"/>
+      <node ref="U11" pin="5"/>
+      <node ref="R26" pin="1"/>
+      <node ref="C14" pin="1"/>
+      <node ref="J3" pin="1"/>
+      <node ref="U10" pin="2"/>
+      <node ref="U12" pin="2"/>
+      <node ref="R23" pin="1"/>
+      <node ref="R25" pin="1"/>
+      <node ref="R22" pin="1"/>
+      <node ref="C12" pin="1"/>
+      <node ref="C13" pin="2"/>
+      <node ref="R24" pin="1"/>
+      <node ref="R15" pin="1"/>
+      <node ref="J2" pin="1"/>
+      <node ref="C9" pin="1"/>
+      <node ref="C10" pin="2"/>
+      <node ref="R6" pin="1"/>
+      <node ref="U7" pin="2"/>
+      <node ref="U9" pin="2"/>
+      <node ref="R17" pin="1"/>
+      <node ref="R16" pin="1"/>
+      <node ref="U6" pin="6"/>
+      <node ref="D7" pin="2"/>
+      <node ref="U6" pin="5"/>
+      <node ref="U4" pin="5"/>
+      <node ref="U4" pin="6"/>
+      <node ref="D5" pin="2"/>
+      <node ref="U5" pin="5"/>
+      <node ref="U5" pin="6"/>
+      <node ref="D6" pin="2"/>
+      <node ref="R4" pin="1"/>
+      <node ref="C4" pin="1"/>
+      <node ref="U2" pin="6"/>
+      <node ref="U2" pin="5"/>
+      <node ref="C7" pin="1"/>
+      <node ref="R7" pin="1"/>
+      <node ref="C6" pin="1"/>
+      <node ref="R5" pin="1"/>
+    </net>
+    <net code="2" name="GND">
+      <node ref="C7" pin="2"/>
+      <node ref="U2" pin="2"/>
+      <node ref="U12" pin="4"/>
+      <node ref="C11" pin="2"/>
+      <node ref="C6" pin="2"/>
+      <node ref="U8" pin="3"/>
+      <node ref="R13" pin="2"/>
+      <node ref="U5" pin="2"/>
+      <node ref="C8" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="U10" pin="4"/>
+      <node ref="R9" pin="2"/>
+      <node ref="U1" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="R10" pin="2"/>
+      <node ref="U7" pin="4"/>
+      <node ref="J3" pin="3"/>
+      <node ref="C12" pin="2"/>
+      <node ref="C13" pin="1"/>
+      <node ref="R12" pin="2"/>
+      <node ref="U4" pin="2"/>
+      <node ref="U11" pin="3"/>
+      <node ref="C14" pin="2"/>
+      <node ref="J2" pin="3"/>
+      <node ref="U6" pin="2"/>
+      <node ref="C10" pin="1"/>
+      <node ref="R14" pin="2"/>
+      <node ref="C9" pin="2"/>
+      <node ref="U9" pin="4"/>
+      <node ref="Q12" pin="2"/>
+      <node ref="Q11" pin="2"/>
+      <node ref="Q9" pin="2"/>
+      <node ref="Q8" pin="2"/>
+      <node ref="Q7" pin="2"/>
+      <node ref="Q6" pin="2"/>
+      <node ref="Q5" pin="2"/>
+      <node ref="Q4" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="Q1" pin="2"/>
+      <node ref="Q2" pin="2"/>
+      <node ref="Q3" pin="2"/>
+      <node ref="J1" pin="15"/>
+      <node ref="J1" pin="13"/>
+      <node ref="C2" pin="2"/>
+      <node ref="Q10" pin="2"/>
+      <node ref="D1" pin="1"/>
+      <node ref="R11" pin="2"/>
+      <node ref="U3" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="D2" pin="1"/>
+    </net>
+    <net code="3" name="Net-(D12-Pad2)">
+      <node ref="D6" pin="1"/>
+      <node ref="D12" pin="2"/>
+    </net>
+    <net code="4" name="Net-(D12-Pad1)">
+      <node ref="U4" pin="4"/>
+      <node ref="D12" pin="1"/>
+    </net>
+    <net code="5" name="Net-(D11-Pad2)">
+      <node ref="D5" pin="1"/>
+      <node ref="D11" pin="2"/>
+    </net>
+    <net code="6" name="Net-(D11-Pad1)">
+      <node ref="U3" pin="4"/>
+      <node ref="D11" pin="1"/>
+    </net>
+    <net code="7" name="Net-(R6-Pad2)">
+      <node ref="R6" pin="2"/>
+      <node ref="U4" pin="1"/>
+    </net>
+    <net code="8" name="Net-(R12-Pad1)">
+      <node ref="U4" pin="3"/>
+      <node ref="R12" pin="1"/>
+    </net>
+    <net code="9" name="Net-(D13-Pad1)">
+      <node ref="U5" pin="4"/>
+      <node ref="D13" pin="1"/>
+    </net>
+    <net code="10" name="Net-(D13-Pad2)">
+      <node ref="D7" pin="1"/>
+      <node ref="D13" pin="2"/>
+    </net>
+    <net code="11" name="Net-(R8-Pad2)">
+      <node ref="R8" pin="2"/>
+      <node ref="U6" pin="1"/>
+    </net>
+    <net code="12" name="Net-(R14-Pad1)">
+      <node ref="U6" pin="3"/>
+      <node ref="R14" pin="1"/>
+    </net>
+    <net code="13" name="Net-(R7-Pad2)">
+      <node ref="U5" pin="1"/>
+      <node ref="R7" pin="2"/>
+    </net>
+    <net code="14" name="Net-(R13-Pad1)">
+      <node ref="U5" pin="3"/>
+      <node ref="R13" pin="1"/>
+    </net>
+    <net code="15" name="Net-(R4-Pad2)">
+      <node ref="U2" pin="1"/>
+      <node ref="R4" pin="2"/>
+    </net>
+    <net code="16" name="Net-(R10-Pad1)">
+      <node ref="U2" pin="3"/>
+      <node ref="R10" pin="1"/>
+    </net>
+    <net code="17" name="+3V3">
+      <node ref="C1" pin="1"/>
+      <node ref="J1" pin="14"/>
+      <node ref="R1" pin="1"/>
+    </net>
+    <net code="18" name="Net-(D1-Pad2)">
+      <node ref="R1" pin="2"/>
+      <node ref="D1" pin="2"/>
+    </net>
+    <net code="19" name="Net-(D2-Pad2)">
+      <node ref="D2" pin="2"/>
+      <node ref="R2" pin="2"/>
+    </net>
+    <net code="20" name="Net-(R5-Pad2)">
+      <node ref="U3" pin="1"/>
+      <node ref="R5" pin="2"/>
+    </net>
+    <net code="21" name="Net-(D10-Pad2)">
+      <node ref="D10" pin="2"/>
+      <node ref="D4" pin="1"/>
+    </net>
+    <net code="22" name="Net-(D10-Pad1)">
+      <node ref="U2" pin="4"/>
+      <node ref="D10" pin="1"/>
+    </net>
+    <net code="23" name="Net-(R11-Pad1)">
+      <node ref="U3" pin="3"/>
+      <node ref="R11" pin="1"/>
+    </net>
+    <net code="24" name="Net-(J1-Pad9)">
+      <node ref="Q9" pin="1"/>
+      <node ref="J1" pin="9"/>
+    </net>
+    <net code="25" name="Net-(J1-Pad10)">
+      <node ref="J1" pin="10"/>
+      <node ref="Q10" pin="1"/>
+    </net>
+    <net code="26" name="Net-(J1-Pad11)">
+      <node ref="J1" pin="11"/>
+      <node ref="Q11" pin="1"/>
+    </net>
+    <net code="27" name="Net-(J1-Pad12)">
+      <node ref="Q12" pin="1"/>
+      <node ref="J1" pin="12"/>
+    </net>
+    <net code="28" name="Net-(J1-Pad7)">
+      <node ref="Q7" pin="1"/>
+      <node ref="J1" pin="7"/>
+    </net>
+    <net code="29" name="Net-(J1-Pad3)">
+      <node ref="Q3" pin="1"/>
+      <node ref="J1" pin="3"/>
+    </net>
+    <net code="30" name="Net-(J1-Pad1)">
+      <node ref="J1" pin="1"/>
+      <node ref="Q1" pin="1"/>
+    </net>
+    <net code="31" name="Net-(J1-Pad4)">
+      <node ref="Q4" pin="1"/>
+      <node ref="J1" pin="4"/>
+    </net>
+    <net code="32" name="Net-(J1-Pad2)">
+      <node ref="J1" pin="2"/>
+      <node ref="Q2" pin="1"/>
+    </net>
+    <net code="33" name="Net-(J1-Pad8)">
+      <node ref="Q8" pin="1"/>
+      <node ref="J1" pin="8"/>
+    </net>
+    <net code="34" name="Net-(J1-Pad6)">
+      <node ref="Q6" pin="1"/>
+      <node ref="J1" pin="6"/>
+    </net>
+    <net code="35" name="Net-(J1-Pad5)">
+      <node ref="Q5" pin="1"/>
+      <node ref="J1" pin="5"/>
+    </net>
+    <net code="36" name="Net-(D14-Pad2)">
+      <node ref="D14" pin="2"/>
+      <node ref="D8" pin="1"/>
+    </net>
+    <net code="37" name="Net-(D14-Pad1)">
+      <node ref="U6" pin="4"/>
+      <node ref="D14" pin="1"/>
+    </net>
+    <net code="38" name="Net-(D9-Pad1)">
+      <node ref="D9" pin="1"/>
+      <node ref="U1" pin="4"/>
+    </net>
+    <net code="39" name="Net-(D3-Pad1)">
+      <node ref="D9" pin="2"/>
+      <node ref="D3" pin="1"/>
+    </net>
+    <net code="40" name="Net-(R9-Pad1)">
+      <node ref="R9" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="41" name="Net-(R3-Pad2)">
+      <node ref="U1" pin="1"/>
+      <node ref="R3" pin="2"/>
+    </net>
+    <net code="42" name="Net-(J2-Pad2)">
+      <node ref="J2" pin="2"/>
+      <node ref="U8" pin="4"/>
+    </net>
+    <net code="43" name="Net-(D18-Pad2)">
+      <node ref="R19" pin="2"/>
+      <node ref="D18" pin="2"/>
+    </net>
+    <net code="44" name="Net-(D17-Pad2)">
+      <node ref="R18" pin="2"/>
+      <node ref="D17" pin="2"/>
+    </net>
+    <net code="45" name="Net-(D15-Pad2)">
+      <node ref="R15" pin="2"/>
+      <node ref="D15" pin="2"/>
+    </net>
+    <net code="46" name="Net-(D16-Pad2)">
+      <node ref="R16" pin="2"/>
+      <node ref="D16" pin="2"/>
+    </net>
+    <net code="47" name="Net-(D15-Pad1)">
+      <node ref="R17" pin="2"/>
+      <node ref="U8" pin="1"/>
+      <node ref="D15" pin="1"/>
+      <node ref="U7" pin="3"/>
+    </net>
+    <net code="48" name="Net-(D18-Pad1)">
+      <node ref="U9" pin="1"/>
+      <node ref="D18" pin="1"/>
+    </net>
+    <net code="49" name="Net-(D17-Pad1)">
+      <node ref="U8" pin="2"/>
+      <node ref="D17" pin="1"/>
+      <node ref="R20" pin="2"/>
+      <node ref="U9" pin="3"/>
+    </net>
+    <net code="50" name="Net-(D16-Pad1)">
+      <node ref="U7" pin="1"/>
+      <node ref="D16" pin="1"/>
+    </net>
+    <net code="51" name="Net-(J3-Pad2)">
+      <node ref="J3" pin="2"/>
+      <node ref="U11" pin="4"/>
+    </net>
+    <net code="52" name="Net-(D22-Pad2)">
+      <node ref="R25" pin="2"/>
+      <node ref="D22" pin="2"/>
+    </net>
+    <net code="53" name="Net-(D19-Pad2)">
+      <node ref="R21" pin="2"/>
+      <node ref="D19" pin="2"/>
+    </net>
+    <net code="54" name="Net-(D21-Pad2)">
+      <node ref="D21" pin="2"/>
+      <node ref="R24" pin="2"/>
+    </net>
+    <net code="55" name="Net-(D20-Pad2)">
+      <node ref="D20" pin="2"/>
+      <node ref="R22" pin="2"/>
+    </net>
+    <net code="56" name="Net-(D19-Pad1)">
+      <node ref="D19" pin="1"/>
+      <node ref="U11" pin="1"/>
+      <node ref="U10" pin="3"/>
+      <node ref="R23" pin="2"/>
+    </net>
+    <net code="57" name="Net-(D22-Pad1)">
+      <node ref="D22" pin="1"/>
+      <node ref="U12" pin="1"/>
+    </net>
+    <net code="58" name="Net-(D21-Pad1)">
+      <node ref="R26" pin="2"/>
+      <node ref="U11" pin="2"/>
+      <node ref="U12" pin="3"/>
+      <node ref="D21" pin="1"/>
+    </net>
+    <net code="59" name="Net-(D20-Pad1)">
+      <node ref="U10" pin="1"/>
+      <node ref="D20" pin="1"/>
+    </net>
+  </nets>
+</export>

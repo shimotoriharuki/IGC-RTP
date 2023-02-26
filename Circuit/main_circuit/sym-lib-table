@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "robotraceV5-rescue")(type "Legacy")(uri "${KIPRJMOD}/robotraceV5-rescue.lib")(options "")(descr ""))
+  (lib (name "robotrace_sensorV3-rescue")(type "Legacy")(uri "${KIPRJMOD}/robotrace_sensorV3-rescue.lib")(options "")(descr ""))
+)
