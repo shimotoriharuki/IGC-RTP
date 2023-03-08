@@ -11,6 +11,8 @@ TIM_HandleTypeDef htim8, htim2;
 
 static int16_t motor_l, motor_r;
 static int16_t drone_motor_l, drone_motor_r;
+static int16_t suction_motor;
+
 int16_t mon_rev_l, mon_rev_r;
 
 void initMotor(void)
@@ -20,6 +22,7 @@ void initMotor(void)
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_3); //PWM start
 	HAL_TIM_PWM_Start(&htim8, TIM_CHANNEL_4); //PWM start
 
+	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1); //PWM start
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3); //PWM start
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4); //PWM start
 
@@ -80,6 +83,11 @@ void droneMotorCtrlFlip(void)
 
 }
 
+void suctionMotorCtrlFlip()
+{
+	__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, suction_motor);
+}
+
 void setMotor(int16_t l, int16_t r)
 {
 	if(l >= MAX_COUNTER_PERIOD) l = MAX_COUNTER_PERIOD;
@@ -103,4 +111,12 @@ void setDroneMotor(int16_t l, int16_t r)
 
 	drone_motor_l = l;
 	drone_motor_r = r;
+}
+
+void setSuctionMotor(int16_t counter_period)
+{
+	if(counter_period > SUCTION_MAX_COUNTER_PERIOD) counter_period = SUCTION_MAX_COUNTER_PERIOD;
+	if(counter_period < 0) counter_period = 0;
+
+	suction_motor = counter_period;
 }

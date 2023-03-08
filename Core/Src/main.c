@@ -135,6 +135,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		runningFlip();
 		motorCtrlFlip();
 		droneMotorCtrlFlip();
+		suctionMotorCtrlFlip();
 
 		resetEncoderCnt(); //Do not move from HERE!!
    }
@@ -270,7 +271,7 @@ int main(void)
 	  if(getSwitchStatus('L') == true){
 		  mode_selector++;
 		  HAL_Delay(500);
-		  if(mode_selector >= 6) mode_selector = 0;
+		  if(mode_selector >= 7) mode_selector = 0;
 	  }
 
 	  switch(mode_selector){
@@ -382,6 +383,14 @@ int main(void)
 			  }
 
 			  break;
+
+		  case 6:
+			  setLED('W');
+			  if(getSwitchStatus('R') == true) {
+				  setSuctionMotor(50);
+				  HAL_Delay(1000);
+				  setSuctionMotor(0);
+			  }
 	  };
 
 	  /*
