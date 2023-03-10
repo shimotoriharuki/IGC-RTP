@@ -25,6 +25,8 @@ void batteryCheckFlip()
 	if(adc2_value <= 1875){ //2s: 1875, 3s: 2824
 #elif defined(I7)
 	if(adc2_value <= 3300){ //2s: 1875, 3s: 2824
+#elif defined(ANEGO)
+	if(adc2_value <= 1875){ //2s: 1875, 3s: 2824
 #endif
 		cnt++;
 	}

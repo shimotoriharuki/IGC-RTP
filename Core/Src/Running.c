@@ -186,6 +186,7 @@ void running(void)
 			  stopLineTrace();
 
 			  setDroneMotor(0, 0);
+			  setSuctionMotor(0);
 
 			  running_flag = false;
 			  goal_flag = 1;
@@ -315,7 +316,9 @@ void runningInit()
 	running_flag = true;
 
 	setDroneMotor(700, 700); //600, 600
+	setSuctionMotor(200);
 	HAL_Delay(500);
+
 }
 
 void saveLog(){

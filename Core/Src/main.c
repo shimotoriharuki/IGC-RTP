@@ -281,7 +281,7 @@ int main(void)
 			  if(getSwitchStatus('R') == true){ //run
 				  setLED('N');
 				  setRunMode(1);
-				  setVelocityRange(1.7, 1.7);
+				  setVelocityRange(1.5, 1.5);
 				  HAL_Delay(500);
 
 				  running();
@@ -344,7 +344,7 @@ int main(void)
 
 				  setLED('N');
 				  setRunMode(3);
-				  setVelocityRange(1.8, 6.5); //1.7, 6.0
+				  setVelocityRange(2.5, 6.5); //1.7, 6.0
 				  setAccDec(8, 3); //8, 3
 				  setStraightRadius(1000); //Do Not Change
 				  HAL_Delay(500);
@@ -387,7 +387,7 @@ int main(void)
 		  case 6:
 			  setLED('W');
 			  if(getSwitchStatus('R') == true) {
-				  setSuctionMotor(50);
+				  setSuctionMotor(200);
 				  HAL_Delay(1000);
 				  setSuctionMotor(0);
 			  }

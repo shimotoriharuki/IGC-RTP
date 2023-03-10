@@ -9,6 +9,7 @@
 #define INC_USERSELECTION_H_
 
 //#define RYUKU
-#define I7
+//#define I7
+#define ANEGO
 
 #endif /* INC_USERSELECTION_H_ */
