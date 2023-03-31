@@ -33,6 +33,9 @@ void calculateVelocityControlFlip(void)
 	//float kp = 2500, ki = 5000, kd = 0;
 	float kp = 5200, ki = 60000, kd = 0.;
 	//float kp = 5800, ki = 100000, kd = 0.;
+#elif defined(ANEGO)
+	#define ENCODER_RESOLUTION 2048
+	float kp =2500, ki = 5000, kd = 0.;
 #endif
 
 	float diff = 0.;
