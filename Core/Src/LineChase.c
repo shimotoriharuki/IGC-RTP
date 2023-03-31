@@ -27,7 +27,7 @@ void calculateLineFollowingTermFlip(void){
 	//float kp = 0.6, ki = 0.00, kd = 0.0060;
 	float kp = 0.65, ki = 0.00, kd = 0.0070;
 #elif defined(ANEGO)
-	float kp = 1.2, ki = 0.00, kd = 0.02;
+	float kp = 2.0, ki = 0.00, kd = 0.04;
 #endif
 	float diff = 0.;
 	static double pre_diff = 0.;
