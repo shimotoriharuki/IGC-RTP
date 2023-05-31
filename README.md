@@ -42,6 +42,12 @@ git merge upstream/<ブランチ名> # マスターに変更を持ってくる
 ```
 
 * https://leico.github.io/TechnicalNote/Git/pull-fork-origin
+
+# Circuitについて
+
+Circuitディレクトリにある制作物は
+[IGC8810](https://github.com/IGC8810)の著作物です。許可を得てこのリポジトリで公開しています。
+
 # LICENSE
 
 このソフトウェアパッケージは[3条項BSDのライセンス](https://github.com/shimotoriharuki/IGC-RTP/blob/master/LICENSE)の下、再頒布および使用が使用が許可されます．
